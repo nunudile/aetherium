@@ -9,9 +9,10 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Beleren:wght@700&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@500;600;700;900&display=swap" rel="stylesheet">
-  <!-- Lucide Icons & html2canvas -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@500;600;700;900&display=swap" rel="stylesheet" crossorigin="anonymous">
+  <!-- Lucide Icons, modern-screenshot & html2canvas fallback -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/modern-screenshot@4.6.0/dist/index.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
@@ -256,6 +257,23 @@
       transform-box: fill-box;
       transform-origin: center;
       animation: primordialTwinkle 2.8s ease-in-out infinite;
+    }
+
+    /* Stabilization rules applied momentarily during PNG export */
+    .exporting-card {
+      box-shadow: none !important;
+      transform: none !important;
+    }
+    .exporting-card.primordial-outer-glow {
+      box-shadow: inset 0 0 18px rgba(253, 224, 71, 0.35) !important;
+      transform: none !important;
+    }
+    .exporting-card .primordial-pulse,
+    .exporting-card .primordial-twinkle,
+    .exporting-card .foil-hologram {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
   </style>
 </head>
@@ -631,7 +649,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           </div>
 
           <!-- LAYER 0: Cosmic Space, Swirling Ethereal Ribbons, Shards & Bottom Filigree Web -->
-          <svg id="cosmicBgSvg" class="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 630 880" preserveAspectRatio="none">
+          <svg id="cosmicBgSvg" xmlns="http://www.w3.org/2000/svg" width="630" height="880" class="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 630 880" preserveAspectRatio="none">
             <defs>
               <radialGradient id="nebulaTop" cx="50%" cy="8%" r="55%">
                 <stop id="nebulaStop1" offset="0%" stop-color="#7c3aed" stop-opacity="0.38"/>
@@ -712,13 +730,29 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               <!-- Celestial Ornaments (Toggled via Crown Checkbox) -->
               <div id="renderCrownWrapper" class="pointer-events-none">
                 <!-- Top-Center 4-Pointed Star sitting on the top border -->
-                <svg class="absolute -top-[12px] left-1/2 -translate-x-1/2 w-6 h-6 drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)] z-40" viewBox="0 0 32 32">
-                  <path d="M16 1 L19.2 12.8 L31 16 L19.2 19.2 L16 31 L12.8 19.2 L1 16 L12.8 12.8 Z" fill="url(#goldFiligreeGrad)" stroke="#231c12" stroke-width="1"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="absolute -top-[12px] left-1/2 -translate-x-1/2 w-6 h-6 drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)] z-40" viewBox="0 0 32 32">
+                  <defs>
+                    <linearGradient id="crownTopGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fff6e0"/>
+                      <stop offset="35%" stop-color="#e5cf9e"/>
+                      <stop offset="70%" stop-color="#ab8d56"/>
+                      <stop offset="100%" stop-color="#5c4724"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M16 1 L19.2 12.8 L31 16 L19.2 19.2 L16 31 L12.8 19.2 L1 16 L12.8 12.8 Z" fill="url(#crownTopGoldGrad)" stroke="#231c12" stroke-width="1"/>
                   <circle cx="16" cy="16" r="2" fill="#fffbeb"/>
                 </svg>
                 <!-- Top-Left Large Overlapping 4-Pointed Star Crest -->
-                <svg class="absolute -left-[15px] -top-[16px] w-11 h-[64px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] z-40" viewBox="0 0 44 68">
-                  <path d="M22 2 L25.5 26 L42 30 L25.5 34 L22 66 L18.5 34 L2 30 L18.5 26 Z" fill="url(#goldFiligreeGrad)" stroke="#1f1910" stroke-width="1.1"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="68" class="absolute -left-[15px] -top-[16px] w-11 h-[64px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] z-40" viewBox="0 0 44 68">
+                  <defs>
+                    <linearGradient id="crownLeftGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fff6e0"/>
+                      <stop offset="35%" stop-color="#e5cf9e"/>
+                      <stop offset="70%" stop-color="#ab8d56"/>
+                      <stop offset="100%" stop-color="#5c4724"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M22 2 L25.5 26 L42 30 L25.5 34 L22 66 L18.5 34 L2 30 L18.5 26 Z" fill="url(#crownLeftGoldGrad)" stroke="#1f1910" stroke-width="1.1"/>
                   <path d="M22 8 L23.8 27.8 L36 30 L23.8 32.2 L22 58 L20.2 32.2 L8 30 L20.2 27.8 Z" fill="#fff9eb" opacity="0.7"/>
                 </svg>
               </div>
@@ -741,16 +775,42 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               </div>
 
               <!-- Mid-Left Astral Star & Overlapping Silk Ribbon -->
-              <svg id="artEdgeStarLeft" class="absolute -left-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
-                <path d="M22,4 C8,26 12,42 38,62" fill="none" stroke="url(#ribbonGradA)" stroke-width="2.2" opacity="0.85"/>
-                <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="1"/>
+              <svg id="artEdgeStarLeft" xmlns="http://www.w3.org/2000/svg" width="44" height="96" class="absolute -left-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
+                <defs>
+                  <linearGradient id="edgeRibbonGradL" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
+                    <stop id="edgeRibbonStopL1" offset="45%" stop-color="#c084fc" stop-opacity="0.55"/>
+                    <stop id="edgeRibbonStopL2" offset="100%" stop-color="#4c1d95" stop-opacity="0.12"/>
+                  </linearGradient>
+                  <linearGradient id="edgeGoldGradL" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fff6e0"/>
+                    <stop offset="35%" stop-color="#e5cf9e"/>
+                    <stop offset="70%" stop-color="#ab8d56"/>
+                    <stop offset="100%" stop-color="#5c4724"/>
+                  </linearGradient>
+                </defs>
+                <path d="M22,4 C8,26 12,42 38,62" fill="none" stroke="url(#edgeRibbonGradL)" stroke-width="2.2" opacity="0.85"/>
+                <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#edgeGoldGradL)" stroke="#1b1712" stroke-width="1"/>
                 <circle cx="22" cy="48" r="2.2" fill="#ffffff"/>
               </svg>
 
               <!-- Mid-Right Astral Star & Overlapping Silk Ribbon -->
-              <svg id="artEdgeStarRight" class="absolute -right-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
-                <path d="M22,4 C36,26 32,42 6,62" fill="none" stroke="url(#ribbonGradB)" stroke-width="2.2" opacity="0.85"/>
-                <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="1"/>
+              <svg id="artEdgeStarRight" xmlns="http://www.w3.org/2000/svg" width="44" height="96" class="absolute -right-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
+                <defs>
+                  <linearGradient id="edgeRibbonGradR" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#f5ebd6" stop-opacity="0.65"/>
+                    <stop id="edgeRibbonStopR1" offset="50%" stop-color="#a855f7" stop-opacity="0.48"/>
+                    <stop offset="100%" stop-color="#09090b" stop-opacity="0.05"/>
+                  </linearGradient>
+                  <linearGradient id="edgeGoldGradR" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fff6e0"/>
+                    <stop offset="35%" stop-color="#e5cf9e"/>
+                    <stop offset="70%" stop-color="#ab8d56"/>
+                    <stop offset="100%" stop-color="#5c4724"/>
+                  </linearGradient>
+                </defs>
+                <path d="M22,4 C36,26 32,42 6,62" fill="none" stroke="url(#edgeRibbonGradR)" stroke-width="2.2" opacity="0.85"/>
+                <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#edgeGoldGradR)" stroke="#1b1712" stroke-width="1"/>
                 <circle cx="22" cy="48" r="2.2" fill="#ffffff"/>
               </svg>
             </div>
@@ -758,8 +818,16 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
             <!-- 3. Dark Obsidian Type Line Bar & 8-Pointed Rarity Star -->
             <div id="cardTypeBox" class="astrum-obsidian-bar relative z-30 flex items-center justify-between px-3 py-1 rounded-[15px] border-[2px] border-[#d8c193] text-[#f3ece0] shrink-0 -mt-[2px]" style="background: linear-gradient(135deg, #262330 0%, #121018 48%, #1f1c29 80%, #0d0c12 100%);">
               <!-- Small Left 4-Pointed Star Accent -->
-              <svg class="w-3.5 h-3.5 mr-1.5 shrink-0" viewBox="0 0 24 24">
-                <path d="M12 2 L14.4 9.6 L22 12 L14.4 14.4 L12 22 L9.6 14.4 L2 12 L9.6 9.6 Z" fill="url(#goldFiligreeGrad)"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-3.5 h-3.5 mr-1.5 shrink-0" viewBox="0 0 24 24">
+                <defs>
+                  <linearGradient id="typeStarGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fff6e0"/>
+                    <stop offset="35%" stop-color="#e5cf9e"/>
+                    <stop offset="70%" stop-color="#ab8d56"/>
+                    <stop offset="100%" stop-color="#5c4724"/>
+                  </linearGradient>
+                </defs>
+                <path d="M12 2 L14.4 9.6 L22 12 L14.4 14.4 L12 22 L9.6 14.4 L2 12 L9.6 9.6 Z" fill="url(#typeStarGoldGrad)"/>
               </svg>
               <div id="renderTypeLine" class="font-card-type text-[10.5px] sm:text-[11.5px] font-bold tracking-wide truncate flex-1 text-[#f4efe4] drop-shadow">
                 Legendary Creature — Elemental Beast
@@ -774,7 +842,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
               <!-- Clipped Marble Veins & Center Celestial Halo Star Watermark -->
               <div class="absolute inset-0 overflow-hidden rounded-b-[8px] pointer-events-none z-0 flex items-center justify-center">
-                <svg id="textBoxWatermark" class="w-[74%] h-[74%] opacity-[0.095]" viewBox="0 0 200 200">
+                <svg id="textBoxWatermark" xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="w-[74%] h-[74%] opacity-[0.095]" viewBox="0 0 200 200">
                   <!-- Orbital Ring -->
                   <ellipse cx="100" cy="108" rx="88" ry="26" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="5"/>
                   <ellipse cx="100" cy="108" rx="68" ry="18" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -794,7 +862,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               <div id="renderFlavorContainer" class="relative z-10 mt-auto pt-1.5">
                 <div class="flex items-center w-full mb-1">
                   <div id="flavorDividerLineL" class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
-                  <svg id="flavorDividerStar" class="w-2.5 h-2.5 mx-1 shrink-0 text-[#2c2836]" viewBox="0 0 16 16">
+                  <svg id="flavorDividerStar" xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-2.5 h-2.5 mx-1 shrink-0 text-[#2c2836]" viewBox="0 0 16 16">
                     <path d="M8 0 L10.2 5.8 L16 8 L10.2 10.2 L8 16 L5.8 10.2 L0 8 L5.8 5.8 Z" fill="currentColor"/>
                   </svg>
                   <div id="flavorDividerLineR" class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
@@ -805,14 +873,28 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               </div>
 
               <!-- Bottom-Left Golden Corner Filigree Spur -->
-              <svg id="textBoxCornerSpur" class="absolute -left-[12px] -bottom-[11px] w-7 h-7 pointer-events-none z-30" viewBox="0 0 28 28">
-                <path d="M14 2 L16 14 L26 16 L12 20 L2 26 L10 14 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="0.9"/>
+              <svg id="textBoxCornerSpur" xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="absolute -left-[12px] -bottom-[11px] w-7 h-7 pointer-events-none z-30" viewBox="0 0 28 28">
+                <defs>
+                  <linearGradient id="spurGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fff6e0"/>
+                    <stop offset="35%" stop-color="#e5cf9e"/>
+                    <stop offset="70%" stop-color="#ab8d56"/>
+                    <stop offset="100%" stop-color="#5c4724"/>
+                  </linearGradient>
+                </defs>
+                <path d="M14 2 L16 14 L26 16 L12 20 L2 26 L10 14 Z" fill="url(#spurGoldGrad)" stroke="#1b1712" stroke-width="0.9"/>
               </svg>
 
               <!-- Bottom-Center Ornate Cabochon Gem & Golden Setting -->
               <div id="renderHoloStamp" class="absolute left-1/2 -bottom-[22px] -translate-x-1/2 w-24 h-11 pointer-events-none z-30 flex items-center justify-center">
-                <svg class="w-full h-full drop-shadow-[0_3px_5px_rgba(0,0,0,0.95)]" viewBox="0 0 96 46">
+                <svg xmlns="http://www.w3.org/2000/svg" width="96" height="46" class="w-full h-full drop-shadow-[0_3px_5px_rgba(0,0,0,0.95)]" viewBox="0 0 96 46">
                   <defs>
+                    <linearGradient id="stampGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fff6e0"/>
+                      <stop offset="35%" stop-color="#e5cf9e"/>
+                      <stop offset="70%" stop-color="#ab8d56"/>
+                      <stop offset="100%" stop-color="#5c4724"/>
+                    </linearGradient>
                     <radialGradient id="cabochonGemGrad" cx="35%" cy="30%" r="65%">
                       <stop id="gemStopLight" offset="0%" stop-color="#e9d5ff"/>
                       <stop id="gemStopCore" offset="45%" stop-color="#6b21a8"/>
@@ -822,10 +904,10 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
                   <!-- Primordial Solar Gem Halo (Shown in Primordial-Rare) -->
                   <g id="primordialGemHalo" class="hidden">
                     <circle cx="48" cy="20" r="20" fill="#fbbf24" opacity="0.28"/>
-                    <path d="M4,18 L24,14 L48,0 L72,14 L92,18 L72,26 L48,46 L24,26 Z" fill="url(#goldFiligreeGrad)" opacity="0.9"/>
+                    <path d="M4,18 L24,14 L48,0 L72,14 L92,18 L72,26 L48,46 L24,26 Z" fill="url(#stampGoldGrad)" opacity="0.9"/>
                   </g>
                   <!-- Golden Winged Bezel Setting -->
-                  <path d="M8,18 C24,18 32,8 48,4 C64,8 72,18 88,18 C74,22 64,28 48,44 C32,28 22,22 8,18 Z" fill="url(#goldFiligreeGrad)" stroke="#1c160e" stroke-width="1.1"/>
+                  <path d="M8,18 C24,18 32,8 48,4 C64,8 72,18 88,18 C74,22 64,28 48,44 C32,28 22,22 8,18 Z" fill="url(#stampGoldGrad)" stroke="#1c160e" stroke-width="1.1"/>
                   <!-- Inner Dark Socket -->
                   <circle cx="48" cy="20" r="11.5" fill="#0f0d14" stroke="#fff3d1" stroke-width="0.8"/>
                   <!-- Glowing Elemental Cabochon Orb -->
@@ -854,7 +936,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           </div>
 
           <!-- LAYER 3: PRIMORDIAL-RARE Radiant 24K Golden Filigree Border Overlay -->
-          <svg id="primordialBorderOverlay" class="hidden absolute inset-0 w-full h-full pointer-events-none z-40" viewBox="0 0 630 880" preserveAspectRatio="none">
+          <svg id="primordialBorderOverlay" xmlns="http://www.w3.org/2000/svg" width="630" height="880" class="hidden absolute inset-0 w-full h-full pointer-events-none z-40" viewBox="0 0 630 880" preserveAspectRatio="none">
             <defs>
               <!-- 24K Luminous Sovereign Gold Gradient -->
               <linearGradient id="primGoldLustre" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1108,7 +1190,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
     // 3. 7 Rarity 8-Pointed Celestial Compass Star SVGs
     function createRarityStarSvg(minorFill, majorFill, coreFill, strokeFill) {
-      return `<svg class="w-4 h-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]" viewBox="0 0 24 24">
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-4 h-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]" viewBox="0 0 24 24">
         <path d="M5.2 5.2 L10.4 9.2 L18.8 5.2 L14.8 10.4 L18.8 18.8 L13.6 14.8 L5.2 18.8 L9.2 13.6 Z" fill="${minorFill}" stroke="${strokeFill}" stroke-width="0.7"/>
         <path d="M12 1.2 L13.9 10.1 L22.8 12 L13.9 13.9 L12 22.8 L10.1 13.9 L1.2 12 L10.1 10.1 Z" fill="${majorFill}" stroke="${strokeFill}" stroke-width="0.8"/>
         <circle cx="12" cy="12" r="2" fill="${coreFill}"/>
@@ -1122,13 +1204,13 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       epic: createRarityStarSvg('#7e22ce', '#d8b4fe', '#fae8ff', '#2e1065'),
       legendary: createRarityStarSvg('#b91c1c', '#fca5a5', '#fef2f2', '#450a0a'),
       mythic: createRarityStarSvg('#c2410c', '#fdba74', '#fff7ed', '#431407'),
-      secret: `<svg class="w-4 h-4 drop-shadow-[0_0_4px_rgba(244,114,182,0.85)]" viewBox="0 0 24 24">
+      secret: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-4 h-4 drop-shadow-[0_0_4px_rgba(244,114,182,0.85)]" viewBox="0 0 24 24">
         <path d="M5.2 5.2 L10.4 9.2 L18.8 5.2 L14.8 10.4 L18.8 18.8 L13.6 14.8 L5.2 18.8 L9.2 13.6 Z" fill="#38bdf8" stroke="#0f172a" stroke-width="0.6"/>
         <path d="M12 1.2 L13.9 10.1 L22.8 12 L13.9 13.9 L12 22.8 L10.1 13.9 L1.2 12 L10.1 10.1 Z" fill="#f472b6" stroke="#fffbeb" stroke-width="0.7"/>
         <polygon points="12,7.5 13.5,10.5 16.5,12 13.5,13.5 12,16.5 10.5,13.5 7.5,12 10.5,10.5" fill="#fde047"/>
         <circle cx="12" cy="12" r="1.8" fill="#ffffff"/>
       </svg>`,
-      primordial: `<svg class="w-[18px] h-[18px] drop-shadow-[0_0_5px_rgba(253,224,71,0.95)]" viewBox="0 0 24 24">
+      primordial: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-[18px] h-[18px] drop-shadow-[0_0_5px_rgba(253,224,71,0.95)]" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9.2" fill="none" stroke="#fde047" stroke-width="0.9" opacity="0.85"/>
         <path d="M4.5 4.5 L10.2 9.2 L19.5 4.5 L14.8 10.2 L19.5 19.5 L13.8 14.8 L4.5 19.5 L9.2 13.8 Z" fill="#f59e0b" stroke="#422006" stroke-width="0.6"/>
         <path d="M12 0.8 L14.1 9.9 L23.2 12 L14.1 14.1 L12 23.2 L9.9 14.1 L0.8 12 L9.9 9.9 Z" fill="#fef08a" stroke="#78350f" stroke-width="0.7"/>
@@ -1165,7 +1247,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
     // 5. Metallic 3D Elemental Emblem Renderer (TYPE_SYMBOL_v2 Vector System)
     function buildMetallicOrb(cls, coreColor, glowColor, innerSvg) {
-      return `<span class="${cls}"><svg class="w-full h-full block" viewBox="0 0 36 36">
+      return `<span class="${cls}"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" class="w-full h-full block" viewBox="0 0 36 36">
         <circle cx="18" cy="18" r="17.4" fill="#121318"/>
         <circle cx="18" cy="18" r="16.3" fill="#cfd5de"/>
         <path d="M6.5 6.5 A16.3 16.3 0 0 1 29.5 6.5 L27.1 8.9 A12.9 12.9 0 0 0 8.9 8.9 Z" fill="#ffffff" opacity="0.8"/>
@@ -1252,7 +1334,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
       // Generic Numeric / Variable Cost Orb (e.g., 1, 2, 3, X)
       const label = code.slice(0, 2) || '0';
-      return `<span class="${cls}"><svg class="w-full h-full block" viewBox="0 0 36 36">
+      return `<span class="${cls}"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" class="w-full h-full block" viewBox="0 0 36 36">
         <circle cx="18" cy="18" r="17.2" fill="#17151c"/>
         <circle cx="18" cy="18" r="15.6" fill="#dfdbd2"/>
         <ellipse cx="15" cy="12" rx="8" ry="5" transform="rotate(-15 15 12)" fill="#ffffff" opacity="0.65"/>
@@ -1298,6 +1380,9 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       setStop('ribbonColorA', theme.ribbonA);
       setStop('ribbonColorB', theme.ribbonB);
       setStop('ribbonColorC', theme.ribbonC);
+      setStop('edgeRibbonStopL1', theme.ribbonA);
+      setStop('edgeRibbonStopL2', theme.ribbonB);
+      setStop('edgeRibbonStopR1', theme.ribbonC);
       setStop('gemStopLight', theme.gem[0]);
       setStop('gemStopCore', theme.gem[1]);
       setStop('gemStopDark', theme.gem[2]);
@@ -1935,59 +2020,23 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
     const DEFAULT_ART_URL = 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80';
     let currentArtImage = null;
 
-    window.loadArtworkSource = function(src) {
-      if (!src) return;
-      const img = new Image();
-      if (/^https?:\/\//i.test(src)) {
-        img.crossOrigin = 'anonymous';
-      }
-      img.onload = function() {
-        currentArtImage = img;
-        updateArtworkTransform();
-      };
-      img.onerror = function() {
-        // Fallback retry without crossOrigin if external host blocks CORS headers
-        if (img.crossOrigin) {
-          const fallbackImg = new Image();
-          fallbackImg.onload = function() {
-            currentArtImage = fallbackImg;
-            updateArtworkTransform();
-          };
-          fallbackImg.src = src;
-        }
-      };
-      img.src = src;
-    };
-
-    window.updateArtworkTransform = function() {
-      const fullArtActive = isFullArtActive();
-      const targetCanvasId = fullArtActive ? 'renderFullArtCanvas' : 'renderCardArtCanvas';
-      const canvas = document.getElementById(targetCanvasId);
+    // Helper to draw auto-cropped image onto any target canvas aspect ratio
+    function drawAutoCroppedCanvas(canvas, img, zoomVal, posX, posY) {
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      const cw = canvas.width;   // 1000 (Standard 5:3) or 945 (Full-Art 63:88)
-      const ch = canvas.height;  // 600  (Standard 5:3) or 1320 (Full-Art 63:88)
+      const cw = canvas.width;
+      const ch = canvas.height;
       const targetAspect = cw / ch;
 
       ctx.clearRect(0, 0, cw, ch);
       ctx.fillStyle = '#0b0a0f';
       ctx.fillRect(0, 0, cw, ch);
 
-      if (!currentArtImage || !currentArtImage.naturalWidth || !currentArtImage.naturalHeight) {
-        return;
-      }
+      const sw = img.naturalWidth || img.width;
+      const sh = img.naturalHeight || img.height;
+      if (!sw || !sh) return;
 
-      const sw = currentArtImage.naturalWidth;
-      const sh = currentArtImage.naturalHeight;
       const srcAspect = sw / sh;
-
-      const infoEl = document.getElementById('artCropInfo');
-      if (infoEl) {
-        const ratioLabel = fullArtActive ? '63:88 풀아트' : '5:3';
-        infoEl.textContent = `원본 ${sw}×${sh} → ${ratioLabel} 자동 크롭됨`;
-      }
-
-      // Compute largest target-aspect cover box inside the source image
       let baseCropW, baseCropH;
       if (srcAspect > targetAspect) {
         baseCropH = sh;
@@ -1996,10 +2045,6 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
         baseCropW = sw;
         baseCropH = sw / targetAspect;
       }
-
-      const zoomVal = Math.max(100, parseFloat(document.getElementById('inputArtZoom')?.value || 100));
-      const posX = Math.min(100, Math.max(0, parseFloat(document.getElementById('inputArtPosX')?.value ?? 50)));
-      const posY = Math.min(100, Math.max(0, parseFloat(document.getElementById('inputArtPosY')?.value ?? 50)));
 
       const scale = zoomVal / 100;
       const cropW = baseCropW / scale;
@@ -2013,9 +2058,107 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(currentArtImage, sx, sy, cropW, cropH, 0, 0, cw, ch);
+      ctx.drawImage(img, sx, sy, cropW, cropH, 0, 0, cw, ch);
+    }
+
+    // Generates a clean, untainted cosmic sanctuary fallback illustration if external CORS fails
+    function createUntaintedFallbackArtwork() {
+      const c = document.createElement('canvas');
+      c.width = 1000;
+      c.height = 1320;
+      const ctx = c.getContext('2d');
+      const bg = ctx.createLinearGradient(0, 0, 0, 1320);
+      bg.addColorStop(0, '#090614');
+      bg.addColorStop(0.45, '#251447');
+      bg.addColorStop(0.8, '#4c1d95');
+      bg.addColorStop(1, '#0b0914');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, 1000, 1320);
+
+      const halo = ctx.createRadialGradient(500, 480, 20, 500, 480, 420);
+      halo.addColorStop(0, 'rgba(254, 240, 138, 0.85)');
+      halo.addColorStop(0.35, 'rgba(192, 132, 252, 0.45)');
+      halo.addColorStop(1, 'rgba(15, 10, 28, 0)');
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, 0, 1000, 1320);
+
+      // Astral Ring
+      ctx.save();
+      ctx.translate(500, 470);
+      ctx.rotate(-0.12);
+      ctx.strokeStyle = 'rgba(253, 230, 138, 0.65)';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 340, 88, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // Gothic Citadel Silhouette
+      ctx.fillStyle = '#120d21';
+      const spires = [
+        [320, 780, 60], [390, 620, 75], [465, 430, 70],
+        [545, 590, 75], [625, 740, 65]
+      ];
+      spires.forEach(([x, topY, w]) => {
+        ctx.beginPath();
+        ctx.moveTo(x, 1150);
+        ctx.lineTo(x, topY + 90);
+        ctx.lineTo(x + w / 2, topY);
+        ctx.lineTo(x + w, topY + 90);
+        ctx.lineTo(x + w, 1150);
+        ctx.closePath();
+        ctx.fill();
+      });
+      return c.toDataURL('image/jpeg', 0.92);
+    }
+
+    window.loadArtworkSource = function(src) {
+      if (!src) return;
+      const img = new Image();
+      if (/^https?:\/\//i.test(src)) {
+        img.crossOrigin = 'anonymous';
+      }
+      img.onload = function() {
+        currentArtImage = img;
+        updateArtworkTransform();
+      };
+      img.onerror = function() {
+        // Never load without CORS to avoid tainting export canvases; use untainted fallback art instead
+        const fallbackImg = new Image();
+        fallbackImg.onload = function() {
+          currentArtImage = fallbackImg;
+          updateArtworkTransform();
+        };
+        fallbackImg.src = createUntaintedFallbackArtwork();
+      };
+      img.src = src;
     };
 
+    window.updateArtworkTransform = function() {
+      const stdCanvas = document.getElementById('renderCardArtCanvas');
+      const fullCanvas = document.getElementById('renderFullArtCanvas');
+
+      if (!currentArtImage) return;
+      const sw = currentArtImage.naturalWidth || currentArtImage.width;
+      const sh = currentArtImage.naturalHeight || currentArtImage.height;
+      if (!sw || !sh) return;
+
+      const zoomVal = Math.max(100, parseFloat(document.getElementById('inputArtZoom')?.value || 100));
+      const posX = Math.min(100, Math.max(0, parseFloat(document.getElementById('inputArtPosX')?.value ?? 50)));
+      const posY = Math.min(100, Math.max(0, parseFloat(document.getElementById('inputArtPosY')?.value ?? 50)));
+
+      // Render onto both 5:3 and 63:88 canvases so switching frame modes is always instant
+      drawAutoCroppedCanvas(stdCanvas, currentArtImage, zoomVal, posX, posY);
+      drawAutoCroppedCanvas(fullCanvas, currentArtImage, zoomVal, posX, posY);
+
+      const infoEl = document.getElementById('artCropInfo');
+      if (infoEl) {
+        const ratioLabel = isFullArtActive() ? '63:88 풀아트' : '5:3';
+        infoEl.textContent = `원본 ${sw}×${sh} → ${ratioLabel} 자동 크롭됨`;
+      }
+    };
+
+    // 9. Reset Artwork Adjustments
     window.resetArtAdjustments = function() {
       const z = document.getElementById('inputArtZoom');
       const x = document.getElementById('inputArtPosX');
@@ -2026,82 +2169,303 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       updateArtworkTransform();
     };
 
-    // 9. Card Export
-    window.downloadCard = function() {
-      const cardEl = document.getElementById('cardPreviewTarget');
-      if (!cardEl || typeof html2canvas !== 'function') return;
+    // 10. Rules Text & Inline Energy Symbol Formatter
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
 
-      const btn = document.getElementById('btnDownload');
-      const origText = btn ? btn.innerHTML : '';
-      if (btn) btn.innerHTML = '<span>생성 중...</span>';
-
-      html2canvas(cardEl, {
-        scale: 3,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null
-      }).then(canvas => {
-        const link = document.createElement('a');
-        const name = (document.getElementById('inputName')?.value || 'card').trim().replace(/\s+/g, '_');
-        link.download = `AETHERIUM_${name}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        if (btn) btn.innerHTML = origText;
-      }).catch(err => {
-        console.error('Export error:', err);
-        if (btn) btn.innerHTML = origText;
-      });
-    };
-
-    // 10. Rules Formatting
-    function formatRulesText(text) {
-      if (!text || typeof text !== 'string') return '';
-      
-      // Split by lines first
-      const lines = text.split('\n');
-      
+    function formatRulesText(rawText) {
+      if (!rawText || typeof rawText !== 'string') return '';
+      const lines = rawText.split(/\r?\n/);
       return lines.map(line => {
-        if (!line.trim()) {
-          return '<p class="min-h-[1.2em] leading-normal">&nbsp;</p>';
-        }
-        
-        // Split line by symbol tokens like {IGNIS}, {AQUA}, {1}, etc.
-        const parts = line.split(/(\{[A-Za-z0-9_-]+\})/g);
-        const renderedLine = parts.map(part => {
-          const match = part.match(/^\{([A-Za-z0-9_-]+)\}$/);
+        if (!line.trim()) return '<div class="h-1"></div>';
+        const parts = line.split(/(\{[A-Za-z0-9_*-]+\})/g);
+        const htmlLine = parts.map(part => {
+          const match = part.match(/^\{([A-Za-z0-9_*-]+)\}$/);
           if (match) {
-            const token = match[1];
-            return renderSingleManaSymbol(token, true);
+            return renderSingleManaSymbol(match[1], true);
           }
-          // Escape regular text safely
-          return part
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+          return escapeHtml(part).replace(/\(([^)]+)\)/g, '<em class="opacity-80 font-normal">($1)</em>');
         }).join('');
-        
-        return `<p class="min-h-[1.25em] leading-relaxed">${renderedLine}</p>`;
+        return `<p class="leading-snug">${htmlLine}</p>`;
       }).join('');
     }
 
-    // 11. Symbol Insertion
-    window.insertSymbol = function(sym) {
+    window.insertSymbol = function(symbol) {
       if (textMode === 'pokemon') {
         if (skillsData.length > 0) {
-          skillsData[skillsData.length - 1].cost = (skillsData[skillsData.length - 1].cost || '') + sym;
+          skillsData[skillsData.length - 1].cost = (skillsData[skillsData.length - 1].cost || '') + symbol;
           renderSkillsEditor();
           updateCard();
         }
-      } else {
-        const ta = document.getElementById('inputText');
-        if (!ta) return;
-        const start = ta.selectionStart || 0;
-        const end = ta.selectionEnd || 0;
-        const val = ta.value;
-        ta.value = val.substring(0, start) + sym + val.substring(end);
-        ta.selectionStart = ta.selectionEnd = start + sym.length;
-        ta.focus();
-        updateCard();
+        return;
+      }
+      const textarea = document.getElementById('inputText');
+      if (!textarea) return;
+      const start = textarea.selectionStart ?? textarea.value.length;
+      const end = textarea.selectionEnd ?? textarea.value.length;
+      textarea.value = textarea.value.slice(0, start) + symbol + textarea.value.slice(end);
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + symbol.length;
+      updateCard();
+    };
+
+    // 11. High-Resolution PNG Card Download (Untainted Native Vector + Canvas Export)
+    function clipRoundedCardCanvas(sourceCanvas, width, height, radiusPx) {
+      const out = document.createElement('canvas');
+      out.width = width;
+      out.height = height;
+      const ctx = out.getContext('2d');
+      ctx.clearRect(0, 0, width, height);
+      ctx.save();
+      const r = Math.min(radiusPx, width / 2, height / 2);
+      ctx.beginPath();
+      ctx.moveTo(r, 0);
+      ctx.arcTo(width, 0, width, height, r);
+      ctx.arcTo(width, height, 0, height, r);
+      ctx.arcTo(0, height, 0, 0, r);
+      ctx.arcTo(0, 0, width, 0, r);
+      ctx.closePath();
+      ctx.clip();
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(sourceCanvas, 0, 0, width, height);
+      ctx.restore();
+      return out;
+    }
+
+    // Rasterize all SVGs inside an offscreen fallback clone so html2canvas renders crisp vectors
+    async function rasterizeSvgsForFallback(rootClone, scaleFactor) {
+      const svgs = Array.from(rootClone.querySelectorAll('svg'));
+      const serializer = new XMLSerializer();
+      for (const svg of svgs) {
+        const cs = window.getComputedStyle(svg);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        const rect = svg.getBoundingClientRect();
+        if (!rect.width || !rect.height) continue;
+
+        try {
+          const cloneSvg = svg.cloneNode(true);
+          cloneSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+          cloneSvg.setAttribute('width', String(Math.ceil(rect.width * scaleFactor)));
+          cloneSvg.setAttribute('height', String(Math.ceil(rect.height * scaleFactor)));
+          if (cs.color) cloneSvg.style.color = cs.color;
+
+          const svgStr = serializer.serializeToString(cloneSvg);
+          const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+          const url = URL.createObjectURL(svgBlob);
+
+          await new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+              const c = document.createElement('canvas');
+              c.width = Math.max(1, Math.round(rect.width * scaleFactor));
+              c.height = Math.max(1, Math.round(rect.height * scaleFactor));
+              c.className = svg.getAttribute('class') || '';
+              c.style.cssText = svg.style.cssText;
+              c.style.width = `${rect.width}px`;
+              c.style.height = `${rect.height}px`;
+              const ctx = c.getContext('2d');
+              ctx.drawImage(img, 0, 0, c.width, c.height);
+              URL.revokeObjectURL(url);
+              if (svg.parentNode) svg.parentNode.replaceChild(c, svg);
+              resolve();
+            };
+            img.onerror = () => {
+              URL.revokeObjectURL(url);
+              resolve();
+            };
+            img.src = url;
+          });
+        } catch (_) {
+          // Keep original SVG if individual serialization skips
+        }
+      }
+    }
+
+    async function renderFallbackHtml2Canvas(target, cardW, cardH, exportScale) {
+      const stage = document.createElement('div');
+      stage.style.cssText = `position:fixed;left:-10000px;top:0;width:${cardW}px;height:${cardH}px;z-index:-1;pointer-events:none;overflow:hidden;`;
+      const clone = target.cloneNode(true);
+      clone.style.width = `${cardW}px`;
+      clone.style.height = `${cardH}px`;
+      clone.style.margin = '0';
+      stage.appendChild(clone);
+      document.body.appendChild(stage);
+
+      try {
+        // Simplify multi-layer ellipse radial gradients & text overflow clipping for html2canvas compatibility
+        clone.querySelectorAll('.truncate').forEach(el => {
+          el.style.overflow = 'visible';
+        });
+        await rasterizeSvgsForFallback(clone, exportScale);
+        return await html2canvas(clone, {
+          scale: exportScale,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: null,
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+          width: cardW,
+          height: cardH
+        });
+      } finally {
+        if (stage.parentNode) stage.parentNode.removeChild(stage);
+      }
+    }
+
+    window.downloadCard = async function() {
+      const target = document.getElementById('cardPreviewTarget');
+      const btn = document.getElementById('btnDownload');
+      if (!target) return;
+
+      const originalHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>고해상도 저장 중...</span>';
+      }
+
+      const artWrapper = document.getElementById('cardArtWrapper');
+      const prevTargetWidth = target.style.width;
+      const prevTargetHeight = target.style.height;
+      const prevArtWidth = artWrapper ? artWrapper.style.width : '';
+      const prevArtHeight = artWrapper ? artWrapper.style.height : '';
+      const proxyImages = [];
+
+      try {
+        // 1. Wait for web fonts (Cinzel, Noto Serif KR) to finish loading
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+
+        // 2. Lock exact integer pixel dimensions so aspect-ratio & subpixel layouts never shift
+        const rect = target.getBoundingClientRect();
+        const cardW = Math.max(320, Math.round(rect.width));
+        const cardH = Math.round((cardW * 88) / 63);
+        const exportScale = Math.max(3, Math.ceil(1230 / cardW));
+
+        target.classList.add('exporting-card');
+        target.style.width = `${cardW}px`;
+        target.style.height = `${cardH}px`;
+
+        if (artWrapper) {
+          const artRect = artWrapper.getBoundingClientRect();
+          if (artRect.width > 0) {
+            artWrapper.style.width = `${Math.round(artRect.width)}px`;
+            artWrapper.style.height = `${Math.round((artRect.width * 3) / 5)}px`;
+          }
+        }
+
+        // 3. Replace active artwork canvases temporarily with pre-decoded high-quality image proxies
+        //    so SVG <foreignObject> & clone renderers never drop or corrupt large canvas bitmaps
+        const canvasesToProxy = [
+          document.getElementById('renderCardArtCanvas'),
+          document.getElementById('renderFullArtCanvas')
+        ];
+        for (const cv of canvasesToProxy) {
+          if (!cv || !cv.parentElement) continue;
+          const parentHidden = cv.parentElement.classList.contains('hidden');
+          const cvOpacity = cv.style.opacity;
+          if (parentHidden || cvOpacity === '0') continue;
+
+          const dataUrl = cv.toDataURL('image/jpeg', 0.98);
+          const proxyImg = new Image();
+          proxyImg.src = dataUrl;
+          proxyImg.className = cv.className;
+          proxyImg.style.cssText = cv.style.cssText;
+          proxyImg.style.width = '100%';
+          proxyImg.style.height = '100%';
+          proxyImg.style.objectFit = 'cover';
+          if (typeof proxyImg.decode === 'function') {
+            await proxyImg.decode().catch(() => {});
+          }
+          cv.style.display = 'none';
+          cv.parentElement.insertBefore(proxyImg, cv);
+          proxyImages.push({ cv, proxyImg });
+        }
+
+        // Force synchronous layout flush
+        void target.offsetHeight;
+
+        // 4. Render via browser-native modern-screenshot (2-pass warmup + 3x crisp pass), with html2canvas fallback
+        let rawCanvas = null;
+        if (window.modernScreenshot && typeof window.modernScreenshot.domToCanvas === 'function') {
+          try {
+            await window.modernScreenshot.domToCanvas(target, {
+              scale: 1,
+              backgroundColor: null
+            });
+            await new Promise(r => requestAnimationFrame(() => setTimeout(r, 40)));
+            rawCanvas = await window.modernScreenshot.domToCanvas(target, {
+              scale: exportScale,
+              backgroundColor: null
+            });
+          } catch (msErr) {
+            console.warn('modern-screenshot fallback triggered:', msErr);
+          }
+        }
+
+        if (!rawCanvas && typeof html2canvas !== 'undefined') {
+          rawCanvas = await renderFallbackHtml2Canvas(target, cardW, cardH, exportScale);
+        }
+
+        if (!rawCanvas) {
+          throw new Error('렌더링 캔버스를 생성할 수 없습니다.');
+        }
+
+        // 5. Clip exact 22px * scale rounded card corners cleanly
+        const outW = cardW * exportScale;
+        const outH = cardH * exportScale;
+        const finalCanvas = clipRoundedCardCanvas(rawCanvas, outW, outH, 22 * exportScale);
+
+        // 6. Export as binary PNG Blob URL (prevents browser 2MB data: URL truncation/corruption)
+        const blob = await new Promise((resolve, reject) => {
+          finalCanvas.toBlob((b) => {
+            if (b) resolve(b);
+            else reject(new Error('PNG Blob 변환 실패'));
+          }, 'image/png');
+        });
+
+        const rawName = (document.getElementById('inputName')?.value || 'aetherium_card')
+          .trim()
+          .replace(/[^a-zA-Z0-9가-힣_-]+/g, '_');
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `${rawName || 'aetherium_card'}.png`;
+        link.href = blobUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
+      } catch (err) {
+        console.error('Download error:', err);
+      } finally {
+        // Restore live canvases and responsive card styles
+        proxyImages.forEach(({ cv, proxyImg }) => {
+          if (proxyImg.parentNode) proxyImg.parentNode.removeChild(proxyImg);
+          cv.style.display = '';
+        });
+        target.classList.remove('exporting-card');
+        target.style.width = prevTargetWidth;
+        target.style.height = prevTargetHeight;
+        if (artWrapper) {
+          artWrapper.style.width = prevArtWidth || '95.5%';
+          artWrapper.style.height = prevArtHeight;
+        }
+
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalHtml;
+          if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+          }
+        }
       }
     };
 
@@ -2334,19 +2698,68 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
         }
       });
 
-      // Sync Rarity Dropdown with Primordial-Rare Frame automatically
-      const raritySelectEl = document.getElementById('selectRarity');
-      if (raritySelectEl) {
-        raritySelectEl.addEventListener('change', (e) => {
+      // Rarity selector sync (auto-switches Primordial frame when Primordial-Rare is chosen)
+      const raritySelect = document.getElementById('selectRarity');
+      if (raritySelect) {
+        raritySelect.addEventListener('change', (e) => {
           if (e.target.value === 'primordial' && frameMode !== 'primordial') {
             setFrameMode('primordial', false);
           } else if (e.target.value !== 'primordial' && frameMode === 'primordial') {
-            setFrameMode(primordialArtMode === 'fullart' ? 'fullart' : 'standard', false);
+            setFrameMode('standard', false);
           } else {
             updateCard();
           }
         });
       }
+
+      // Artwork file upload & drag-drop binding
+      const handleUploadedImageFile = (file) => {
+        if (!file || !file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const dataUrl = ev.target?.result;
+          if (dataUrl) {
+            const z = document.getElementById('inputArtZoom');
+            const x = document.getElementById('inputArtPosX');
+            const y = document.getElementById('inputArtPosY');
+            if (z) z.value = 100;
+            if (x) x.value = 50;
+            if (y) y.value = 50;
+            loadArtworkSource(dataUrl);
+          }
+        };
+        reader.readAsDataURL(file);
+      };
+
+      const artFileInput = document.getElementById('inputArtFile');
+      if (artFileInput) {
+        artFileInput.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (file) handleUploadedImageFile(file);
+        });
+      }
+
+      // Allow dropping an image file directly onto the card preview
+      const previewCardEl = document.getElementById('cardPreviewTarget');
+      if (previewCardEl) {
+        previewCardEl.addEventListener('dragover', (e) => {
+          e.preventDefault();
+        });
+        previewCardEl.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const file = e.dataTransfer?.files?.[0];
+          if (file) handleUploadedImageFile(file);
+        });
+      }
+
+      // Artwork Zoom & X/Y Crop Sliders binding
+      ['inputArtZoom', 'inputArtPosX', 'inputArtPosY'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', updateArtworkTransform);
+          el.addEventListener('change', updateArtworkTransform);
+        }
+      });
 
       // Direct drag-to-pan on the 5:3 illustration frame
       const artContainer = document.getElementById('cardArtContainer');
