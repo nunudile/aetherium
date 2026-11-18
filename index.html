@@ -186,6 +186,77 @@
         inset 0 -1.5px 2px rgba(0, 0, 0, 0.35),
         inset 0 0 0 1.5px #232029;
     }
+
+    /* Crisp text readability shadow for Full-Art Dark Glass & Floating SAR modes */
+    .fullart-crisp-shadow {
+      text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.96), 0 0 8px rgba(0, 0, 0, 0.75);
+    }
+
+    /* Primordial-Rare Radiant Golden Frame Styles & Animations */
+    .primordial-outer-glow {
+      box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.95),
+        0 0 28px rgba(251, 191, 36, 0.42),
+        inset 0 0 18px rgba(253, 224, 71, 0.35) !important;
+      border-color: #fde68a !important;
+    }
+
+    .primordial-gilded-header {
+      background-color: #efe7d4;
+      background-image:
+        radial-gradient(ellipse at 20% 25%, rgba(255, 253, 240, 0.9) 0%, transparent 55%),
+        radial-gradient(ellipse at 82% 75%, rgba(217, 179, 102, 0.35) 0%, transparent 50%),
+        linear-gradient(180deg, #fbf6e8 0%, #eadec3 52%, #d8c59e 100%);
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.85),
+        0 0 12px rgba(251, 191, 36, 0.35),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.92),
+        inset 0 -1.5px 3px rgba(120, 86, 24, 0.35),
+        inset 0 0 0 1.2px #422c08;
+    }
+
+    .primordial-gilded-box {
+      background-color: #f1ead9;
+      background-image:
+        radial-gradient(circle at 18% 22%, rgba(255, 253, 242, 0.85) 0%, transparent 45%),
+        radial-gradient(circle at 82% 28%, rgba(218, 184, 114, 0.28) 0%, transparent 48%),
+        radial-gradient(circle at 50% 85%, rgba(251, 191, 36, 0.14) 0%, transparent 55%),
+        linear-gradient(165deg, #faf5e8 0%, #ede3cc 50%, #dfd0b0 100%);
+      box-shadow:
+        inset 0 2px 6px rgba(92, 64, 14, 0.22),
+        inset 0 0 0 1.2px #452e09,
+        0 0 14px rgba(251, 191, 36, 0.28),
+        0 4px 12px rgba(0, 0, 0, 0.85);
+    }
+
+    .primordial-pt-plaque {
+      background: linear-gradient(180deg, #fffbeb 0%, #f3dfb1 55%, #d4af61 100%);
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.9),
+        0 0 12px rgba(253, 224, 71, 0.5),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.95),
+        inset 0 0 0 1.2px #422c08;
+    }
+
+    @keyframes primordialAuraPulse {
+      0%, 100% { opacity: 0.78; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes primordialTwinkle {
+      0%, 100% { opacity: 0.45; transform: scale(0.92); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+
+    .primordial-pulse {
+      animation: primordialAuraPulse 3.6s ease-in-out infinite;
+    }
+
+    .primordial-twinkle {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: primordialTwinkle 2.8s ease-in-out infinite;
+    }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
@@ -218,6 +289,118 @@
 
     <!-- Left Column: Form Controls (7 cols on lg) -->
     <div class="lg:col-span-7 space-y-5 order-2 lg:order-1">
+
+      <!-- 0. Card Frame Layout Selector (Standard 5:3 / Full-Art 63:88 / Primordial-Rare) -->
+      <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+            <i data-lucide="maximize-2" class="w-4 h-4 text-amber-400"></i>
+            카드 프레임 양식 (FRAME &amp; SPECIAL TIER)
+          </h2>
+          <div class="grid grid-cols-3 gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs">
+            <button type="button" id="btnFrameStandard" onclick="setFrameMode('standard')" class="px-2.5 py-1.5 rounded-lg font-bold transition-all bg-amber-500 text-zinc-950 shadow-sm flex items-center justify-center gap-1">
+              <i data-lucide="layout-template" class="w-3.5 h-3.5 shrink-0"></i>
+              <span class="truncate">기본 (5:3)</span>
+            </button>
+            <button type="button" id="btnFrameFullArt" onclick="setFrameMode('fullart')" class="px-2.5 py-1.5 rounded-lg font-semibold text-zinc-400 hover:text-zinc-200 transition-all flex items-center justify-center gap-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 shrink-0"></i>
+              <span class="truncate">풀아트</span>
+            </button>
+            <button type="button" id="btnFramePrimordial" onclick="setFrameMode('primordial')" class="px-2.5 py-1.5 rounded-lg font-semibold text-amber-300/90 hover:text-amber-200 transition-all flex items-center justify-center gap-1">
+              <i data-lucide="crown" class="w-3.5 h-3.5 shrink-0"></i>
+              <span class="truncate">Primordial 틀</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Primordial-Rare Exclusive Sub-Options -->
+        <div id="primordialOptionsPanel" class="hidden pt-3 border-t border-amber-500/25 space-y-3">
+          <div class="flex items-center justify-between bg-amber-950/25 border border-amber-500/30 rounded-xl px-3 py-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-300 animate-ping"></span>
+              <span class="text-xs font-bold text-amber-300">PRIMORDIAL-RARE 태초 황금 성좌 틀 활성화됨</span>
+            </div>
+            <span class="text-[10px] text-amber-200/75">24K 광휘 필리그리</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] text-zinc-400 mb-1.5">프리모디얼 일러스트 규격</label>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button type="button" id="btnPrimArtStandard" onclick="setPrimordialArtMode('standard')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-amber-400 text-amber-300 transition">
+                  5:3 성전 프레임
+                </button>
+                <button type="button" id="btnPrimArtFull" onclick="setPrimordialArtMode('fullart')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition">
+                  63:88 풀아트
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-[11px] text-zinc-400">테두리 금빛 광채 강도</label>
+                <span id="labelPrimordialGlow" class="text-[11px] font-mono text-amber-300">90%</span>
+              </div>
+              <input type="range" id="inputPrimordialGlow" min="35" max="100" value="90" class="w-full accent-amber-400 mt-1">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1.5">프리모디얼 텍스트 박스 스타일</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" data-primstyle="gilded-marble" onclick="setPrimordialBoxStyle('gilded-marble')" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-amber-400 text-amber-300 transition flex flex-col items-center gap-0.5">
+                <span>황금 성전 마블</span>
+                <span class="text-[10px] font-normal text-zinc-400">금빛 아이보리</span>
+              </button>
+              <button type="button" data-primstyle="dark-gold" onclick="setPrimordialBoxStyle('dark-gold')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>로열 옵시디언</span>
+                <span class="text-[10px] font-normal text-zinc-500">다크 골드 글래스</span>
+              </button>
+              <button type="button" data-primstyle="floating" onclick="setPrimordialBoxStyle('floating')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>태초 플로팅</span>
+                <span class="text-[10px] font-normal text-zinc-500">테두리 없는 뷰</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Full-Art Exclusive Sub-Options -->
+        <div id="fullArtOptionsPanel" class="hidden pt-3 border-t border-zinc-800/90 space-y-3">
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1.5">풀아트 텍스트 영역 스타일</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" data-fastyle="dark-glass" onclick="setFullArtStyle('dark-glass')" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-amber-500/80 text-amber-300 transition flex flex-col items-center gap-0.5">
+                <span>다크 글래스</span>
+                <span class="text-[10px] font-normal text-zinc-400">반투명 골드 테두리</span>
+              </button>
+              <button type="button" data-fastyle="floating" onclick="setFullArtStyle('floating')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>플로팅 SAR</span>
+                <span class="text-[10px] font-normal text-zinc-500">테두리 없는 풀뷰</span>
+              </button>
+              <button type="button" data-fastyle="light-glass" onclick="setFullArtStyle('light-glass')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>라이트 마블</span>
+                <span class="text-[10px] font-normal text-zinc-500">반투명 대리석</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center pt-1">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-[11px] text-zinc-400">텍스트 영역 배경 농도</label>
+                <span id="labelBoxOpacity" class="text-[11px] font-mono text-amber-400">65%</span>
+              </div>
+              <input type="range" id="inputBoxOpacity" min="15" max="92" value="65" class="w-full accent-amber-500">
+            </div>
+            <div class="flex items-center sm:justify-end pt-1 sm:pt-3">
+              <label class="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer select-none">
+                <input type="checkbox" id="toggleCosmicRibbons" checked class="w-4 h-4 rounded text-amber-500 bg-zinc-950 border-zinc-700 focus:ring-0">
+                <span>외곽 에테르 성운 리본 표시</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- 1. Attribute / Theme Selector -->
       <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg">
@@ -280,7 +463,7 @@
             <input type="text" id="inputTypeLine" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500" value="Legendary Creature — Elemental Beast">
           </div>
           <div class="sm:col-span-4">
-            <label class="block text-xs text-zinc-400 mb-1">카드 등급 (7 RARITIES)</label>
+            <label class="block text-xs text-zinc-400 mb-1">카드 등급 (8 RARITIES)</label>
             <select id="selectRarity" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500">
               <option value="common">Common (커먼)</option>
               <option value="uncommon">Uncommon (언커먼)</option>
@@ -289,6 +472,7 @@
               <option value="legendary">Legendary (전설)</option>
               <option value="mythic" selected>Mythic (미식)</option>
               <option value="secret">Secret Rare (시크릿 레어)</option>
+              <option value="primordial">Primordial-Rare (태초)</option>
             </select>
           </div>
         </div>
@@ -313,35 +497,39 @@
         </div>
       </div>
 
-      <!-- 3. Artwork Controls (5:3 Ratio) -->
+      <!-- 3. Artwork Controls (5:3 / Full-Art Auto-Crop) -->
       <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
         <div class="flex items-center justify-between">
           <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-            <i data-lucide="image" class="w-4 h-4 text-amber-400"></i>
-            일러스트레이션 설정 (5:3 와이드 비율)
+            <i data-lucide="crop" class="w-4 h-4 text-amber-400"></i>
+            <span id="artSectionTitle">일러스트레이션 설정 (5:3 자동 재단)</span>
           </h2>
-          <button type="button" onclick="resetArtAdjustments()" class="text-xs text-zinc-400 hover:text-zinc-200">초기화</button>
+          <div class="flex items-center gap-3">
+            <span id="artCropInfo" class="text-[11px] text-emerald-400/90 font-medium">5:3 자동 크롭 활성</span>
+            <button type="button" onclick="resetArtAdjustments()" class="text-xs text-zinc-400 hover:text-zinc-200">초기화</button>
+          </div>
         </div>
         
         <div>
-          <label class="block text-xs text-zinc-400 mb-1">이미지 파일 불러오기</label>
+          <label id="artUploadLabel" class="block text-xs text-zinc-400 mb-1">이미지 파일 불러오기 (업로드 시 5:3 규격으로 자동 재단됩니다)</label>
           <input type="file" id="inputArtFile" accept="image/*" class="w-full text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-amber-400 hover:file:bg-zinc-700 cursor-pointer">
         </div>
 
         <div class="grid grid-cols-3 gap-3">
           <div>
             <label class="block text-[11px] text-zinc-400 mb-1">확대/축소 (Zoom)</label>
-            <input type="range" id="inputArtZoom" min="80" max="250" value="100" class="w-full accent-amber-500">
+            <input type="range" id="inputArtZoom" min="100" max="250" value="100" class="w-full accent-amber-500">
           </div>
           <div>
-            <label class="block text-[11px] text-zinc-400 mb-1">가로 위치 (X Offset)</label>
+            <label class="block text-[11px] text-zinc-400 mb-1">가로 재단 위치 (X)</label>
             <input type="range" id="inputArtPosX" min="0" max="100" value="50" class="w-full accent-amber-500">
           </div>
           <div>
-            <label class="block text-[11px] text-zinc-400 mb-1">세로 위치 (Y Offset)</label>
+            <label class="block text-[11px] text-zinc-400 mb-1">세로 재단 위치 (Y)</label>
             <input type="range" id="inputArtPosY" min="0" max="100" value="50" class="w-full accent-amber-500">
           </div>
         </div>
+        <p class="text-[11px] text-zinc-500">팁: 카드 미리보기의 일러스트 영역을 마우스나 터치로 직접 드래그하여 재단 위치를 조절할 수도 있습니다.</p>
       </div>
 
       <!-- 4. Rules & Skills Builder (Tabs: Pokemon vs Classic) -->
@@ -435,8 +623,15 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
         <!-- CARD PREVIEW CONTAINER (AETHERIUM Astral Filigree Form - 63:88) -->
         <div id="cardPreviewTarget" class="w-full aspect-[63/88] rounded-[22px] bg-[#040407] relative select-none box-border flex flex-col overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.95)] border border-[#24202c]">
 
+          <!-- FULL-ART LAYER (63:88 Edge-to-Edge Auto-Cropped Artwork Canvas) -->
+          <div id="fullArtContainer" class="absolute inset-0 w-full h-full overflow-hidden z-0 hidden">
+            <canvas id="renderFullArtCanvas" width="945" height="1320" class="w-full h-full block select-none pointer-events-none"></canvas>
+            <!-- Subtle Bottom Readability Scrim for Full-Art -->
+            <div id="fullArtBottomScrim" class="absolute inset-0 pointer-events-none"></div>
+          </div>
+
           <!-- LAYER 0: Cosmic Space, Swirling Ethereal Ribbons, Shards & Bottom Filigree Web -->
-          <svg id="cosmicBgSvg" class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 630 880" preserveAspectRatio="none">
+          <svg id="cosmicBgSvg" class="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 630 880" preserveAspectRatio="none">
             <defs>
               <radialGradient id="nebulaTop" cx="50%" cy="8%" r="55%">
                 <stop id="nebulaStop1" offset="0%" stop-color="#7c3aed" stop-opacity="0.38"/>
@@ -466,42 +661,46 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               </linearGradient>
             </defs>
 
-            <!-- Deep Cosmic Base -->
-            <rect width="630" height="880" fill="#040407"/>
-            <rect width="630" height="880" fill="url(#nebulaTop)"/>
-            <rect width="630" height="880" fill="url(#nebulaBottom)"/>
+            <!-- Deep Cosmic Base (Hidden in Full-Art Mode) -->
+            <rect id="cosmicBaseRect" width="630" height="880" fill="#040407"/>
 
-            <!-- Distant Starfield Specks -->
-            <g fill="#ffffff" opacity="0.55">
-              <circle cx="48" cy="22" r="1.1"/><circle cx="122" cy="14" r="0.8"/><circle cx="265" cy="18" r="1.2"/>
-              <circle cx="385" cy="12" r="1"/><circle cx="515" cy="20" r="1.3"/><circle cx="585" cy="34" r="0.9"/>
-              <circle cx="16" cy="145" r="1.1"/><circle cx="24" cy="390" r="0.9"/><circle cx="14" cy="520" r="1.2"/>
-              <circle cx="614" cy="175" r="1"/><circle cx="608" cy="410" r="1.2"/><circle cx="616" cy="590" r="0.9"/>
-              <circle cx="95" cy="856" r="1.1"/><circle cx="215" cy="865" r="0.8"/><circle cx="430" cy="862" r="1.1"/><circle cx="545" cy="852" r="0.9"/>
+            <!-- Cosmic Nebulae, Ribbons & Filigree Decor Group -->
+            <g id="cosmicDecorGroup">
+              <rect width="630" height="880" fill="url(#nebulaTop)"/>
+              <rect width="630" height="880" fill="url(#nebulaBottom)"/>
+
+              <!-- Distant Starfield Specks -->
+              <g fill="#ffffff" opacity="0.55">
+                <circle cx="48" cy="22" r="1.1"/><circle cx="122" cy="14" r="0.8"/><circle cx="265" cy="18" r="1.2"/>
+                <circle cx="385" cy="12" r="1"/><circle cx="515" cy="20" r="1.3"/><circle cx="585" cy="34" r="0.9"/>
+                <circle cx="16" cy="145" r="1.1"/><circle cx="24" cy="390" r="0.9"/><circle cx="14" cy="520" r="1.2"/>
+                <circle cx="614" cy="175" r="1"/><circle cx="608" cy="410" r="1.2"/><circle cx="616" cy="590" r="0.9"/>
+                <circle cx="95" cy="856" r="1.1"/><circle cx="215" cy="865" r="0.8"/><circle cx="430" cy="862" r="1.1"/><circle cx="545" cy="852" r="0.9"/>
+              </g>
+
+              <!-- Top Swirling Astral Silk Ribbons -->
+              <path d="M-10,95 C35,10 155,-8 275,28 C185,8 75,24 18,115 Z" fill="url(#ribbonGradA)"/>
+              <path d="M640,95 C595,12 475,-8 355,28 C445,8 555,24 612,115 Z" fill="url(#ribbonGradB)"/>
+              <path d="M25,42 C110,-6 230,6 315,24 C400,6 520,-6 605,42" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.3" opacity="0.65"/>
+
+              <!-- Left & Right Flowing Nebula Ribbons -->
+              <path d="M6,160 C-8,260 36,330 22,445 C10,520 -4,610 34,710 C12,615 24,525 34,440 C44,330 8,255 24,165 Z" fill="url(#ribbonGradA)" opacity="0.85"/>
+              <path d="M624,150 C638,255 594,335 608,450 C620,530 634,615 596,715 C618,620 606,530 596,445 C586,335 622,250 606,155 Z" fill="url(#ribbonGradB)" opacity="0.85"/>
+
+              <!-- Floating Crystal Shards on Lower Outer Borders -->
+              <polygon points="14,555 32,572 24,602 8,582" fill="url(#ribbonGradA)" stroke="#e5cf9e" stroke-width="0.7" opacity="0.75"/>
+              <polygon points="616,548 598,568 606,598 622,578" fill="url(#ribbonGradB)" stroke="#e5cf9e" stroke-width="0.7" opacity="0.75"/>
+              <polygon points="10,705 28,688 36,725 14,742" fill="url(#ribbonGradB)" stroke="#cbd5e1" stroke-width="0.6" opacity="0.65"/>
+              <polygon points="620,700 602,685 594,722 616,738" fill="url(#ribbonGradA)" stroke="#cbd5e1" stroke-width="0.6" opacity="0.65"/>
+
+              <!-- Bottom Swirling Ribbons & Golden Gothic Web Filigree -->
+              <path d="M12,785 C65,868 185,882 315,848 C195,868 85,848 28,772 Z" fill="url(#ribbonGradA)"/>
+              <path d="M618,785 C565,868 445,882 315,848 C435,868 545,848 602,772 Z" fill="url(#ribbonGradB)"/>
+              <!-- Intricate Golden Tendrils Flanking Bottom Gem -->
+              <path d="M38,816 C115,802 195,820 278,828 C215,846 125,858 55,832" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.6" opacity="0.85"/>
+              <path d="M592,816 C515,802 435,820 352,828 C415,846 505,858 575,832" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.6" opacity="0.85"/>
+              <path d="M95,842 C155,815 225,815 285,836 M535,842 C475,815 405,815 345,836" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.1" opacity="0.7"/>
             </g>
-
-            <!-- Top Swirling Astral Silk Ribbons -->
-            <path d="M-10,95 C35,10 155,-8 275,28 C185,8 75,24 18,115 Z" fill="url(#ribbonGradA)"/>
-            <path d="M640,95 C595,12 475,-8 355,28 C445,8 555,24 612,115 Z" fill="url(#ribbonGradB)"/>
-            <path d="M25,42 C110,-6 230,6 315,24 C400,6 520,-6 605,42" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.3" opacity="0.65"/>
-
-            <!-- Left & Right Flowing Nebula Ribbons -->
-            <path d="M6,160 C-8,260 36,330 22,445 C10,520 -4,610 34,710 C12,615 24,525 34,440 C44,330 8,255 24,165 Z" fill="url(#ribbonGradA)" opacity="0.85"/>
-            <path d="M624,150 C638,255 594,335 608,450 C620,530 634,615 596,715 C618,620 606,530 596,445 C586,335 622,250 606,155 Z" fill="url(#ribbonGradB)" opacity="0.85"/>
-
-            <!-- Floating Crystal Shards on Lower Outer Borders -->
-            <polygon points="14,555 32,572 24,602 8,582" fill="url(#ribbonGradA)" stroke="#e5cf9e" stroke-width="0.7" opacity="0.75"/>
-            <polygon points="616,548 598,568 606,598 622,578" fill="url(#ribbonGradB)" stroke="#e5cf9e" stroke-width="0.7" opacity="0.75"/>
-            <polygon points="10,705 28,688 36,725 14,742" fill="url(#ribbonGradB)" stroke="#cbd5e1" stroke-width="0.6" opacity="0.65"/>
-            <polygon points="620,700 602,685 594,722 616,738" fill="url(#ribbonGradA)" stroke="#cbd5e1" stroke-width="0.6" opacity="0.65"/>
-
-            <!-- Bottom Swirling Ribbons & Golden Gothic Web Filigree -->
-            <path d="M12,785 C65,868 185,882 315,848 C195,868 85,848 28,772 Z" fill="url(#ribbonGradA)"/>
-            <path d="M618,785 C565,868 445,882 315,848 C435,868 545,848 602,772 Z" fill="url(#ribbonGradB)"/>
-            <!-- Intricate Golden Tendrils Flanking Bottom Gem -->
-            <path d="M38,816 C115,802 195,820 278,828 C215,846 125,858 55,832" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.6" opacity="0.85"/>
-            <path d="M592,816 C515,802 435,820 352,828 C415,846 505,858 575,832" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.6" opacity="0.85"/>
-            <path d="M95,842 C155,815 225,815 285,836 M535,842 C475,815 405,815 345,836" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.1" opacity="0.7"/>
           </svg>
 
           <!-- LAYER 1: Inner Structural Card Stack -->
@@ -533,23 +732,23 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
             </div>
 
             <!-- 2. Card Illustration Frame (Exact 5:3 Ratio + Flanking Celestial Edge Stars) -->
-            <div id="cardArtWrapper" class="mx-auto relative z-20 shrink-0 -mt-[2px] border-x-[2.5px] border-[#d8c193] shadow-[0_0_0_1.5px_#121017]" style="width: 95.5%; aspect-ratio: 5 / 3;">
-              <!-- Clipped Image Box -->
-              <div id="cardArtContainer" class="w-full h-full relative overflow-hidden flex items-center justify-center bg-[#0b0a0f]">
-                <img id="renderCardArt" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80" alt="Card Art" class="min-w-full min-h-full object-cover select-none pointer-events-none transition-transform duration-75">
+            <div id="cardArtWrapper" class="mx-auto relative z-20 shrink-0 min-h-0 -mt-[2px] border-x-[2.5px] border-[#d8c193] shadow-[0_0_0_1.5px_#121017]" style="width: 95.5%; aspect-ratio: 5 / 3;">
+              <!-- Clipped Auto-Cropped 5:3 Canvas Box -->
+              <div id="cardArtContainer" title="드래그하여 크롭 영역 이동" class="absolute inset-0 w-full h-full overflow-hidden bg-[#0b0a0f] cursor-grab active:cursor-grabbing">
+                <canvas id="renderCardArtCanvas" width="1000" height="600" class="w-full h-full block select-none pointer-events-none"></canvas>
                 <!-- Subtle Inner Vignette -->
-                <div class="absolute inset-0 shadow-[inset_0_0_12px_rgba(0,0,0,0.65)] pointer-events-none"></div>
+                <div id="artInnerVignette" class="absolute inset-0 shadow-[inset_0_0_12px_rgba(0,0,0,0.65)] pointer-events-none"></div>
               </div>
 
               <!-- Mid-Left Astral Star & Overlapping Silk Ribbon -->
-              <svg class="absolute -left-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
+              <svg id="artEdgeStarLeft" class="absolute -left-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
                 <path d="M22,4 C8,26 12,42 38,62" fill="none" stroke="url(#ribbonGradA)" stroke-width="2.2" opacity="0.85"/>
                 <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="1"/>
                 <circle cx="22" cy="48" r="2.2" fill="#ffffff"/>
               </svg>
 
               <!-- Mid-Right Astral Star & Overlapping Silk Ribbon -->
-              <svg class="absolute -right-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
+              <svg id="artEdgeStarRight" class="absolute -right-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
                 <path d="M22,4 C36,26 32,42 6,62" fill="none" stroke="url(#ribbonGradB)" stroke-width="2.2" opacity="0.85"/>
                 <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="1"/>
                 <circle cx="22" cy="48" r="2.2" fill="#ffffff"/>
@@ -575,15 +774,14 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
               <!-- Clipped Marble Veins & Center Celestial Halo Star Watermark -->
               <div class="absolute inset-0 overflow-hidden rounded-b-[8px] pointer-events-none z-0 flex items-center justify-center">
-                <svg class="w-[74%] h-[74%] opacity-[0.095]" viewBox="0 0 200 200">
+                <svg id="textBoxWatermark" class="w-[74%] h-[74%] opacity-[0.095]" viewBox="0 0 200 200">
                   <!-- Orbital Ring -->
-                  <ellipse cx="100" cy="108" rx="88" ry="26" transform="rotate(-8 100 108)" fill="none" stroke="#1e1b26" stroke-width="5"/>
-                  <ellipse cx="100" cy="108" rx="68" ry="18" transform="rotate(-8 100 108)" fill="none" stroke="#1e1b26" stroke-width="2"/>
+                  <ellipse cx="100" cy="108" rx="88" ry="26" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="5"/>
+                  <ellipse cx="100" cy="108" rx="68" ry="18" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="2"/>
                   <!-- Gothic Crescent Arcs -->
-                  <circle cx="100" cy="102" r="42" fill="none" stroke="#1e1b26" stroke-width="3.5" stroke-dasharray="180 40"/>
+                  <circle cx="100" cy="102" r="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-dasharray="180 40"/>
                   <!-- Tall 4-Pointed Celestial Crest -->
-                  <path d="M100 10 L112 86 L178 102 L112 118 L100 190 L88 118 L22 102 L88 86 Z" fill="#1e1b26"/>
-                  <path d="M100 45 L105 95 L145 102 L105 109 L100 155 L95 109 L55 102 L95 95 Z" fill="#e3dfd7"/>
+                  <path d="M100 10 L112 86 L178 102 L112 118 L100 190 L88 118 L22 102 L88 86 Z" fill="currentColor" fill-opacity="0.85"/>
                 </svg>
               </div>
 
@@ -595,11 +793,11 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               <!-- Flavor Text with Signature Star-Centered Divider Line -->
               <div id="renderFlavorContainer" class="relative z-10 mt-auto pt-1.5">
                 <div class="flex items-center w-full mb-1">
-                  <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
-                  <svg class="w-2.5 h-2.5 mx-1 shrink-0 text-[#2c2836]" viewBox="0 0 16 16">
+                  <div id="flavorDividerLineL" class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
+                  <svg id="flavorDividerStar" class="w-2.5 h-2.5 mx-1 shrink-0 text-[#2c2836]" viewBox="0 0 16 16">
                     <path d="M8 0 L10.2 5.8 L16 8 L10.2 10.2 L8 16 L5.8 10.2 L0 8 L5.8 5.8 Z" fill="currentColor"/>
                   </svg>
-                  <div class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
+                  <div id="flavorDividerLineR" class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
                 </div>
                 <div id="renderFlavorText" class="font-card-flavor text-[10px] sm:text-[10.5px] text-[#2d2938] pr-12 select-text">
                   “From the ashes, it rises again.”
@@ -607,7 +805,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               </div>
 
               <!-- Bottom-Left Golden Corner Filigree Spur -->
-              <svg class="absolute -left-[12px] -bottom-[11px] w-7 h-7 pointer-events-none z-30" viewBox="0 0 28 28">
+              <svg id="textBoxCornerSpur" class="absolute -left-[12px] -bottom-[11px] w-7 h-7 pointer-events-none z-30" viewBox="0 0 28 28">
                 <path d="M14 2 L16 14 L26 16 L12 20 L2 26 L10 14 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="0.9"/>
               </svg>
 
@@ -621,6 +819,11 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
                       <stop id="gemStopDark" offset="100%" stop-color="#1e0536"/>
                     </radialGradient>
                   </defs>
+                  <!-- Primordial Solar Gem Halo (Shown in Primordial-Rare) -->
+                  <g id="primordialGemHalo" class="hidden">
+                    <circle cx="48" cy="20" r="20" fill="#fbbf24" opacity="0.28"/>
+                    <path d="M4,18 L24,14 L48,0 L72,14 L92,18 L72,26 L48,46 L24,26 Z" fill="url(#goldFiligreeGrad)" opacity="0.9"/>
+                  </g>
                   <!-- Golden Winged Bezel Setting -->
                   <path d="M8,18 C24,18 32,8 48,4 C64,8 72,18 88,18 C74,22 64,28 48,44 C32,28 22,22 8,18 Z" fill="url(#goldFiligreeGrad)" stroke="#1c160e" stroke-width="1.1"/>
                   <!-- Inner Dark Socket -->
@@ -650,6 +853,157 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
             <div id="renderCopyright" class="text-zinc-300/80 max-w-[40%] truncate text-right">™ &amp; © 2026 AETHERIUM</div>
           </div>
 
+          <!-- LAYER 3: PRIMORDIAL-RARE Radiant 24K Golden Filigree Border Overlay -->
+          <svg id="primordialBorderOverlay" class="hidden absolute inset-0 w-full h-full pointer-events-none z-40" viewBox="0 0 630 880" preserveAspectRatio="none">
+            <defs>
+              <!-- 24K Luminous Sovereign Gold Gradient -->
+              <linearGradient id="primGoldLustre" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fffef5"/>
+                <stop offset="18%" stop-color="#fde68a"/>
+                <stop offset="42%" stop-color="#f59e0b"/>
+                <stop offset="62%" stop-color="#fffbeb"/>
+                <stop offset="82%" stop-color="#d97706"/>
+                <stop offset="100%" stop-color="#78350f"/>
+              </linearGradient>
+              <linearGradient id="primGoldVertical" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" stop-color="#fffbeb"/>
+                <stop offset="25%" stop-color="#fcd34d"/>
+                <stop offset="50%" stop-color="#d97706"/>
+                <stop offset="75%" stop-color="#fde68a"/>
+                <stop offset="100%" stop-color="#92400e"/>
+              </linearGradient>
+              <!-- Radiant Golden Bloom Halos (100% html2canvas safe) -->
+              <radialGradient id="primStarBloom" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                <stop offset="28%" stop-color="#fde047" stop-opacity="0.75"/>
+                <stop offset="65%" stop-color="#f59e0b" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="primEdgeGlowTop" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.52"/>
+                <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="primEdgeGlowBot" x1="50%" y1="100%" x2="50%" y2="0%">
+                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="primEdgeGlowLeft" x1="0%" y1="50%" x2="100%" y2="50%">
+                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="primEdgeGlowRight" x1="100%" y1="50%" x2="0%" y2="50%">
+                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Soft Golden Edge Luminescence Wash -->
+            <g id="primordialGlowWash" class="primordial-pulse">
+              <rect x="0" y="0" width="630" height="36" fill="url(#primEdgeGlowTop)"/>
+              <rect x="0" y="840" width="630" height="40" fill="url(#primEdgeGlowBot)"/>
+              <rect x="0" y="0" width="32" height="880" fill="url(#primEdgeGlowLeft)"/>
+              <rect x="598" y="0" width="32" height="880" fill="url(#primEdgeGlowRight)"/>
+              <!-- Soft Luminous Halo Stroke Behind Perimeter Rail -->
+              <rect x="8.5" y="8.5" width="613" height="863" rx="18" fill="none" stroke="#fde047" stroke-width="7" stroke-opacity="0.28"/>
+            </g>
+
+            <!-- Outer & Inner 24K Double Filigree Frame Rails -->
+            <rect x="7.5" y="7.5" width="615" height="865" rx="18.5" fill="none" stroke="url(#primGoldLustre)" stroke-width="3"/>
+            <rect x="13.5" y="13.5" width="603" height="853" rx="14.5" fill="none" stroke="url(#primGoldVertical)" stroke-width="1.3" stroke-dasharray="14 4 3 4"/>
+
+            <!-- TOP-LEFT Grand Winged Celestial Corner Ornament -->
+            <g>
+              <circle cx="24" cy="24" r="24" fill="url(#primStarBloom)"/>
+              <path d="M7,68 C7,26 26,7 74,7 C52,14 38,20 26,32 C18,40 13,52 7,68 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.9"/>
+              <path d="M13,98 C10,58 18,34 40,20 C26,38 20,62 18,98 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <path d="M108,13 C66,10 38,16 22,36 C38,24 68,18 108,17 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <!-- Corner Radiant 4-Pointed Star Jewel -->
+              <path d="M24,4 L27.5,20.5 L44,24 L27.5,27.5 L24,44 L20.5,27.5 L4,24 L20.5,20.5 Z" fill="#fffbeb" stroke="#92400e" stroke-width="0.8"/>
+              <circle cx="24" cy="24" r="3.2" fill="#ffffff"/>
+            </g>
+
+            <!-- TOP-RIGHT Grand Winged Celestial Corner Ornament -->
+            <g>
+              <circle cx="606" cy="24" r="24" fill="url(#primStarBloom)"/>
+              <path d="M623,68 C623,26 604,7 556,7 C578,14 592,20 604,32 C612,40 617,52 623,68 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.9"/>
+              <path d="M617,98 C620,58 612,34 590,20 C604,38 610,62 612,98 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <path d="M522,13 C564,10 592,16 608,36 C592,24 562,18 522,17 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <path d="M606,4 L609.5,20.5 L626,24 L609.5,27.5 L606,44 L602.5,27.5 L586,24 L602.5,20.5 Z" fill="#fffbeb" stroke="#92400e" stroke-width="0.8"/>
+              <circle cx="606" cy="24" r="3.2" fill="#ffffff"/>
+            </g>
+
+            <!-- BOTTOM-LEFT Grand Winged Celestial Corner Ornament -->
+            <g>
+              <circle cx="24" cy="856" r="24" fill="url(#primStarBloom)"/>
+              <path d="M7,812 C7,854 26,873 74,873 C52,866 38,860 26,848 C18,840 13,828 7,812 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.9"/>
+              <path d="M13,782 C10,822 18,846 40,860 C26,842 20,818 18,782 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <path d="M108,867 C66,870 38,864 22,844 C38,856 68,862 108,863 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <path d="M24,836 L27.5,852.5 L44,856 L27.5,859.5 L24,876 L20.5,859.5 L4,856 L20.5,852.5 Z" fill="#fffbeb" stroke="#92400e" stroke-width="0.8"/>
+              <circle cx="24" cy="856" r="3.2" fill="#ffffff"/>
+            </g>
+
+            <!-- BOTTOM-RIGHT Grand Winged Celestial Corner Ornament -->
+            <g>
+              <circle cx="606" cy="856" r="24" fill="url(#primStarBloom)"/>
+              <path d="M623,812 C623,854 604,873 556,873 C578,866 592,860 604,848 C612,840 617,828 623,812 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.9"/>
+              <path d="M617,782 C620,822 612,846 590,860 C604,842 610,818 612,782 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <path d="M522,867 C564,870 592,864 608,844 C592,856 562,862 522,863 Z" fill="url(#primGoldLustre)" opacity="0.92"/>
+              <path d="M606,836 L609.5,852.5 L626,856 L609.5,859.5 L606,876 L602.5,859.5 L586,856 L602.5,852.5 Z" fill="#fffbeb" stroke="#92400e" stroke-width="0.8"/>
+              <circle cx="606" cy="856" r="3.2" fill="#ffffff"/>
+            </g>
+
+            <!-- TOP-CENTER Sovereign Solar Halo Crown Crest -->
+            <g>
+              <ellipse cx="315" cy="16" rx="85" ry="20" fill="url(#primStarBloom)" opacity="0.85"/>
+              <path d="M210,12 C250,24 282,26 315,6 C348,26 380,24 420,12 C382,18 350,18 315,2 C280,18 248,18 210,12 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.8"/>
+              <!-- Solar Crown Spikes -->
+              <polygon points="315,1 319,13 332,16 319,19 315,31 311,19 298,16 311,13" fill="#fffbeb" stroke="#92400e" stroke-width="0.7"/>
+              <polygon points="276,8 279,15 286,17 279,19 276,26 273,19 266,17 273,15" fill="#fde68a"/>
+              <polygon points="354,8 357,15 364,17 357,19 354,26 351,19 344,17 351,15" fill="#fde68a"/>
+            </g>
+
+            <!-- LEFT & RIGHT Border Luminous Pillar Clasps & Filigree Vines -->
+            <g>
+              <!-- Left Center Clasp -->
+              <circle cx="14" cy="440" r="22" fill="url(#primStarBloom)"/>
+              <path d="M8,365 C22,395 22,418 14,440 C22,462 22,485 8,515 C15,485 15,462 6,440 C15,418 15,395 8,365 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.7"/>
+              <polygon points="14,420 17.5,436.5 30,440 17.5,443.5 14,460 10.5,443.5 2,440 10.5,436.5" fill="#fffbeb" stroke="#92400e" stroke-width="0.7"/>
+
+              <!-- Right Center Clasp -->
+              <circle cx="616" cy="440" r="22" fill="url(#primStarBloom)"/>
+              <path d="M622,365 C608,395 608,418 616,440 C608,462 608,485 622,515 C615,485 615,462 624,440 C615,418 615,395 622,365 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.7"/>
+              <polygon points="616,420 619.5,436.5 628,440 619.5,443.5 616,460 612.5,443.5 600,440 612.5,436.5" fill="#fffbeb" stroke="#92400e" stroke-width="0.7"/>
+
+              <!-- Upper & Lower Side Radiant Diamond Nodes -->
+              <g class="primordial-twinkle">
+                <circle cx="14" cy="235" r="13" fill="url(#primStarBloom)"/>
+                <polygon points="14,224 17,232 25,235 17,238 14,246 11,238 3,235 11,232" fill="#fffbeb"/>
+                <circle cx="616" cy="235" r="13" fill="url(#primStarBloom)"/>
+                <polygon points="616,224 619,232 627,235 619,238 616,246 613,238 605,235 613,232" fill="#fffbeb"/>
+
+                <circle cx="14" cy="655" r="13" fill="url(#primStarBloom)"/>
+                <polygon points="14,644 17,652 25,655 17,658 14,666 11,658 3,655 11,652" fill="#fffbeb"/>
+                <circle cx="616" cy="655" r="13" fill="url(#primStarBloom)"/>
+                <polygon points="616,644 619,652 627,655 619,658 616,666 613,658 605,655 613,652" fill="#fffbeb"/>
+              </g>
+            </g>
+
+            <!-- BOTTOM-CENTER Sovereign Golden Winged Sanctuary Pedestal -->
+            <g>
+              <ellipse cx="315" cy="862" rx="110" ry="22" fill="url(#primStarBloom)" opacity="0.8"/>
+              <path d="M145,868 C205,868 255,856 315,840 C375,856 425,868 485,868 C425,874 372,866 315,852 C258,866 205,874 145,868 Z" fill="url(#primGoldLustre)" stroke="#422006" stroke-width="0.8"/>
+              <polygon points="315,848 318.5,860 330,863 318.5,866 315,878 311.5,866 300,863 311.5,860" fill="#fffbeb" stroke="#92400e" stroke-width="0.7"/>
+            </g>
+
+            <!-- Luminous Golden Stardust Motes Along Perimeter -->
+            <g fill="#fef08a">
+              <circle cx="155" cy="18" r="1.8"/><circle cx="475" cy="18" r="1.8"/>
+              <circle cx="20" cy="155" r="1.6"/><circle cx="20" cy="315" r="1.8"/><circle cx="20" cy="575" r="1.6"/><circle cx="20" cy="735" r="1.8"/>
+              <circle cx="610" cy="155" r="1.6"/><circle cx="610" cy="315" r="1.8"/><circle cx="610" cy="575" r="1.6"/><circle cx="610" cy="735" r="1.8"/>
+              <circle cx="175" cy="862" r="1.7"/><circle cx="455" cy="862" r="1.7"/>
+            </g>
+          </svg>
+
         </div>
       </div>
     </div>
@@ -658,337 +1012,1008 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
   <script>
     // 1. Global State Variables
     let currentColor = 'IGNIS';
+    let frameMode = 'standard'; // 'standard' | 'fullart' | 'primordial'
+    let fullArtStyle = 'dark-glass'; // 'dark-glass' | 'floating' | 'light-glass'
+    let primordialArtMode = 'standard'; // 'standard' | 'fullart'
+    let primordialBoxStyle = 'gilded-marble'; // 'gilded-marble' | 'dark-gold' | 'floating'
     let textMode = 'pokemon';
     let skillsData = [
       {
         cost: '{IGNIS}',
-        name: 'Ember Rush',
+        name: 'Ember Charge',
         damage: '20',
-        desc: '이 카드가 공격할 때마다 상대에게 1 데미지를 줍니다.'
+        desc: 'Whenever Kindlet, the Emberling attacks, it deals 10 damage to each opponent.'
       },
       {
         cost: '{IGNIS}{IGNIS}',
-        name: 'Blazing Sacrifice',
+        name: 'Ashen Nova',
         damage: '60',
-        desc: '{IGNIS}{IGNIS}, 이 카드를 희생한다: 임의의 대상에게 3 데미지를 입힙니다.'
+        desc: 'Sacrifice Kindlet: It deals 30 {IGNIS} damage to any target.'
       }
     ];
 
-    // 2. Rarity Set Symbols (8-Pointed Celestial Star Crest matching CARD_FORM)
-    const RARITY_SVGS = {
-      common: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="#52525b" stroke="#e4e4e7" stroke-width="1"/></svg>`,
-      uncommon: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="uncommonGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#cbd5e1"/><stop offset="100%" stop-color="#64748b"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#uncommonGrad)" stroke="#0f172a" stroke-width="0.9"/></svg>`,
-      rare: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="rareGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fffbeb"/><stop offset="45%" stop-color="#ebd08d"/><stop offset="100%" stop-color="#926c24"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#rareGrad)" stroke="#1c1608" stroke-width="0.9"/></svg>`,
-      epic: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="epicGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f3e8ff"/><stop offset="50%" stop-color="#c084fc"/><stop offset="100%" stop-color="#6b21a8"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#epicGrad)" stroke="#1e1b4b" stroke-width="0.9"/></svg>`,
-      legendary: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="legendaryGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffedd5"/><stop offset="50%" stop-color="#fb923c"/><stop offset="100%" stop-color="#9a3412"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#legendaryGrad)" stroke="#1c1917" stroke-width="0.9"/></svg>`,
-      mythic: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="mythicGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef08a"/><stop offset="45%" stop-color="#f97316"/><stop offset="100%" stop-color="#991b1b"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#mythicGrad)" stroke="#1c1917" stroke-width="0.9"/></svg>`,
-      secret: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="secretGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f472b6"/><stop offset="33%" stop-color="#38bdf8"/><stop offset="66%" stop-color="#4ade80"/><stop offset="100%" stop-color="#facc15"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#secretGrad)" stroke="#ffffff" stroke-width="0.8"/></svg>`
+    // 2. 7 Elemental Astral Themes (Synchronized with CARD_FORM SVG & Full-Art Overlays)
+    const COLOR_THEMES = {
+      IGNIS: {
+        nebulaTop: ['#ef4444', '#7f1d1d'],
+        nebulaBot: ['#f97316', '#450a0a'],
+        ribbonA: '#f87171',
+        ribbonB: '#7f1d1d',
+        ribbonC: '#fb923c',
+        gem: ['#fecaca', '#dc2626', '#450a0a'],
+        trimBorder: '#e2c792',
+        obsidianBg: 'linear-gradient(135deg, #2e1d20 0%, #160d0f 48%, #26171a 80%, #0f090a 100%)'
+      },
+      AQUA: {
+        nebulaTop: ['#38bdf8', '#0c4a6e'],
+        nebulaBot: ['#0ea5e9', '#082f49'],
+        ribbonA: '#7dd3fc',
+        ribbonB: '#0369a1',
+        ribbonC: '#38bdf8',
+        gem: ['#bae6fd', '#0284c7', '#082f49'],
+        trimBorder: '#d6dce5',
+        obsidianBg: 'linear-gradient(135deg, #1b2836 0%, #0d141d 48%, #162230 80%, #090e14 100%)'
+      },
+      VERDANT: {
+        nebulaTop: ['#34d399', '#064e3b'],
+        nebulaBot: ['#10b981', '#022c22'],
+        ribbonA: '#6ee7b7',
+        ribbonB: '#047857',
+        ribbonC: '#34d399',
+        gem: ['#bbf7d0', '#16a34a', '#052e16'],
+        trimBorder: '#d8cfa2',
+        obsidianBg: 'linear-gradient(135deg, #1b2c24 0%, #0d1712 48%, #16251e 80%, #08100c 100%)'
+      },
+      VOLT: {
+        nebulaTop: ['#fbbf24', '#78350f'],
+        nebulaBot: ['#a855f7', '#3b0764'],
+        ribbonA: '#fde047',
+        ribbonB: '#6b21a8',
+        ribbonC: '#c084fc',
+        gem: ['#fef08a', '#eab308', '#422006'],
+        trimBorder: '#ebd28e',
+        obsidianBg: 'linear-gradient(135deg, #2b2433 0%, #15111c 48%, #241d2c 80%, #0d0a12 100%)'
+      },
+      UMBRA: {
+        nebulaTop: ['#7c3aed', '#3b0764'],
+        nebulaBot: ['#9333ea', '#1e1b4b'],
+        ribbonA: '#c084fc',
+        ribbonB: '#4c1d95',
+        ribbonC: '#a855f7',
+        gem: ['#e9d5ff', '#6b21a8', '#1e0536'],
+        trimBorder: '#dfca9f',
+        obsidianBg: 'linear-gradient(135deg, #262330 0%, #121018 48%, #1f1c29 80%, #0d0c12 100%)'
+      },
+      LUMEN: {
+        nebulaTop: ['#fde68a', '#713f12'],
+        nebulaBot: ['#f59e0b', '#451a03'],
+        ribbonA: '#fef3c7',
+        ribbonB: '#b45309',
+        ribbonC: '#fcd34d',
+        gem: ['#fef9c3', '#d97706', '#451a03'],
+        trimBorder: '#f3dfb2',
+        obsidianBg: 'linear-gradient(135deg, #2e2920 0%, #17140f 48%, #26221a 80%, #100e0a 100%)'
+      },
+      NEUTRA: {
+        nebulaTop: ['#94a3b8', '#1e293b'],
+        nebulaBot: ['#64748b', '#0f172a'],
+        ribbonA: '#cbd5e1',
+        ribbonB: '#334155',
+        ribbonC: '#94a3b8',
+        gem: ['#f1f5f9', '#64748b', '#0f172a'],
+        trimBorder: '#d4d8de',
+        obsidianBg: 'linear-gradient(135deg, #25282e 0%, #121418 48%, #1e2126 80%, #0b0d10 100%)'
+      }
     };
 
-    // 3. Mana / Energy Tokenizer
+    // 3. 7 Rarity 8-Pointed Celestial Compass Star SVGs
+    function createRarityStarSvg(minorFill, majorFill, coreFill, strokeFill) {
+      return `<svg class="w-4 h-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]" viewBox="0 0 24 24">
+        <path d="M5.2 5.2 L10.4 9.2 L18.8 5.2 L14.8 10.4 L18.8 18.8 L13.6 14.8 L5.2 18.8 L9.2 13.6 Z" fill="${minorFill}" stroke="${strokeFill}" stroke-width="0.7"/>
+        <path d="M12 1.2 L13.9 10.1 L22.8 12 L13.9 13.9 L12 22.8 L10.1 13.9 L1.2 12 L10.1 10.1 Z" fill="${majorFill}" stroke="${strokeFill}" stroke-width="0.8"/>
+        <circle cx="12" cy="12" r="2" fill="${coreFill}"/>
+      </svg>`;
+    }
+
+    const RARITY_SVGS = {
+      common: createRarityStarSvg('#52525b', '#a1a1aa', '#f4f4f5', '#18181b'),
+      uncommon: createRarityStarSvg('#94a3b8', '#e2e8f0', '#ffffff', '#1e293b'),
+      rare: createRarityStarSvg('#b48a3e', '#f3d899', '#fffbeb', '#291d09'),
+      epic: createRarityStarSvg('#7e22ce', '#d8b4fe', '#fae8ff', '#2e1065'),
+      legendary: createRarityStarSvg('#b91c1c', '#fca5a5', '#fef2f2', '#450a0a'),
+      mythic: createRarityStarSvg('#c2410c', '#fdba74', '#fff7ed', '#431407'),
+      secret: `<svg class="w-4 h-4 drop-shadow-[0_0_4px_rgba(244,114,182,0.85)]" viewBox="0 0 24 24">
+        <path d="M5.2 5.2 L10.4 9.2 L18.8 5.2 L14.8 10.4 L18.8 18.8 L13.6 14.8 L5.2 18.8 L9.2 13.6 Z" fill="#38bdf8" stroke="#0f172a" stroke-width="0.6"/>
+        <path d="M12 1.2 L13.9 10.1 L22.8 12 L13.9 13.9 L12 22.8 L10.1 13.9 L1.2 12 L10.1 10.1 Z" fill="#f472b6" stroke="#fffbeb" stroke-width="0.7"/>
+        <polygon points="12,7.5 13.5,10.5 16.5,12 13.5,13.5 12,16.5 10.5,13.5 7.5,12 10.5,10.5" fill="#fde047"/>
+        <circle cx="12" cy="12" r="1.8" fill="#ffffff"/>
+      </svg>`,
+      primordial: `<svg class="w-[18px] h-[18px] drop-shadow-[0_0_5px_rgba(253,224,71,0.95)]" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9.2" fill="none" stroke="#fde047" stroke-width="0.9" opacity="0.85"/>
+        <path d="M4.5 4.5 L10.2 9.2 L19.5 4.5 L14.8 10.2 L19.5 19.5 L13.8 14.8 L4.5 19.5 L9.2 13.8 Z" fill="#f59e0b" stroke="#422006" stroke-width="0.6"/>
+        <path d="M12 0.8 L14.1 9.9 L23.2 12 L14.1 14.1 L12 23.2 L9.9 14.1 L0.8 12 L9.9 9.9 Z" fill="#fef08a" stroke="#78350f" stroke-width="0.7"/>
+        <polygon points="12,6.8 13.6,10.4 17.2,12 13.6,13.6 12,17.2 10.4,13.6 6.8,12 10.4,10.4" fill="#ffffff"/>
+        <circle cx="12" cy="12" r="2" fill="#f59e0b"/>
+      </svg>`
+    };
+
+    // 4. Mana / Energy Cost Tokenizer
     function parseManaTokens(str) {
       if (!str || typeof str !== 'string') return [];
       const tokens = [];
-      const regex = /\{([A-Za-z0-9_-]+)\}|([0-9]+)|([IAVULBWRGCTEN])/gi;
+      const regex = /\{([A-Za-z0-9_*-]+)\}|(\d+)|([A-Za-z*]+)/g;
       let match;
       while ((match = regex.exec(str)) !== null) {
-        if (match[1]) tokens.push(match[1].toUpperCase());
-        else if (match[2]) tokens.push(match[2]);
-        else if (match[3]) tokens.push(match[3].toUpperCase());
+        if (match[1]) {
+          tokens.push(match[1].toUpperCase());
+        } else if (match[2]) {
+          tokens.push(match[2]);
+        } else if (match[3]) {
+          const word = match[3].toUpperCase();
+          const knownWords = ['IGNIS', 'AQUA', 'VERDANT', 'VOLT', 'UMBRA', 'LUMEN', 'NEUTRA', 'TAP'];
+          if (knownWords.includes(word)) {
+            tokens.push(word);
+          } else {
+            for (const ch of word) {
+              tokens.push(ch);
+            }
+          }
+        }
       }
       return tokens;
     }
 
-    // 4. Render Single Mana/Energy Symbol (Metallic Bevel Emblem Design matching TYPE_SYMBOL_v2)
-    function renderSingleManaSymbol(code, isInline = false) {
-      const c = String(code).trim().toUpperCase();
-      const szClass = isInline ? 'mana-symbol-inline' : 'mana-symbol';
-      
-      // Shared Metallic Silver Gradient & Filter IDs inside inline SVGs
-      const silverGrad = `<defs>
-        <linearGradient id="metalSilver" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ffffff"/>
-          <stop offset="30%" stop-color="#e2e8f0"/>
-          <stop offset="55%" stop-color="#94a3b8"/>
-          <stop offset="80%" stop-color="#f8fafc"/>
-          <stop offset="100%" stop-color="#64748b"/>
-        </linearGradient>
-        <linearGradient id="metalRim" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#f1f5f9"/>
-          <stop offset="50%" stop-color="#94a3b8"/>
-          <stop offset="100%" stop-color="#334155"/>
-        </linearGradient>
-      </defs>`;
-
-      // 1. IGNIS (화염 - Red Crimson Metallic Flame)
-      if (['IGNIS', 'I', 'R', 'RED', 'FIRE'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #b91c1c 0%, #7f1d1d 65%, #450a0a 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #450a0a;">
-          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
-            ${silverGrad}
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
-            <path d="M18.5 5.5c1.5 3.5 1 6.5-.5 8.5 2.5-.8 4.2-3 4.2-5.5 2.2 2.5 3.3 5.8 2.8 9.2 1.2-1 2-2.4 2.2-4 1.6 2.8 1.5 7.2-1 10.3-2.2 2.8-5.5 4.2-8.7 4.2-3.8 0-7.2-2.2-8.6-5.8-1.2-3.2-.5-7 1.8-9.8-.2 1.8.4 3.4 1.5 4.4-.5-3.2.8-6.8 3.5-9.2-.3 1.6.1 3.2 1 4.2-.2-2.5.6-4.8 1.8-6.5z" fill="url(#metalSilver)" stroke="#1e293b" stroke-width="0.9" stroke-linejoin="round"/>
-          </svg>
-        </span>`;
-      }
-      
-      // 2. AQUA (물 - Deep Sapphire Water Drop & Wave)
-      if (['AQUA', 'A', 'U', 'BLUE', 'WATER'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #1d4ed8 0%, #1e3a8a 65%, #172554 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #172554;">
-          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
-            ${silverGrad}
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
-            <path d="M18 6.5c0 0-5.5 6.8-5.5 10.8a5.5 5.5 0 0011 0C23.5 13.3 18 6.5 18 6.5z" fill="url(#metalSilver)" stroke="#0f172a" stroke-width="0.9"/>
-            <path d="M9.5 23.5c3.5 3.8 10.5 4.5 15.5.8 1.8-1.3 2.5-3.5 1.2-4.8-1.2-1.2-3-.2-2.5 1.2.3.8-.5 1.8-2 2.2-3.8 1-8.5-.5-12.2.6z" fill="url(#metalSilver)" stroke="#0f172a" stroke-width="0.9" stroke-linejoin="round"/>
-          </svg>
-        </span>`;
-      }
-
-      // 3. VERDANT (자연 - Emerald Three-Leaf Sprig)
-      if (['VERDANT', 'V', 'G', 'GREEN', 'NATURE'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #15803d 0%, #14532d 65%, #052e16 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #052e16;">
-          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
-            ${silverGrad}
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
-            <path d="M18 6c-3 3.2-3.8 7.5-1.5 11h3c2.3-3.5 1.5-7.8-1.5-11z" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.9"/>
-            <path d="M8.5 14.5c1.5 4.2 5.2 6.5 9 6v-2.2c-2.5-2.5-5.8-3.8-9-3.8z" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.9"/>
-            <path d="M27.5 14.5c-3.2 0-6.5 1.3-9 3.8v2.2c3.8.5 7.5-1.8 9-6z" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.9"/>
-            <rect x="17" y="16.5" width="2" height="12.5" rx="1" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.7"/>
-          </svg>
-        </span>`;
-      }
-
-      // 4. LUMEN (광휘 - Golden Radiant 8-Point Starburst)
-      if (['LUMEN', 'LUM', 'W', 'LIGHT', 'HOLY'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #facc15 0%, #ca8a04 65%, #713f12 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #fef08a, inset 0 0 0 2.5px #713f12;">
-          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
-            ${silverGrad}
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
-            <path d="M18 5.5l2.4 8.5 8.6-2.5-5.5 7 5.5 7-8.6-2.5L18 30.5l-2.4-7.5-8.6 2.5 5.5-7-5.5-7 8.6 2.5z" fill="url(#metalSilver)" stroke="#422006" stroke-width="0.9" stroke-linejoin="round"/>
-            <polygon points="18,14.5 21.5,18 18,21.5 14.5,18" fill="#eab308" stroke="#422006" stroke-width="0.7"/>
-          </svg>
-        </span>`;
-      }
-
-      // 5. VOLT (전격 - Royal Violet Lightning Bolt)
-      if (['VOLT', 'E', 'L', 'VLT', 'LIGHTNING', 'ENERGY'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #7e22ce 0%, #581c87 65%, #3b0764 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #3b0764;">
-          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
-            ${silverGrad}
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
-            <path d="M20.5 6.5h-6l-3 11.5h5.5l-2.5 11.5 10.5-14h-6l1.5-9z" fill="url(#metalSilver)" stroke="#1e1b4b" stroke-width="0.95" stroke-linejoin="round"/>
-          </svg>
-        </span>`;
-      }
-
-      // 6. NEUTRA (무속성 - Slate Steel Interlocking Rings)
-      if (['NEUTRA', 'N', 'C'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #475569 0%, #334155 65%, #0f172a 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #0f172a;">
-          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
-            ${silverGrad}
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
-            <circle cx="14.5" cy="18" r="6.2" fill="none" stroke="url(#metalSilver)" stroke-width="2.4"/>
-            <circle cx="14.5" cy="18" r="6.2" fill="none" stroke="#0f172a" stroke-width="0.6"/>
-            <circle cx="21.5" cy="18" r="6.2" fill="none" stroke="url(#metalSilver)" stroke-width="2.4"/>
-            <circle cx="21.5" cy="18" r="6.2" fill="none" stroke="#0f172a" stroke-width="0.6"/>
-          </svg>
-        </span>`;
-      }
-
-      // 7. UMBRA (암흑 - Dark Obsidian Swirling Vortex)
-      if (['UMBRA', 'UMB', 'B', 'BLACK', 'DARK', 'SHADOW'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #3b0764 0%, #1e1b4b 65%, #09090b 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.8), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #09090b;">
-          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
-            ${silverGrad}
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
-            <path d="M18 8c5.5 0 10 4.5 10 10 0 4.2-2.8 7.8-6.8 9 2.2-2 3.3-4.8 2.8-7.6-.5-3-3.2-5.2-6.2-5.2-2.5 0-4.6 1.6-5.2 3.8-.5 1.8.4 3.6 2 4.4-2.8-.2-5-2.5-5-5.4 0-5 4-9 8.4-9z" fill="url(#metalSilver)" stroke="#09090b" stroke-width="0.8"/>
-            <path d="M18 28c-5.5 0-10-4.5-10-10 0-4.2 2.8-7.8 6.8-9-2.2 2-3.3 4.8-2.8 7.6.5 3 3.2 5.2 6.2 5.2 1.8 0 3.4-.9 4.3-2.3-.6 4.8-4.5 8.5-4.5 8.5z" fill="url(#metalSilver)" stroke="#09090b" stroke-width="0.8" opacity="0.9"/>
-            <circle cx="18" cy="18" r="2.3" fill="url(#metalSilver)" stroke="#09090b" stroke-width="0.6"/>
-          </svg>
-        </span>`;
-      }
-
-      // 8. TAP Symbol ({T})
-      if (['T', 'TAP'].includes(c)) {
-        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #e2e8f0 0%, #94a3b8 65%, #475569 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.7), inset 0 0 0 1.2px #f8fafc;">
-          <svg viewBox="0 0 24 24" class="w-[74%] h-[74%]">
-            <path d="M7 14a5 5 0 0 1 8.5-3.5L18 8v7h-7l2.5-2.5A3 3 0 0 0 9 14H7z" fill="#0f172a"/>
-          </svg>
-        </span>`;
-      }
-
-      // 9. Generic Number / Variable Cost (0, 1, 2, X, *)
-      const fontSize = isInline ? '10.5px' : '13px';
-      return `<span class="${szClass} font-card-title font-black text-[#141218]" style="background: radial-gradient(circle at 35% 30%, #f1efe9 0%, #cdc8be 65%, #8c857b 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 1px 1px #ffffff, inset 0 0 0 1.3px #27242e; font-size: ${fontSize}; line-height: 1;">${c}</span>`;
+    // 5. Metallic 3D Elemental Emblem Renderer (TYPE_SYMBOL_v2 Vector System)
+    function buildMetallicOrb(cls, coreColor, glowColor, innerSvg) {
+      return `<span class="${cls}"><svg class="w-full h-full block" viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="17.4" fill="#121318"/>
+        <circle cx="18" cy="18" r="16.3" fill="#cfd5de"/>
+        <path d="M6.5 6.5 A16.3 16.3 0 0 1 29.5 6.5 L27.1 8.9 A12.9 12.9 0 0 0 8.9 8.9 Z" fill="#ffffff" opacity="0.8"/>
+        <circle cx="18" cy="18" r="14.1" fill="#22252d"/>
+        <circle cx="18" cy="18" r="13.2" fill="#b8c0cc"/>
+        <circle cx="18" cy="18" r="12.1" fill="${coreColor}"/>
+        <ellipse cx="15" cy="11.5" rx="7.2" ry="4.2" transform="rotate(-18 15 11.5)" fill="${glowColor}" opacity="0.42"/>
+        ${innerSvg}
+      </svg></span>`;
     }
 
-    // 5. Parse Multiple Mana Symbols into HTML
+    function renderSingleManaSymbol(rawToken, isInline = false) {
+      const code = String(rawToken || '').trim().toUpperCase();
+      const cls = isInline ? 'mana-symbol-inline' : 'mana-symbol';
+
+      // IGNIS (Fire Emblem)
+      if (code === 'IGNIS' || code === 'I' || code === 'R') {
+        return buildMetallicOrb(cls, '#8f131a', '#f87171', `
+          <path d="M18.5 7.2 C16.2 11.2 13.2 13.4 13.6 17.5 C12.1 16.4 11.6 14.8 11.8 13.5 C9.6 16.2 9.4 20.6 12.2 23.6 C14.5 26.1 18.2 26.8 21.4 25.4 C24.8 23.9 26.4 19.8 24.6 15.8 C23.9 17.2 22.8 17.9 21.8 17.8 C23.1 14.6 21.5 10.4 18.5 7.2 Z" fill="#dcdfe5" stroke="#2a080a" stroke-width="0.9" stroke-linejoin="round"/>
+          <path d="M18.2 11.2 C16.8 14.2 15.4 16.2 16.2 19.5 C15.2 18.8 14.7 17.8 14.8 16.8 C13.6 18.8 14.2 21.8 16.5 23.2 C18.8 24.5 21.6 23.2 22.1 20.2 C20.4 20.6 19.8 19.2 20.4 17.2 C20.8 15.2 19.8 13.1 18.2 11.2 Z" fill="#ffffff" opacity="0.88"/>
+        `);
+      }
+
+      // AQUA (Water Droplet & Wave Emblem)
+      if (code === 'AQUA' || code === 'A' || code === 'U') {
+        return buildMetallicOrb(cls, '#13448a', '#60a5fa', `
+          <path d="M18 7.6 C15.2 12.2 13.2 15.2 13.2 18.1 C13.2 20.8 15.3 22.6 18 22.6 C20.7 22.6 22.8 20.8 22.8 18.1 C22.8 15.2 20.8 12.2 18 7.6 Z" fill="#dcdfe5" stroke="#0b2249" stroke-width="0.85"/>
+          <path d="M16.6 11.5 C15.2 14.2 14.7 16.2 14.9 18.1 C15.1 19.6 16.2 20.6 17.7 20.8 C16.4 19.6 16 17.4 16.8 14.2 Z" fill="#ffffff" opacity="0.88"/>
+          <path d="M10.4 22.4 C12.8 21.2 15.6 24.5 19.4 24.3 C22.1 24.1 23.6 22.4 23.3 20.9 C25.2 21.9 25.6 24.7 23.1 26.3 C19.8 28.2 13.8 27 10.4 22.4 Z" fill="#e2e8f0" stroke="#0b2249" stroke-width="0.8"/>
+        `);
+      }
+
+      // VERDANT (Three-Leaf Sprout Emblem)
+      if (code === 'VERDANT' || code === 'V' || code === 'G') {
+        return buildMetallicOrb(cls, '#155c39', '#4ade80', `
+          <path d="M18 7.8 C15.2 11.2 15.2 15.6 18 18.5 C20.8 15.6 20.8 11.2 18 7.8 Z" fill="#e2e8f0" stroke="#092c1b" stroke-width="0.85"/>
+          <path d="M9.8 15.2 C10.6 19.4 13.8 21.4 17.4 20.6 C16.6 17.2 13.8 15.2 9.8 15.2 Z" fill="#dcdfe5" stroke="#092c1b" stroke-width="0.85"/>
+          <path d="M26.2 15.2 C25.4 19.4 22.2 21.4 18.6 20.6 C19.4 17.2 22.2 15.2 26.2 15.2 Z" fill="#dcdfe5" stroke="#092c1b" stroke-width="0.85"/>
+          <path d="M18 11 L18 27 M18 20.6 L13.2 17.6 M18 20.6 L22.8 17.6" stroke="#ffffff" stroke-width="1.45" stroke-linecap="round"/>
+        `);
+      }
+
+      // LUMEN (8-Pointed Radiant Star Emblem)
+      if (code === 'LUMEN' || code === 'LU' || code === 'W') {
+        return buildMetallicOrb(cls, '#ca9618', '#fef08a', `
+          <path d="M11.2 11.2 L16.2 15.2 L24.8 11.2 L20.8 16.2 L24.8 24.8 L19.8 20.8 L11.2 24.8 L15.2 19.8 Z" fill="#cbd5e1" stroke="#422c04" stroke-width="0.7"/>
+          <path d="M18 6.8 L20.1 15.9 L29.2 18 L20.1 20.1 L18 29.2 L15.9 20.1 L6.8 18 L15.9 15.9 Z" fill="#f8fafc" stroke="#422c04" stroke-width="0.8"/>
+          <polygon points="18,14.8 21.2,18 18,21.2 14.8,18" fill="#eab308" stroke="#ffffff" stroke-width="0.6"/>
+        `);
+      }
+
+      // VOLT (Royal Purple Lightning Emblem)
+      if (code === 'VOLT' || code === 'E' || code === 'L') {
+        return buildMetallicOrb(cls, '#4c1d95', '#c084fc', `
+          <polygon points="20.8,7.4 12.6,18.2 17.8,18.2 14.4,28.6 24.2,16.6 18.8,16.6" fill="#e2e8f0" stroke="#1e093d" stroke-width="0.9" stroke-linejoin="round"/>
+          <polygon points="19.8,9.4 14.3,17.4 18.2,17.4 16.2,24.8 22.3,17.4 18.2,17.4" fill="#ffffff" opacity="0.88"/>
+        `);
+      }
+
+      // NEUTRA (Interlocking Silver Rings Emblem)
+      if (code === 'NEUTRA' || code === 'N' || code === 'C') {
+        return buildMetallicOrb(cls, '#3f4852', '#94a3b8', `
+          <circle cx="15.2" cy="18" r="5.5" fill="none" stroke="#181c20" stroke-width="3.3"/>
+          <circle cx="20.8" cy="18" r="5.5" fill="none" stroke="#181c20" stroke-width="3.3"/>
+          <circle cx="15.2" cy="18" r="5.5" fill="none" stroke="#dce1e8" stroke-width="2.1"/>
+          <circle cx="20.8" cy="18" r="5.5" fill="none" stroke="#f8fafc" stroke-width="2.1"/>
+        `);
+      }
+
+      // UMBRA (Dark Obsidian Swirling Vortex Emblem)
+      if (code === 'UMBRA' || code === 'UM' || code === 'B') {
+        return buildMetallicOrb(cls, '#211132', '#9333ea', `
+          <path d="M18 9.2 C23.2 9.2 26.8 13.2 26.4 18.4 C26 23.2 21.8 26.2 17.2 25.4 C13.4 24.8 11.2 21.2 12.2 17.6 C13 14.8 16 13.4 18.8 14.4 C20.8 15.2 21.6 17.4 20.6 19.2 C19.8 20.6 18 20.8 16.8 19.8" fill="none" stroke="#e2e8f0" stroke-width="2.3" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="2.1" fill="#ffffff"/>
+        `);
+      }
+
+      // TAP Symbol ({T})
+      if (code === 'T' || code === 'TAP') {
+        return buildMetallicOrb(cls, '#47433e', '#d6d3d1', `
+          <path d="M13 21.5 C12.5 15.5 16.5 12 22 13.2 L20.2 10.6 L25.5 14.2 L20.4 17.8 L21.8 15.4 C17.6 14.6 15.2 17.2 15.6 21.5 Z" fill="#f8fafc" stroke="#1c1917" stroke-width="0.7"/>
+        `);
+      }
+
+      // Generic Numeric / Variable Cost Orb (e.g., 1, 2, 3, X)
+      const label = code.slice(0, 2) || '0';
+      return `<span class="${cls}"><svg class="w-full h-full block" viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="17.2" fill="#17151c"/>
+        <circle cx="18" cy="18" r="15.6" fill="#dfdbd2"/>
+        <ellipse cx="15" cy="12" rx="8" ry="5" transform="rotate(-15 15 12)" fill="#ffffff" opacity="0.65"/>
+        <text x="18" y="24.2" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-weight="900" font-size="${label.length > 1 ? '15' : '18.5'}" fill="#141218">${label}</text>
+      </svg></span>`;
+    }
+
+    // 6. Render Sequence of Mana Symbols
     function parseManaSymbols(str, isInline = false) {
       try {
         const tokens = parseManaTokens(str);
-        if (!tokens || tokens.length === 0) return '';
+        if (!tokens.length) return '';
         return tokens.map(token => renderSingleManaSymbol(token, isInline)).join('');
       } catch (e) {
-        console.error('Mana parse error:', e);
+        console.error('Mana symbol parse error:', e);
         return '';
       }
     }
 
-    // 6. Themes Definition (Astral Cosmic Ribbons, Obsidian Type Sheen & Cabochon Gem Colors)
-    const COLOR_THEMES = {
-      IGNIS: {
-        nebula1: '#dc2626',
-        nebula2: '#450a0a',
-        ribbonA: '#f87171',
-        ribbonB: '#7f1d1d',
-        ribbonC: '#fb923c',
-        trimBorder: '#e2c290',
-        obsidianBg: 'linear-gradient(135deg, #2b1718 0%, #140b0c 48%, #241214 80%, #0d0708 100%)',
-        gemLight: '#fecaca',
-        gemCore: '#dc2626',
-        gemDark: '#450a0a'
-      },
-      AQUA: {
-        nebula1: '#0284c7',
-        nebula2: '#082f49',
-        ribbonA: '#38bdf8',
-        ribbonB: '#0369a1',
-        ribbonC: '#67e8f9',
-        trimBorder: '#d2deeb',
-        obsidianBg: 'linear-gradient(135deg, #162433 0%, #0b121c 48%, #13202e 80%, #070b12 100%)',
-        gemLight: '#bae6fd',
-        gemCore: '#0284c7',
-        gemDark: '#082f49'
-      },
-      VERDANT: {
-        nebula1: '#16a34a',
-        nebula2: '#052e16',
-        ribbonA: '#4ade80',
-        ribbonB: '#15803d',
-        ribbonC: '#86efac',
-        trimBorder: '#d8cca3',
-        obsidianBg: 'linear-gradient(135deg, #16291e 0%, #0a140f 48%, #12241a 80%, #060d09 100%)',
-        gemLight: '#bbf7d0',
-        gemCore: '#16a34a',
-        gemDark: '#052e16'
-      },
-      VOLT: {
-        nebula1: '#9333ea',
-        nebula2: '#422006',
-        ribbonA: '#facc15',
-        ribbonB: '#6b21a8',
-        ribbonC: '#c084fc',
-        trimBorder: '#ebd28e',
-        obsidianBg: 'linear-gradient(135deg, #282118 0%, #14100b 48%, #24192b 80%, #0d0a0f 100%)',
-        gemLight: '#fef08a',
-        gemCore: '#ca8a04',
-        gemDark: '#3b0764'
-      },
-      UMBRA: {
-        nebula1: '#7e22ce',
-        nebula2: '#2e1065',
-        ribbonA: '#c084fc',
-        ribbonB: '#4c1d95',
-        ribbonC: '#a855f7',
-        trimBorder: '#dfca9f',
-        obsidianBg: 'linear-gradient(135deg, #262330 0%, #121018 48%, #1f1c29 80%, #0d0c12 100%)',
-        gemLight: '#e9d5ff',
-        gemCore: '#6b21a8',
-        gemDark: '#1e0536'
-      },
-      LUMEN: {
-        nebula1: '#eab308',
-        nebula2: '#422006',
-        ribbonA: '#fef08a',
-        ribbonB: '#a16207',
-        ribbonC: '#fde68a',
-        trimBorder: '#f2dfb3',
-        obsidianBg: 'linear-gradient(135deg, #2b271c 0%, #14120c 48%, #242016 80%, #0d0b07 100%)',
-        gemLight: '#fef9c3',
-        gemCore: '#eab308',
-        gemDark: '#422006'
-      },
-      NEUTRA: {
-        nebula1: '#94a3b8',
-        nebula2: '#1e293b',
-        ribbonA: '#e2e8f0',
-        ribbonB: '#475569',
-        ribbonC: '#cbd5e1',
-        trimBorder: '#d6dae0',
-        obsidianBg: 'linear-gradient(135deg, #25282e 0%, #111317 48%, #1d2026 80%, #0b0c0f 100%)',
-        gemLight: '#f1f5f9',
-        gemCore: '#64748b',
-        gemDark: '#0f172a'
-      }
-    };
+    // 7. Attribute Color Theme Switcher
+    window.selectColor = function(color) {
+      if (!COLOR_THEMES[color]) color = 'IGNIS';
+      currentColor = color;
+      const theme = COLOR_THEMES[color];
 
-    // 7. Theme Selection
-    window.selectColor = function(colorKey) {
-      if (!COLOR_THEMES[colorKey]) return;
-      currentColor = colorKey;
-      const theme = COLOR_THEMES[colorKey];
-
-      document.querySelectorAll('#colorSelectors button').forEach(btn => {
-        if (btn.getAttribute('data-color') === colorKey) {
-          btn.classList.add('ring-2', 'ring-white', 'scale-105', 'font-bold');
+      document.querySelectorAll('#colorSelectors button[data-color]').forEach(btn => {
+        if (btn.getAttribute('data-color') === color) {
+          btn.classList.add('ring-2', 'ring-white', 'scale-[1.03]');
         } else {
-          btn.classList.remove('ring-2', 'ring-white', 'scale-105', 'font-bold');
+          btn.classList.remove('ring-2', 'ring-white', 'scale-[1.03]');
         }
       });
 
-      // Update Cosmic SVG Nebula & Ribbon Stops
-      const setStop = (id, color) => {
+      const setStop = (id, stopColor) => {
         const el = document.getElementById(id);
-        if (el) el.setAttribute('stop-color', color);
+        if (el) el.setAttribute('stop-color', stopColor);
       };
-      setStop('nebulaStop1', theme.nebula1);
-      setStop('nebulaStop2', theme.nebula2);
-      setStop('nebulaBotStop1', theme.nebula1);
-      setStop('nebulaBotStop2', theme.nebula2);
+
+      setStop('nebulaStop1', theme.nebulaTop[0]);
+      setStop('nebulaStop2', theme.nebulaTop[1]);
+      setStop('nebulaBotStop1', theme.nebulaBot[0]);
+      setStop('nebulaBotStop2', theme.nebulaBot[1]);
       setStop('ribbonColorA', theme.ribbonA);
       setStop('ribbonColorB', theme.ribbonB);
       setStop('ribbonColorC', theme.ribbonC);
-
-      // Update Bottom Cabochon Gem Stops
-      setStop('gemStopLight', theme.gemLight);
-      setStop('gemStopCore', theme.gemCore);
-      setStop('gemStopDark', theme.gemDark);
-
-      // Update Metallic Trim Borders & Dark Obsidian Type Bar
-      const headerBox = document.getElementById('cardHeaderBox');
-      if (headerBox) headerBox.style.borderColor = theme.trimBorder;
-
-      const artWrapper = document.getElementById('cardArtWrapper');
-      if (artWrapper) artWrapper.style.borderColor = theme.trimBorder;
-
-      const typeBox = document.getElementById('cardTypeBox');
-      if (typeBox) {
-        typeBox.style.borderColor = theme.trimBorder;
-        typeBox.style.background = theme.obsidianBg;
-      }
-
-      const textBox = document.getElementById('cardTextBox');
-      if (textBox) textBox.style.borderColor = theme.trimBorder;
-
-      const ptBox = document.getElementById('renderPTBox');
-      if (ptBox) ptBox.style.borderColor = theme.trimBorder;
+      setStop('gemStopLight', theme.gem[0]);
+      setStop('gemStopCore', theme.gem[1]);
+      setStop('gemStopDark', theme.gem[2]);
 
       updateCard();
     };
 
-    // 8. Artwork Adjustments
+    // 7.5. Frame Mode, Full-Art & Primordial-Rare Switchers
+    function isFullArtActive() {
+      return frameMode === 'fullart' || (frameMode === 'primordial' && primordialArtMode === 'fullart');
+    }
+
+    function isFullArtDarkTextMode() {
+      if (frameMode === 'fullart') return fullArtStyle !== 'light-glass';
+      if (frameMode === 'primordial') return primordialBoxStyle !== 'gilded-marble';
+      return false;
+    }
+
+    window.setFrameMode = function(mode, syncRarity = true) {
+      if (mode === 'primordial') {
+        frameMode = 'primordial';
+      } else if (mode === 'fullart') {
+        frameMode = 'fullart';
+      } else {
+        frameMode = 'standard';
+      }
+
+      const raritySelect = document.getElementById('selectRarity');
+      if (syncRarity && raritySelect) {
+        if (frameMode === 'primordial') {
+          raritySelect.value = 'primordial';
+        } else if (raritySelect.value === 'primordial') {
+          raritySelect.value = 'mythic';
+        }
+      }
+
+      const btnStd = document.getElementById('btnFrameStandard');
+      const btnFull = document.getElementById('btnFrameFullArt');
+      const btnPrim = document.getElementById('btnFramePrimordial');
+      const fullArtPanel = document.getElementById('fullArtOptionsPanel');
+      const primPanel = document.getElementById('primordialOptionsPanel');
+      const artTitle = document.getElementById('artSectionTitle');
+      const artUploadLabel = document.getElementById('artUploadLabel');
+
+      const activeBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-amber-500 text-zinc-950 shadow-sm flex items-center justify-center gap-1';
+      const activePrimBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 text-zinc-950 shadow-[0_0_12px_rgba(251,191,36,0.5)] flex items-center justify-center gap-1';
+      const inactiveBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-zinc-400 hover:text-zinc-200 transition-all flex items-center justify-center gap-1';
+      const inactivePrimBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-amber-300/90 hover:text-amber-200 transition-all flex items-center justify-center gap-1';
+
+      if (btnStd) btnStd.className = frameMode === 'standard' ? activeBtnCls : inactiveBtnCls;
+      if (btnFull) btnFull.className = frameMode === 'fullart' ? activeBtnCls : inactiveBtnCls;
+      if (btnPrim) btnPrim.className = frameMode === 'primordial' ? activePrimBtnCls : inactivePrimBtnCls;
+
+      if (fullArtPanel) fullArtPanel.classList.toggle('hidden', frameMode !== 'fullart');
+      if (primPanel) primPanel.classList.toggle('hidden', frameMode !== 'primordial');
+
+      if (isFullArtActive()) {
+        if (artTitle) artTitle.textContent = frameMode === 'primordial'
+          ? '일러스트레이션 설정 (Primordial 63:88 풀아트 재단)'
+          : '일러스트레이션 설정 (63:88 풀아트 자동 재단)';
+        if (artUploadLabel) artUploadLabel.textContent = '이미지 파일 불러오기 (업로드 시 63:88 카드 전체 규격으로 자동 재단됩니다)';
+      } else {
+        if (artTitle) artTitle.textContent = frameMode === 'primordial'
+          ? '일러스트레이션 설정 (Primordial 5:3 자동 재단)'
+          : '일러스트레이션 설정 (5:3 자동 재단)';
+        if (artUploadLabel) artUploadLabel.textContent = '이미지 파일 불러오기 (업로드 시 5:3 규격으로 자동 재단됩니다)';
+      }
+
+      updateArtworkTransform();
+      updateCard();
+    };
+
+    window.setPrimordialArtMode = function(artMode) {
+      primordialArtMode = artMode === 'fullart' ? 'fullart' : 'standard';
+      const btnStd = document.getElementById('btnPrimArtStandard');
+      const btnFull = document.getElementById('btnPrimArtFull');
+      if (btnStd) {
+        btnStd.className = primordialArtMode === 'standard'
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-amber-400 text-amber-300 transition'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition';
+      }
+      if (btnFull) {
+        btnFull.className = primordialArtMode === 'fullart'
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-amber-400 text-amber-300 transition'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition';
+      }
+      setFrameMode('primordial', false);
+    };
+
+    window.setPrimordialBoxStyle = function(style) {
+      primordialBoxStyle = style;
+      document.querySelectorAll('#primordialOptionsPanel button[data-primstyle]').forEach(btn => {
+        if (btn.getAttribute('data-primstyle') === style) {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-amber-400 text-amber-300 transition flex flex-col items-center gap-0.5';
+        } else {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5';
+        }
+      });
+      updateCard();
+    };
+
+    window.setFullArtStyle = function(style) {
+      fullArtStyle = style;
+      document.querySelectorAll('#fullArtOptionsPanel button[data-fastyle]').forEach(btn => {
+        if (btn.getAttribute('data-fastyle') === style) {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-amber-500/80 text-amber-300 transition flex flex-col items-center gap-0.5';
+        } else {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5';
+        }
+      });
+      updateCard();
+    };
+
+    function applyFrameLayoutStyles() {
+      const theme = COLOR_THEMES[currentColor] || COLOR_THEMES.UMBRA;
+      const opacityRaw = parseFloat(document.getElementById('inputBoxOpacity')?.value ?? 65);
+      const alpha = Math.min(0.95, Math.max(0.1, opacityRaw / 100));
+      const labelOpacity = document.getElementById('labelBoxOpacity');
+      if (labelOpacity) labelOpacity.textContent = `${Math.round(opacityRaw)}%`;
+
+      const primGlowRaw = parseFloat(document.getElementById('inputPrimordialGlow')?.value ?? 90);
+      const labelPrimGlow = document.getElementById('labelPrimordialGlow');
+      if (labelPrimGlow) labelPrimGlow.textContent = `${Math.round(primGlowRaw)}%`;
+
+      const rarityVal = document.getElementById('selectRarity')?.value || 'mythic';
+      const isPrimordial = frameMode === 'primordial' || rarityVal === 'primordial';
+      const showCosmicRibbons = document.getElementById('toggleCosmicRibbons')?.checked ?? true;
+
+      const cardTarget = document.getElementById('cardPreviewTarget');
+      const primOverlay = document.getElementById('primordialBorderOverlay');
+      const primGlowWash = document.getElementById('primordialGlowWash');
+      const primGemHalo = document.getElementById('primordialGemHalo');
+      const footerBar = document.getElementById('renderFooterBar');
+
+      const fullArtContainer = document.getElementById('fullArtContainer');
+      const fullArtBottomScrim = document.getElementById('fullArtBottomScrim');
+      const cosmicBaseRect = document.getElementById('cosmicBaseRect');
+      const cosmicDecorGroup = document.getElementById('cosmicDecorGroup');
+
+      const headerBox = document.getElementById('cardHeaderBox');
+      const cardNameEl = document.getElementById('renderCardName');
+      const artWrapper = document.getElementById('cardArtWrapper');
+      const artContainer = document.getElementById('cardArtContainer');
+      const stdCanvas = document.getElementById('renderCardArtCanvas');
+      const artVignette = document.getElementById('artInnerVignette');
+      const starLeft = document.getElementById('artEdgeStarLeft');
+      const starRight = document.getElementById('artEdgeStarRight');
+
+      const typeBox = document.getElementById('cardTypeBox');
+      const textBox = document.getElementById('cardTextBox');
+      const watermark = document.getElementById('textBoxWatermark');
+      const rulesEl = document.getElementById('renderRulesText');
+      const flavorEl = document.getElementById('renderFlavorText');
+      const divL = document.getElementById('flavorDividerLineL');
+      const divStar = document.getElementById('flavorDividerStar');
+      const divR = document.getElementById('flavorDividerLineR');
+      const cornerSpur = document.getElementById('textBoxCornerSpur');
+      const ptBox = document.getElementById('renderPTBox');
+      const ptValEl = document.getElementById('renderPTVal');
+
+      // Toggle Primordial-Rare Outer Golden Filigree & Halo Layer
+      if (cardTarget) {
+        cardTarget.classList.toggle('primordial-outer-glow', isPrimordial);
+      }
+      if (primOverlay) {
+        primOverlay.classList.toggle('hidden', !isPrimordial);
+        primOverlay.style.opacity = String(primGlowRaw / 100);
+      }
+      if (primGlowWash) {
+        primGlowWash.style.opacity = String(Math.min(1, (primGlowRaw / 100) * 1.05));
+      }
+      if (primGemHalo) {
+        primGemHalo.classList.toggle('hidden', !isPrimordial);
+      }
+      if (footerBar) {
+        footerBar.className = isPrimordial
+          ? 'absolute bottom-[13px] left-[7.5%] right-[7.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-amber-200/95 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.98)]'
+          : 'absolute bottom-[5px] left-[5.5%] right-[5.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-zinc-300/85 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]';
+      }
+
+      // Reset custom Primordial box classes before applying mode-specific classes
+      if (headerBox) headerBox.classList.remove('primordial-gilded-header');
+      if (textBox) textBox.classList.remove('primordial-gilded-box');
+      if (ptBox) ptBox.classList.remove('primordial-pt-plaque');
+
+      // PRIMORDIAL-RARE DEDICATED FRAME MODE
+      if (frameMode === 'primordial') {
+        const goldBorder = '#fde68a';
+        const royalTypeBg = 'linear-gradient(135deg, #32240d 0%, #171005 48%, #2d1f0a 80%, #0f0a03 100%)';
+
+        if (primordialArtMode === 'fullart') {
+          if (fullArtContainer) fullArtContainer.classList.remove('hidden');
+          if (cosmicBaseRect) cosmicBaseRect.style.display = 'none';
+          if (cosmicDecorGroup) cosmicDecorGroup.style.display = 'block';
+          if (artWrapper) {
+            artWrapper.style.borderLeftWidth = '0px';
+            artWrapper.style.borderRightWidth = '0px';
+            artWrapper.style.boxShadow = 'none';
+          }
+          if (artContainer) artContainer.style.backgroundColor = 'transparent';
+          if (stdCanvas) stdCanvas.style.opacity = '0';
+          if (artVignette) artVignette.style.display = 'none';
+          if (starLeft) starLeft.style.display = 'none';
+          if (starRight) starRight.style.display = 'none';
+        } else {
+          if (fullArtContainer) fullArtContainer.classList.add('hidden');
+          if (cosmicBaseRect) cosmicBaseRect.style.display = 'block';
+          if (cosmicDecorGroup) cosmicDecorGroup.style.display = 'block';
+          if (artWrapper) {
+            artWrapper.style.borderLeftWidth = '2.5px';
+            artWrapper.style.borderRightWidth = '2.5px';
+            artWrapper.style.borderColor = goldBorder;
+            artWrapper.style.boxShadow = '0 0 14px rgba(251, 191, 36, 0.35), 0 0 0 1.5px #291c06';
+          }
+          if (artContainer) artContainer.style.backgroundColor = '#0b0a0f';
+          if (stdCanvas) stdCanvas.style.opacity = '1';
+          if (artVignette) artVignette.style.display = 'block';
+          if (starLeft) starLeft.style.display = 'block';
+          if (starRight) starRight.style.display = 'block';
+        }
+
+        if (primordialBoxStyle === 'gilded-marble') {
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(251,191,36,0.08) 0%, rgba(0,0,0,0) 45%, rgba(20,14,4,0.45) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.classList.add('primordial-gilded-header');
+            headerBox.style.background = '';
+            headerBox.style.boxShadow = '';
+            headerBox.style.borderWidth = '2.2px';
+            headerBox.style.borderColor = goldBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#241805]';
+          }
+          if (typeBox) {
+            typeBox.classList.add('astrum-obsidian-bar');
+            typeBox.style.background = royalTypeBg;
+            typeBox.style.borderWidth = '2px';
+            typeBox.style.borderColor = goldBorder;
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.classList.add('primordial-gilded-box');
+            textBox.style.background = '';
+            textBox.style.boxShadow = '';
+            textBox.style.borderLeftWidth = '2.5px';
+            textBox.style.borderRightWidth = '2.5px';
+            textBox.style.borderBottomWidth = '2.5px';
+            textBox.style.borderColor = goldBorder;
+          }
+          if (watermark) {
+            watermark.style.color = '#92400e';
+            watermark.style.opacity = '0.13';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#1f1608]';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#452e0b] pr-12 select-text';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#92400e]/55 to-[#92400e]/80';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#92400e]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#92400e]/55 to-[#92400e]/80';
+          if (cornerSpur) cornerSpur.style.display = 'block';
+
+          if (ptBox) {
+            ptBox.classList.remove('astrum-pt-plaque');
+            ptBox.classList.add('primordial-pt-plaque');
+            ptBox.style.background = '';
+            ptBox.style.borderColor = '#fffbeb';
+          }
+          if (ptValEl) {
+            ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#261905] tracking-tight';
+          }
+        } else if (primordialBoxStyle === 'floating') {
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(20,14,4,0.28) 0%, rgba(0,0,0,0) 22%, rgba(12,9,3,0.12) 48%, rgba(14,10,4,0.78) 74%, rgba(8,6,2,0.92) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.style.background = 'linear-gradient(180deg, rgba(32,22,8,0.78) 0%, rgba(16,11,4,0.58) 100%)';
+            headerBox.style.boxShadow = '0 2px 12px rgba(251,191,36,0.28)';
+            headerBox.style.borderWidth = '1.6px';
+            headerBox.style.borderColor = goldBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#fffbeb] fullart-crisp-shadow';
+          }
+          if (typeBox) {
+            typeBox.classList.remove('astrum-obsidian-bar');
+            typeBox.style.background = 'linear-gradient(90deg, rgba(30,21,7,0.82) 0%, rgba(18,13,4,0.65) 100%)';
+            typeBox.style.borderWidth = '1.4px';
+            typeBox.style.borderColor = 'rgba(253, 230, 138, 0.75)';
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.style.background = 'transparent';
+            textBox.style.boxShadow = 'none';
+            textBox.style.borderLeftWidth = '0px';
+            textBox.style.borderRightWidth = '0px';
+            textBox.style.borderBottomWidth = '0px';
+          }
+          if (watermark) {
+            watermark.style.color = '#fde68a';
+            watermark.style.opacity = '0.09';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#fffbeb] fullart-crisp-shadow';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#fde68a] pr-12 select-text fullart-crisp-shadow';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#fde68a]/55 to-[#fde68a]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#fde68a]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#fde68a]/55 to-[#fde68a]/85';
+          if (cornerSpur) cornerSpur.style.display = 'none';
+
+          if (ptBox) {
+            ptBox.classList.remove('astrum-pt-plaque');
+            ptBox.style.background = 'linear-gradient(180deg, rgba(42,29,9,0.92) 0%, rgba(18,12,4,0.96) 100%)';
+            ptBox.style.borderColor = goldBorder;
+          }
+          if (ptValEl) {
+            ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#fef08a] tracking-tight fullart-crisp-shadow';
+          }
+        } else {
+          // Royal Obsidian & Gold Glass
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(251,191,36,0.1) 0%, rgba(0,0,0,0) 35%, rgba(12,9,3,0.6) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.style.background = 'linear-gradient(180deg, rgba(36,26,10,0.88) 0%, rgba(16,12,5,0.92) 100%)';
+            headerBox.style.boxShadow = '0 3px 12px rgba(0,0,0,0.85), 0 0 12px rgba(251,191,36,0.28), inset 0 1px 1px rgba(254,240,138,0.35)';
+            headerBox.style.borderWidth = '2px';
+            headerBox.style.borderColor = goldBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#fef9c3] fullart-crisp-shadow';
+          }
+          if (typeBox) {
+            typeBox.classList.add('astrum-obsidian-bar');
+            typeBox.style.background = royalTypeBg;
+            typeBox.style.borderWidth = '2px';
+            typeBox.style.borderColor = goldBorder;
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.style.background = 'linear-gradient(165deg, rgba(28,20,8,0.84) 0%, rgba(12,9,4,0.91) 100%)';
+            textBox.style.boxShadow = '0 4px 14px rgba(0,0,0,0.85), 0 0 14px rgba(251,191,36,0.22), inset 0 1px 1px rgba(254,240,138,0.22)';
+            textBox.style.borderLeftWidth = '2.2px';
+            textBox.style.borderRightWidth = '2.2px';
+            textBox.style.borderBottomWidth = '2.2px';
+            textBox.style.borderColor = goldBorder;
+          }
+          if (watermark) {
+            watermark.style.color = '#fde047';
+            watermark.style.opacity = '0.1';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#fbf7ec] fullart-crisp-shadow';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#fde68a] pr-12 select-text fullart-crisp-shadow';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#fde68a]/55 to-[#fde68a]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#fde68a]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#fde68a]/55 to-[#fde68a]/85';
+          if (cornerSpur) cornerSpur.style.display = 'block';
+
+          if (ptBox) {
+            ptBox.classList.remove('astrum-pt-plaque');
+            ptBox.style.background = 'linear-gradient(180deg, rgba(46,32,10,0.95) 0%, rgba(18,12,4,0.98) 100%)';
+            ptBox.style.borderColor = goldBorder;
+          }
+          if (ptValEl) {
+            ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#fef08a] tracking-tight fullart-crisp-shadow';
+          }
+        }
+        return;
+      }
+
+      if (frameMode === 'standard') {
+        // Restore Classic 5:3 Astral Filigree Frame
+        if (fullArtContainer) fullArtContainer.classList.add('hidden');
+        if (cosmicBaseRect) cosmicBaseRect.style.display = 'block';
+        if (cosmicDecorGroup) cosmicDecorGroup.style.display = 'block';
+
+        if (headerBox) {
+          headerBox.classList.add('astrum-marble-header');
+          headerBox.style.background = '';
+          headerBox.style.boxShadow = '';
+          headerBox.style.borderWidth = '2.2px';
+          headerBox.style.borderColor = theme.trimBorder;
+        }
+        if (cardNameEl) {
+          cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#181520]';
+        }
+
+        if (artWrapper) {
+          artWrapper.style.borderLeftWidth = '2.5px';
+          artWrapper.style.borderRightWidth = '2.5px';
+          artWrapper.style.borderColor = theme.trimBorder;
+          artWrapper.style.boxShadow = '0 0 0 1.5px #121017';
+        }
+        if (artContainer) artContainer.style.backgroundColor = '#0b0a0f';
+        if (stdCanvas) stdCanvas.style.opacity = '1';
+        if (artVignette) artVignette.style.display = 'block';
+        if (starLeft) starLeft.style.display = 'block';
+        if (starRight) starRight.style.display = 'block';
+
+        if (typeBox) {
+          typeBox.classList.add('astrum-obsidian-bar');
+          typeBox.style.background = theme.obsidianBg;
+          typeBox.style.borderWidth = '2px';
+          typeBox.style.borderColor = theme.trimBorder;
+        }
+
+        if (textBox) {
+          textBox.classList.add('astrum-marble-box');
+          textBox.style.background = '';
+          textBox.style.boxShadow = '';
+          textBox.style.borderLeftWidth = '2.5px';
+          textBox.style.borderRightWidth = '2.5px';
+          textBox.style.borderBottomWidth = '2.5px';
+          textBox.style.borderColor = theme.trimBorder;
+        }
+        if (watermark) {
+          watermark.style.color = '#1e1b26';
+          watermark.style.opacity = '0.095';
+        }
+        if (rulesEl) {
+          rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#18161f]';
+        }
+        if (flavorEl) {
+          flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#2d2938] pr-12 select-text';
+        }
+        if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#2c2836]/65 to-[#2c2836]/80';
+        if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#2c2836]';
+        if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#2c2836]/65 to-[#2c2836]/80';
+        if (cornerSpur) cornerSpur.style.display = 'block';
+
+        if (ptBox) {
+          ptBox.classList.add('astrum-pt-plaque');
+          ptBox.style.background = '';
+          ptBox.style.borderColor = theme.trimBorder;
+        }
+        if (ptValEl) {
+          ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#17151f] tracking-tight';
+        }
+        return;
+      }
+
+      // FULL-ART MODE (63:88 Borderless Showcase)
+      if (fullArtContainer) fullArtContainer.classList.remove('hidden');
+      if (cosmicBaseRect) cosmicBaseRect.style.display = 'none';
+      if (cosmicDecorGroup) cosmicDecorGroup.style.display = showCosmicRibbons ? 'block' : 'none';
+
+      // Make upper 5:3 art box a clean transparent viewport over the full-bleed 63:88 art
+      if (artWrapper) {
+        artWrapper.style.borderLeftWidth = '0px';
+        artWrapper.style.borderRightWidth = '0px';
+        artWrapper.style.boxShadow = 'none';
+      }
+      if (artContainer) artContainer.style.backgroundColor = 'transparent';
+      if (stdCanvas) stdCanvas.style.opacity = '0';
+      if (artVignette) artVignette.style.display = 'none';
+      if (starLeft) starLeft.style.display = 'none';
+      if (starRight) starRight.style.display = 'none';
+
+      if (fullArtStyle === 'light-glass') {
+        // Frosted Alabaster Translucent Marble
+        if (fullArtBottomScrim) {
+          fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.45) 100%)';
+        }
+        if (headerBox) {
+          headerBox.classList.remove('astrum-marble-header');
+          headerBox.style.background = `linear-gradient(180deg, rgba(242,239,232,${Math.min(0.95, alpha + 0.1)}) 0%, rgba(216,211,202,${alpha}) 100%)`;
+          headerBox.style.boxShadow = '0 3px 10px rgba(0,0,0,0.65), inset 0 1px 1px rgba(255,255,255,0.75)';
+          headerBox.style.borderWidth = '2px';
+          headerBox.style.borderColor = theme.trimBorder;
+        }
+        if (cardNameEl) {
+          cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#181520]';
+        }
+        if (typeBox) {
+          typeBox.classList.add('astrum-obsidian-bar');
+          typeBox.style.background = `linear-gradient(135deg, rgba(30,27,38,${Math.min(0.95, alpha + 0.18)}) 0%, rgba(14,12,20,${Math.min(0.95, alpha + 0.22)}) 100%)`;
+          typeBox.style.borderWidth = '1.8px';
+          typeBox.style.borderColor = theme.trimBorder;
+        }
+        if (textBox) {
+          textBox.classList.remove('astrum-marble-box');
+          textBox.style.background = `linear-gradient(165deg, rgba(240,237,230,${alpha}) 0%, rgba(218,213,203,${Math.min(0.95, alpha + 0.08)}) 100%)`;
+          textBox.style.boxShadow = '0 4px 14px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.65)';
+          textBox.style.borderLeftWidth = '2px';
+          textBox.style.borderRightWidth = '2px';
+          textBox.style.borderBottomWidth = '2px';
+          textBox.style.borderColor = theme.trimBorder;
+        }
+        if (watermark) {
+          watermark.style.color = '#1e1b26';
+          watermark.style.opacity = '0.075';
+        }
+        if (rulesEl) {
+          rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#16141d]';
+        }
+        if (flavorEl) {
+          flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#282433] pr-12 select-text';
+        }
+        if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#2c2836]/65 to-[#2c2836]/80';
+        if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#2c2836]';
+        if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#2c2836]/65 to-[#2c2836]/80';
+        if (cornerSpur) cornerSpur.style.display = 'block';
+
+        if (ptBox) {
+          ptBox.classList.add('astrum-pt-plaque');
+          ptBox.style.background = '';
+          ptBox.style.borderColor = theme.trimBorder;
+        }
+        if (ptValEl) {
+          ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#17151f] tracking-tight';
+        }
+      } else if (fullArtStyle === 'floating') {
+        // Borderless SAR Floating Overlay Style
+        if (fullArtBottomScrim) {
+          fullArtBottomScrim.style.background = `linear-gradient(180deg, rgba(6,5,10,0.32) 0%, rgba(6,5,10,0) 18%, rgba(6,5,10,0.05) 48%, rgba(6,5,10,${Math.min(0.94, alpha * 0.92)}) 72%, rgba(4,4,8,${Math.min(0.97, alpha + 0.22)}) 100%)`;
+        }
+        if (headerBox) {
+          headerBox.classList.remove('astrum-marble-header');
+          headerBox.style.background = `linear-gradient(180deg, rgba(14,12,20,${alpha * 0.85}) 0%, rgba(10,9,15,${alpha * 0.55}) 100%)`;
+          headerBox.style.boxShadow = '0 2px 10px rgba(0,0,0,0.6)';
+          headerBox.style.borderWidth = '1.2px';
+          headerBox.style.borderColor = 'rgba(229, 207, 158, 0.55)';
+        }
+        if (cardNameEl) {
+          cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#fbf8f1] fullart-crisp-shadow';
+        }
+        if (typeBox) {
+          typeBox.classList.remove('astrum-obsidian-bar');
+          typeBox.style.background = `linear-gradient(90deg, rgba(12,11,18,${alpha * 0.78}) 0%, rgba(20,18,28,${alpha * 0.55}) 100%)`;
+          typeBox.style.borderWidth = '1px';
+          typeBox.style.borderColor = 'rgba(229, 207, 158, 0.45)';
+        }
+        if (textBox) {
+          textBox.classList.remove('astrum-marble-box');
+          textBox.style.background = 'transparent';
+          textBox.style.boxShadow = 'none';
+          textBox.style.borderLeftWidth = '0px';
+          textBox.style.borderRightWidth = '0px';
+          textBox.style.borderBottomWidth = '0px';
+        }
+        if (watermark) {
+          watermark.style.color = '#fff6e0';
+          watermark.style.opacity = '0.06';
+        }
+        if (rulesEl) {
+          rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#f8f5ee] fullart-crisp-shadow';
+        }
+        if (flavorEl) {
+          flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#e6decb] pr-12 select-text fullart-crisp-shadow';
+        }
+        if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#e5cf9e]/50 to-[#e5cf9e]/75';
+        if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#e5cf9e]';
+        if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#e5cf9e]/50 to-[#e5cf9e]/75';
+        if (cornerSpur) cornerSpur.style.display = 'none';
+
+        if (ptBox) {
+          ptBox.classList.remove('astrum-pt-plaque');
+          ptBox.style.background = 'linear-gradient(180deg, rgba(28,25,38,0.88) 0%, rgba(10,9,16,0.94) 100%)';
+          ptBox.style.borderColor = theme.trimBorder;
+        }
+        if (ptValEl) {
+          ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#fbf8f1] tracking-tight fullart-crisp-shadow';
+        }
+      } else {
+        // Default Full-Art: Dark Astral Glass (Framed Smoked Obsidian + Gold Trim)
+        if (fullArtBottomScrim) {
+          fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 100%)';
+        }
+        if (headerBox) {
+          headerBox.classList.remove('astrum-marble-header');
+          headerBox.style.background = `linear-gradient(180deg, rgba(24,21,34,${Math.min(0.95, alpha + 0.08)}) 0%, rgba(12,10,18,${Math.min(0.95, alpha + 0.14)}) 100%)`;
+          headerBox.style.boxShadow = '0 3px 10px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.18)';
+          headerBox.style.borderWidth = '2px';
+          headerBox.style.borderColor = theme.trimBorder;
+        }
+        if (cardNameEl) {
+          cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#f8f4eb] fullart-crisp-shadow';
+        }
+        if (typeBox) {
+          typeBox.classList.add('astrum-obsidian-bar');
+          typeBox.style.background = `linear-gradient(135deg, rgba(32,29,42,${Math.min(0.96, alpha + 0.16)}) 0%, rgba(14,12,20,${Math.min(0.96, alpha + 0.22)}) 100%)`;
+          typeBox.style.borderWidth = '1.8px';
+          typeBox.style.borderColor = theme.trimBorder;
+        }
+        if (textBox) {
+          textBox.classList.remove('astrum-marble-box');
+          textBox.style.background = `linear-gradient(165deg, rgba(20,18,28,${alpha}) 0%, rgba(10,9,15,${Math.min(0.96, alpha + 0.12)}) 100%)`;
+          textBox.style.boxShadow = '0 4px 14px rgba(0,0,0,0.85), inset 0 1px 1px rgba(255,255,255,0.12)';
+          textBox.style.borderLeftWidth = '2px';
+          textBox.style.borderRightWidth = '2px';
+          textBox.style.borderBottomWidth = '2px';
+          textBox.style.borderColor = theme.trimBorder;
+        }
+        if (watermark) {
+          watermark.style.color = '#fff6e0';
+          watermark.style.opacity = '0.075';
+        }
+        if (rulesEl) {
+          rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#f3efe6] fullart-crisp-shadow';
+        }
+        if (flavorEl) {
+          flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#ded6c4] pr-12 select-text fullart-crisp-shadow';
+        }
+        if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#e5cf9e]/50 to-[#e5cf9e]/75';
+        if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#e5cf9e]';
+        if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#e5cf9e]/50 to-[#e5cf9e]/75';
+        if (cornerSpur) cornerSpur.style.display = 'block';
+
+        if (ptBox) {
+          ptBox.classList.remove('astrum-pt-plaque');
+          ptBox.style.background = 'linear-gradient(180deg, rgba(30,27,40,0.92) 0%, rgba(12,10,18,0.96) 100%)';
+          ptBox.style.borderColor = theme.trimBorder;
+        }
+        if (ptValEl) {
+          ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#f8f4eb] tracking-tight fullart-crisp-shadow';
+        }
+      }
+    }
+
+    // 8. Artwork 5:3 & Full-Art 63:88 Auto-Crop Engine
+    const DEFAULT_ART_URL = 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80';
+    let currentArtImage = null;
+
+    window.loadArtworkSource = function(src) {
+      if (!src) return;
+      const img = new Image();
+      if (/^https?:\/\//i.test(src)) {
+        img.crossOrigin = 'anonymous';
+      }
+      img.onload = function() {
+        currentArtImage = img;
+        updateArtworkTransform();
+      };
+      img.onerror = function() {
+        // Fallback retry without crossOrigin if external host blocks CORS headers
+        if (img.crossOrigin) {
+          const fallbackImg = new Image();
+          fallbackImg.onload = function() {
+            currentArtImage = fallbackImg;
+            updateArtworkTransform();
+          };
+          fallbackImg.src = src;
+        }
+      };
+      img.src = src;
+    };
+
     window.updateArtworkTransform = function() {
-      const img = document.getElementById('renderCardArt');
-      if (!img) return;
-      const zoom = document.getElementById('inputArtZoom')?.value || 100;
-      const posX = document.getElementById('inputArtPosX')?.value || 50;
-      const posY = document.getElementById('inputArtPosY')?.value || 50;
+      const fullArtActive = isFullArtActive();
+      const targetCanvasId = fullArtActive ? 'renderFullArtCanvas' : 'renderCardArtCanvas';
+      const canvas = document.getElementById(targetCanvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const cw = canvas.width;   // 1000 (Standard 5:3) or 945 (Full-Art 63:88)
+      const ch = canvas.height;  // 600  (Standard 5:3) or 1320 (Full-Art 63:88)
+      const targetAspect = cw / ch;
 
-      const scale = zoom / 100;
-      const translateX = (posX - 50) * 1.5;
-      const translateY = (posY - 50) * 1.5;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.fillStyle = '#0b0a0f';
+      ctx.fillRect(0, 0, cw, ch);
 
-      img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-      img.style.transformOrigin = 'center center';
+      if (!currentArtImage || !currentArtImage.naturalWidth || !currentArtImage.naturalHeight) {
+        return;
+      }
+
+      const sw = currentArtImage.naturalWidth;
+      const sh = currentArtImage.naturalHeight;
+      const srcAspect = sw / sh;
+
+      const infoEl = document.getElementById('artCropInfo');
+      if (infoEl) {
+        const ratioLabel = fullArtActive ? '63:88 풀아트' : '5:3';
+        infoEl.textContent = `원본 ${sw}×${sh} → ${ratioLabel} 자동 크롭됨`;
+      }
+
+      // Compute largest target-aspect cover box inside the source image
+      let baseCropW, baseCropH;
+      if (srcAspect > targetAspect) {
+        baseCropH = sh;
+        baseCropW = sh * targetAspect;
+      } else {
+        baseCropW = sw;
+        baseCropH = sw / targetAspect;
+      }
+
+      const zoomVal = Math.max(100, parseFloat(document.getElementById('inputArtZoom')?.value || 100));
+      const posX = Math.min(100, Math.max(0, parseFloat(document.getElementById('inputArtPosX')?.value ?? 50)));
+      const posY = Math.min(100, Math.max(0, parseFloat(document.getElementById('inputArtPosY')?.value ?? 50)));
+
+      const scale = zoomVal / 100;
+      const cropW = baseCropW / scale;
+      const cropH = baseCropH / scale;
+
+      const maxX = Math.max(0, sw - cropW);
+      const maxY = Math.max(0, sh - cropH);
+
+      const sx = (posX / 100) * maxX;
+      const sy = (posY / 100) * maxY;
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(currentArtImage, sx, sy, cropW, cropH, 0, 0, cw, ch);
     };
 
     window.resetArtAdjustments = function() {
@@ -1082,25 +2107,32 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
     // 12. Render Pokemon Skills inside Card
     function renderPokemonSkills() {
+      const darkOverlay = isFullArtDarkTextMode();
       if (!skillsData || skillsData.length === 0) {
-        return '<p class="text-zinc-500 italic text-[11px] py-2 text-center">등록된 기술이 없습니다.</p>';
+        const emptyColor = darkOverlay ? 'text-zinc-300/80' : 'text-zinc-500';
+        return `<p class="${emptyColor} italic text-[11px] py-2 text-center">등록된 기술이 없습니다.</p>`;
       }
+
+      const nameColor = darkOverlay ? 'text-[#fbf8f1] fullart-crisp-shadow' : 'text-zinc-950';
+      const dmgColor = darkOverlay ? 'text-[#fde68a] fullart-crisp-shadow' : 'text-zinc-950';
+      const descColor = darkOverlay ? 'text-[#f1ede4] fullart-crisp-shadow' : 'text-zinc-900';
+      const dividerColor = darkOverlay ? 'border-amber-200/20' : 'border-zinc-800/15';
 
       return skillsData.map((skill, idx) => {
         const costHtml = skill.cost ? `<div class="pokemon-energy-cost">${parseManaSymbols(skill.cost, true)}</div>` : '';
-        const damageHtml = skill.damage ? `<div class="font-card-title text-xs sm:text-[13px] font-black tracking-tight text-zinc-950 ml-auto shrink-0 whitespace-nowrap">${skill.damage}</div>` : '';
-        const borderClass = idx > 0 ? 'border-t border-zinc-800/15 pt-1.5' : '';
+        const damageHtml = skill.damage ? `<div class="font-card-title text-xs sm:text-[13px] font-black tracking-tight ${dmgColor} ml-auto shrink-0 whitespace-nowrap">${skill.damage}</div>` : '';
+        const borderClass = idx > 0 ? `border-t ${dividerColor} pt-1.5` : '';
         
         let descHtml = '';
         if (skill.desc && typeof skill.desc === 'string' && skill.desc.trim()) {
-          descHtml = `<div class="font-card-body text-[10px] sm:text-[10.5px] text-zinc-900 leading-snug pt-0.5">${formatRulesText(skill.desc)}</div>`;
+          descHtml = `<div class="font-card-body text-[10px] sm:text-[10.5px] ${descColor} leading-snug pt-0.5">${formatRulesText(skill.desc)}</div>`;
         }
 
         return `
           <div class="pokemon-skill-row ${borderClass}">
             <div class="pokemon-skill-header">
               ${costHtml}
-              <div class="font-card-title text-[11.5px] sm:text-[12.5px] font-extrabold tracking-tight text-zinc-950 flex-1 min-w-0 truncate">
+              <div class="font-card-title text-[11.5px] sm:text-[12.5px] font-extrabold tracking-tight ${nameColor} flex-1 min-w-0 truncate">
                 ${skill.name || '기술명'}
               </div>
               ${damageHtml}
@@ -1188,6 +2220,8 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
     // 14. Realtime Card Preview Update
     function updateCard() {
       try {
+        applyFrameLayoutStyles();
+
         // 1. Name & Mana
         const name = document.getElementById('inputName')?.value || 'Untitled';
         const renderNameEl = document.getElementById('renderCardName');
@@ -1210,7 +2244,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
         const holoStamp = document.getElementById('renderHoloStamp');
         if (holoStamp) {
-          holoStamp.style.display = ['rare', 'epic', 'legendary', 'mythic', 'secret'].includes(rarity) ? 'flex' : 'none';
+          holoStamp.style.display = ['rare', 'epic', 'legendary', 'mythic', 'secret', 'primordial'].includes(rarity) ? 'flex' : 'none';
         }
 
         // 3. Text Body
@@ -1287,8 +2321,9 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
     function setupApp() {
       // Inputs binding
       const inputIds = [
-        'inputName', 'inputMana', 'inputTypeLine', 'selectRarity',
+        'inputName', 'inputMana', 'inputTypeLine',
         'inputText', 'inputFlavor', 'togglePT', 'inputPT', 'toggleCrown', 'toggleFooter',
+        'inputBoxOpacity', 'toggleCosmicRibbons', 'inputPrimordialGlow',
         'inputSetCode', 'inputLang', 'inputArtist', 'inputCopyright'
       ];
       inputIds.forEach(id => {
@@ -1299,30 +2334,74 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
         }
       });
 
-      // Artwork zoom & position sliders
-      ['inputArtZoom', 'inputArtPosX', 'inputArtPosY'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener('input', updateArtworkTransform);
-        }
-      });
-
-      // Artwork local file upload
-      const artFileInput = document.getElementById('inputArtFile');
-      if (artFileInput) {
-        artFileInput.addEventListener('change', (e) => {
-          const file = e.target.files && e.target.files[0];
-          if (!file) return;
-          const reader = new FileReader();
-          reader.onload = (ev) => {
-            const img = document.getElementById('renderCardArt');
-            if (img && ev.target?.result) {
-              img.src = ev.target.result;
-              resetArtAdjustments();
-            }
-          };
-          reader.readAsDataURL(file);
+      // Sync Rarity Dropdown with Primordial-Rare Frame automatically
+      const raritySelectEl = document.getElementById('selectRarity');
+      if (raritySelectEl) {
+        raritySelectEl.addEventListener('change', (e) => {
+          if (e.target.value === 'primordial' && frameMode !== 'primordial') {
+            setFrameMode('primordial', false);
+          } else if (e.target.value !== 'primordial' && frameMode === 'primordial') {
+            setFrameMode(primordialArtMode === 'fullart' ? 'fullart' : 'standard', false);
+          } else {
+            updateCard();
+          }
         });
+      }
+
+      // Direct drag-to-pan on the 5:3 illustration frame
+      const artContainer = document.getElementById('cardArtContainer');
+      if (artContainer) {
+        let isDraggingArt = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let initialPosX = 50;
+        let initialPosY = 50;
+
+        const startDrag = (clientX, clientY) => {
+          isDraggingArt = true;
+          dragStartX = clientX;
+          dragStartY = clientY;
+          initialPosX = parseFloat(document.getElementById('inputArtPosX')?.value ?? 50);
+          initialPosY = parseFloat(document.getElementById('inputArtPosY')?.value ?? 50);
+        };
+
+        const moveDrag = (clientX, clientY) => {
+          if (!isDraggingArt) return;
+          const refEl = isFullArtActive() ? (document.getElementById('cardPreviewTarget') || artContainer) : artContainer;
+          const rect = refEl.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+          const dx = clientX - dragStartX;
+          const dy = clientY - dragStartY;
+
+          const nextX = Math.min(100, Math.max(0, initialPosX - (dx / rect.width) * 100));
+          const nextY = Math.min(100, Math.max(0, initialPosY - (dy / rect.height) * 100));
+
+          const xEl = document.getElementById('inputArtPosX');
+          const yEl = document.getElementById('inputArtPosY');
+          if (xEl) xEl.value = nextX;
+          if (yEl) yEl.value = nextY;
+          updateArtworkTransform();
+        };
+
+        const endDrag = () => {
+          isDraggingArt = false;
+        };
+
+        artContainer.addEventListener('mousedown', (e) => startDrag(e.clientX, e.clientY));
+        window.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
+        window.addEventListener('mouseup', endDrag);
+
+        artContainer.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 1) {
+            startDrag(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: true });
+        window.addEventListener('touchmove', (e) => {
+          if (isDraggingArt && e.touches.length === 1) {
+            moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: true });
+        window.addEventListener('touchend', endDrag);
       }
 
       // Pokemon vs Classic mode tabs
@@ -1375,7 +2454,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       selectColor('UMBRA');
       renderSkillsEditor();
       updateCard();
-      updateArtworkTransform();
+      loadArtworkSource(DEFAULT_ART_URL);
     }
 
     // Run setup on load
