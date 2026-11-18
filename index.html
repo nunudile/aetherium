@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AETHERIUM TCG Card Maker</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Beleren:wght@700&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons & html2canvas -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    /* Font styles */
+    .font-card-title {
+      font-family: 'Cinzel', 'Noto Serif KR', serif;
+    }
+    .font-card-type {
+      font-family: 'Cinzel', 'Noto Serif KR', serif;
+    }
+    .font-card-body {
+      font-family: 'Noto Serif KR', Georgia, serif;
+    }
+    .font-card-flavor {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-style: italic;
+    }
+
+    /* Holographic Foil Shader Effect */
+    .foil-hologram {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 0, 128, 0.3) 25%,
+        rgba(0, 255, 255, 0.4) 50%,
+        rgba(255, 230, 0, 0.3) 75%,
+        rgba(255, 255, 255, 0.4) 100%
+      );
+      background-size: 200% 200%;
+      animation: foilSheen 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes foilSheen {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* Core Mana/Energy Symbol - Circular 3D Orb */
+    .mana-symbol {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+      max-width: 22px;
+      border-radius: 9999px;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.55), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6);
+      flex-shrink: 0 !important;
+      user-select: none;
+      vertical-align: middle;
+      position: relative;
+    }
+
+    .mana-symbol-inline {
+      width: 17px;
+      height: 17px;
+      min-width: 17px;
+      max-width: 17px;
+      border-radius: 9999px;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 0.8px 1px rgba(255, 255, 255, 0.5);
+      flex-shrink: 0 !important;
+      user-select: none;
+      vertical-align: -3px !important;
+      position: relative;
+      margin: 0 1.5px !important;
+      line-height: 1 !important;
+    }
+
+    /* Header Mana Cost Row */
+    .mana-cost-group {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+      white-space: nowrap !important;
+      gap: 2px !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Rules text inline symbols cluster */
+    .mana-cluster-inline {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+      white-space: nowrap !important;
+      gap: 1.5px !important;
+      margin: 0 2px !important;
+      vertical-align: middle !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Pokemon Skill Energy & Header Styles (Strict No-Wrap Rules) */
+    .pokemon-energy-cost {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+      white-space: nowrap !important;
+      gap: 1.5px !important;
+      flex-shrink: 0 !important;
+    }
+    .pokemon-energy-cost > * {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .pokemon-energy-cost .mana-symbol-inline {
+      flex-shrink: 0 !important;
+      display: inline-flex !important;
+      margin: 0 !important;
+    }
+    .pokemon-skill-header {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+      gap: 6px !important;
+      width: 100% !important;
+    }
+
+    /* Astral Filigree Frame Textures (CARD_FORM Style) */
+    .astrum-marble-header {
+      background-color: #dedad2;
+      background-image:
+        radial-gradient(ellipse at 20% 30%, rgba(255, 255, 255, 0.65) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(160, 154, 145, 0.35) 0%, transparent 50%),
+        linear-gradient(180deg, #ece9e2 0%, #dad5cc 52%, #c9c3b8 100%);
+      box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.85),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8),
+        inset 0 -1.5px 3px rgba(60, 52, 42, 0.35),
+        inset 0 0 0 1.5px #1a1821;
+    }
+
+    .astrum-obsidian-bar {
+      box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.9),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.22),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.85),
+        inset 0 0 0 1.2px #09080d;
+    }
+
+    .astrum-marble-box {
+      background-color: #e3dfd7;
+      background-image:
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.7) 0%, transparent 45%),
+        radial-gradient(circle at 82% 28%, rgba(175, 169, 158, 0.32) 0%, transparent 48%),
+        radial-gradient(circle at 35% 78%, rgba(168, 162, 152, 0.28) 0%, transparent 52%),
+        radial-gradient(circle at 78% 82%, rgba(255, 255, 255, 0.55) 0%, transparent 45%),
+        linear-gradient(165deg, #ebe8e1 0%, #dfdbd2 48%, #d5d0c6 100%);
+      box-shadow:
+        inset 0 2px 6px rgba(0, 0, 0, 0.28),
+        inset 0 0 0 1.5px #1b1922,
+        0 4px 12px rgba(0, 0, 0, 0.85);
+    }
+
+    .astrum-pt-plaque {
+      background-color: #dfdbd2;
+      background-image:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.75) 0%, transparent 60%),
+        linear-gradient(180deg, #edeae4 0%, #d8d3c8 60%, #c4beb2 100%);
+      box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.9),
+        inset 0 1px 1px rgba(255, 255, 255, 0.85),
+        inset 0 -1.5px 2px rgba(0, 0, 0, 0.35),
+        inset 0 0 0 1.5px #232029;
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
+
+  <!-- Header / Navigation Bar -->
+  <header class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 via-rose-600 to-amber-400 flex items-center justify-center shadow-lg shadow-rose-950/40">
+          <i data-lucide="sparkles" class="w-5 h-5 text-zinc-950"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight font-card-title flex items-center gap-2">
+            AETHERIUM <span class="text-xs px-2 py-0.5 rounded bg-zinc-800 text-amber-400 border border-zinc-700">TCG MAKER</span>
+          </h1>
+          <p class="text-[11px] text-zinc-400 hidden sm:block">전설적 크리처 & 배틀 스킬 카드 에디터</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnDownload" onclick="downloadCard()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 text-xs font-bold rounded-lg shadow-md transition flex items-center gap-1.5 active:scale-95">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>카드 다운로드</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- Left Column: Form Controls (7 cols on lg) -->
+    <div class="lg:col-span-7 space-y-5 order-2 lg:order-1">
+
+      <!-- 1. Attribute / Theme Selector -->
+      <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center gap-2">
+          <i data-lucide="palette" class="w-4 h-4 text-amber-400"></i>
+          카드 속성 선택 (7 ELEMENTS)
+        </h2>
+        <div id="colorSelectors" class="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
+          <button type="button" data-color="IGNIS" onclick="selectColor('IGNIS')" class="px-2 py-2 rounded-xl text-xs font-semibold bg-red-950/80 border border-red-700/80 text-red-200 hover:bg-red-900 transition flex flex-col items-center gap-1 ring-2 ring-white">
+            <span class="w-3.5 h-3.5 rounded-full bg-red-500 shadow-sm"></span>
+            <span>IGNIS</span>
+          </button>
+          <button type="button" data-color="AQUA" onclick="selectColor('AQUA')" class="px-2 py-2 rounded-xl text-xs font-semibold bg-cyan-950/80 border border-cyan-700/80 text-cyan-200 hover:bg-cyan-900 transition flex flex-col items-center gap-1">
+            <span class="w-3.5 h-3.5 rounded-full bg-cyan-400 shadow-sm"></span>
+            <span>AQUA</span>
+          </button>
+          <button type="button" data-color="VERDANT" onclick="selectColor('VERDANT')" class="px-2 py-2 rounded-xl text-xs font-semibold bg-emerald-950/80 border border-emerald-700/80 text-emerald-200 hover:bg-emerald-900 transition flex flex-col items-center gap-1">
+            <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm"></span>
+            <span>VERDANT</span>
+          </button>
+          <button type="button" data-color="VOLT" onclick="selectColor('VOLT')" class="px-2 py-2 rounded-xl text-xs font-semibold bg-amber-950/80 border border-amber-700/80 text-amber-200 hover:bg-amber-900 transition flex flex-col items-center gap-1">
+            <span class="w-3.5 h-3.5 rounded-full bg-amber-400 shadow-sm"></span>
+            <span>VOLT</span>
+          </button>
+          <button type="button" data-color="UMBRA" onclick="selectColor('UMBRA')" class="px-2 py-2 rounded-xl text-xs font-semibold bg-purple-950/80 border border-purple-700/80 text-purple-200 hover:bg-purple-900 transition flex flex-col items-center gap-1">
+            <span class="w-3.5 h-3.5 rounded-full bg-purple-500 shadow-sm"></span>
+            <span>UMBRA</span>
+          </button>
+          <button type="button" data-color="LUMEN" onclick="selectColor('LUMEN')" class="px-2 py-2 rounded-xl text-xs font-semibold bg-yellow-950/80 border border-yellow-700/80 text-yellow-200 hover:bg-yellow-900 transition flex flex-col items-center gap-1">
+            <span class="w-3.5 h-3.5 rounded-full bg-yellow-300 shadow-sm"></span>
+            <span>LUMEN</span>
+          </button>
+          <button type="button" data-color="NEUTRA" onclick="selectColor('NEUTRA')" class="px-2 py-2 rounded-xl text-xs font-semibold bg-zinc-800 border border-zinc-600 text-zinc-300 hover:bg-zinc-700 transition flex flex-col items-center gap-1">
+            <span class="w-3.5 h-3.5 rounded-full bg-zinc-400 shadow-sm"></span>
+            <span>NEUTRA</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Basic Info & Header Controls -->
+      <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+          <i data-lucide="file-text" class="w-4 h-4 text-amber-400"></i>
+          기본 카드 정보
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <div class="sm:col-span-8">
+            <label class="block text-xs text-zinc-400 mb-1">카드 이름</label>
+            <input type="text" id="inputName" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500" value="Kindlet, the Emberling">
+          </div>
+          <div class="sm:col-span-4">
+            <label class="block text-xs text-zinc-400 mb-1">소환 코스트 (예: 1 {IGNIS})</label>
+            <input type="text" id="inputMana" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500" value="1 {IGNIS}">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <div class="sm:col-span-8">
+            <label class="block text-xs text-zinc-400 mb-1">유형 라인 (Type Line)</label>
+            <input type="text" id="inputTypeLine" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500" value="Legendary Creature — Elemental Beast">
+          </div>
+          <div class="sm:col-span-4">
+            <label class="block text-xs text-zinc-400 mb-1">카드 등급 (7 RARITIES)</label>
+            <select id="selectRarity" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500">
+              <option value="common">Common (커먼)</option>
+              <option value="uncommon">Uncommon (언커먼)</option>
+              <option value="rare">Rare (레어)</option>
+              <option value="epic">Epic (에픽)</option>
+              <option value="legendary">Legendary (전설)</option>
+              <option value="mythic" selected>Mythic (미식)</option>
+              <option value="secret">Secret Rare (시크릿 레어)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
+          <label class="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer select-none">
+            <input type="checkbox" id="toggleCrown" checked class="w-4 h-4 rounded text-amber-500 bg-zinc-950 border-zinc-700 focus:ring-0">
+            <span>천상 성좌 장식(Celestial Crest) 표시</span>
+          </label>
+          <label class="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer select-none">
+            <input type="checkbox" id="togglePT" checked class="w-4 h-4 rounded text-amber-500 bg-zinc-950 border-zinc-700 focus:ring-0">
+            <span>P/T 박스 표시</span>
+          </label>
+          <label class="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer select-none">
+            <input type="checkbox" id="toggleFooter" checked class="w-4 h-4 rounded text-amber-500 bg-zinc-950 border-zinc-700 focus:ring-0">
+            <span>하단 메타정보 표시</span>
+          </label>
+          <div class="flex items-center gap-1.5 ml-auto">
+            <span class="text-xs text-zinc-400">P/T:</span>
+            <input type="text" id="inputPT" class="w-16 bg-zinc-950 border border-zinc-700 rounded-lg px-2 py-1 text-xs text-center text-zinc-100 font-bold" value="2/2">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Artwork Controls (5:3 Ratio) -->
+      <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+            <i data-lucide="image" class="w-4 h-4 text-amber-400"></i>
+            일러스트레이션 설정 (5:3 와이드 비율)
+          </h2>
+          <button type="button" onclick="resetArtAdjustments()" class="text-xs text-zinc-400 hover:text-zinc-200">초기화</button>
+        </div>
+        
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">이미지 파일 불러오기</label>
+          <input type="file" id="inputArtFile" accept="image/*" class="w-full text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-amber-400 hover:file:bg-zinc-700 cursor-pointer">
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1">확대/축소 (Zoom)</label>
+            <input type="range" id="inputArtZoom" min="80" max="250" value="100" class="w-full accent-amber-500">
+          </div>
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1">가로 위치 (X Offset)</label>
+            <input type="range" id="inputArtPosX" min="0" max="100" value="50" class="w-full accent-amber-500">
+          </div>
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1">세로 위치 (Y Offset)</label>
+            <input type="range" id="inputArtPosY" min="0" max="100" value="50" class="w-full accent-amber-500">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Rules & Skills Builder (Tabs: Pokemon vs Classic) -->
+      <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
+        <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+            <i data-lucide="swords" class="w-4 h-4 text-amber-400"></i>
+            스킬 & 규칙 서식 모드
+          </h2>
+          <div class="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800 text-xs">
+            <button type="button" id="tabModePokemon" class="px-3 py-1.5 rounded-md transition-all bg-amber-500 text-zinc-950 font-bold shadow-sm flex items-center gap-1.5">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              <span>스킬 분리 모드 (포켓몬풍)</span>
+            </button>
+            <button type="button" id="tabModeClassic" class="px-3 py-1.5 rounded-md text-zinc-400 hover:text-zinc-200 transition-all flex items-center gap-1.5">
+              <i data-lucide="align-left" class="w-3.5 h-3.5"></i>
+              <span>클래식 서술 모드 (오라클)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode 1: Pokemon Style Builder -->
+        <div id="sectionPokemonStyle" class="space-y-3">
+          <div id="skillsList" class="space-y-3">
+            <!-- Dynamic Skill Blocks generated here -->
+          </div>
+          <button type="button" id="btnAddSkill" class="w-full py-2 border-2 border-dashed border-zinc-700 hover:border-amber-500/60 rounded-xl text-xs font-bold text-zinc-300 hover:text-amber-400 transition flex items-center justify-center gap-2">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>새로운 기술 추가</span>
+          </button>
+        </div>
+
+        <!-- Mode 2: Classic Free Text -->
+        <div id="sectionClassicStyle" class="space-y-3 hidden">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="text-xs text-zinc-400">룰 텍스트 (줄바꿈 및 심볼 지원)</label>
+              <div class="flex items-center gap-1">
+                <button type="button" onclick="insertSymbol('{IGNIS}')" class="px-1.5 py-0.5 rounded bg-red-950 border border-red-800 text-[10px] text-red-300">+IGNIS</button>
+                <button type="button" onclick="insertSymbol('{AQUA}')" class="px-1.5 py-0.5 rounded bg-cyan-950 border border-cyan-800 text-[10px] text-cyan-300">+AQUA</button>
+                <button type="button" onclick="insertSymbol('{VERDANT}')" class="px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-[10px] text-emerald-300">+VERDANT</button>
+                <button type="button" onclick="insertSymbol('{VOLT}')" class="px-1.5 py-0.5 rounded bg-amber-950 border border-amber-800 text-[10px] text-amber-300">+VOLT</button>
+                <button type="button" onclick="insertSymbol('{UMBRA}')" class="px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-[10px] text-purple-300">+UMBRA</button>
+                <button type="button" onclick="insertSymbol('{NEUTRA}')" class="px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-600 text-[10px] text-zinc-300">+NEUTRA</button>
+                <button type="button" onclick="insertSymbol('{T}')" class="px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-600 text-[10px] text-zinc-300">+TAP</button>
+              </div>
+            </div>
+            <textarea id="inputText" rows="4" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl p-3 text-sm text-zinc-100 font-card-body leading-relaxed focus:outline-none focus:border-amber-500">Haste
+Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
+{IGNIS}{IGNIS}, Sacrifice Kindlet: It deals 3 damage to any target.</textarea>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">플레이버 텍스트 (Flavor Text)</label>
+          <input type="text" id="inputFlavor" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-300 italic focus:outline-none focus:border-amber-500" value="“From the ashes, it rises again.”">
+        </div>
+      </div>
+
+      <!-- 5. Card Footer Metadata -->
+      <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+          <i data-lucide="tag" class="w-4 h-4 text-amber-400"></i>
+          하단 메타데이터
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1">세트 코드</label>
+            <input type="text" id="inputSetCode" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200" value="GEN">
+          </div>
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1">언어</label>
+            <input type="text" id="inputLang" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200" value="EN">
+          </div>
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1">일러스트레이터</label>
+            <input type="text" id="inputArtist" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200" value="Lucas Graciano">
+          </div>
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1">카피라이트</label>
+            <input type="text" id="inputCopyright" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200" value="™ & © 2026 AETHERIUM">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Live Card Preview (5 cols on lg, sticky) -->
+    <div class="lg:col-span-5 order-1 lg:order-2 flex flex-col items-center lg:sticky lg:top-20">
+      <div class="w-full max-w-[370px] sm:max-w-[410px]">
+        
+        <!-- CARD PREVIEW CONTAINER (AETHERIUM Astral Filigree Form - 63:88) -->
+        <div id="cardPreviewTarget" class="w-full aspect-[63/88] rounded-[22px] bg-[#040407] relative select-none box-border flex flex-col overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.95)] border border-[#24202c]">
+
+          <!-- LAYER 0: Cosmic Space, Swirling Ethereal Ribbons, Shards & Bottom Filigree Web -->
+          <svg id="cosmicBgSvg" class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 630 880" preserveAspectRatio="none">
+            <defs>
+              <radialGradient id="nebulaTop" cx="50%" cy="8%" r="55%">
+                <stop id="nebulaStop1" offset="0%" stop-color="#7c3aed" stop-opacity="0.38"/>
+                <stop id="nebulaStop2" offset="55%" stop-color="#3b0764" stop-opacity="0.16"/>
+                <stop offset="100%" stop-color="#040407" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="nebulaBottom" cx="50%" cy="92%" r="55%">
+                <stop id="nebulaBotStop1" offset="0%" stop-color="#9333ea" stop-opacity="0.42"/>
+                <stop id="nebulaBotStop2" offset="60%" stop-color="#1e1b4b" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#040407" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="ribbonGradA" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
+                <stop id="ribbonColorA" offset="45%" stop-color="#c084fc" stop-opacity="0.55"/>
+                <stop id="ribbonColorB" offset="100%" stop-color="#4c1d95" stop-opacity="0.08"/>
+              </linearGradient>
+              <linearGradient id="ribbonGradB" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#f5ebd6" stop-opacity="0.65"/>
+                <stop id="ribbonColorC" offset="50%" stop-color="#a855f7" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#09090b" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="goldFiligreeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fff6e0"/>
+                <stop offset="35%" stop-color="#e5cf9e"/>
+                <stop offset="70%" stop-color="#ab8d56"/>
+                <stop offset="100%" stop-color="#5c4724"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Deep Cosmic Base -->
+            <rect width="630" height="880" fill="#040407"/>
+            <rect width="630" height="880" fill="url(#nebulaTop)"/>
+            <rect width="630" height="880" fill="url(#nebulaBottom)"/>
+
+            <!-- Distant Starfield Specks -->
+            <g fill="#ffffff" opacity="0.55">
+              <circle cx="48" cy="22" r="1.1"/><circle cx="122" cy="14" r="0.8"/><circle cx="265" cy="18" r="1.2"/>
+              <circle cx="385" cy="12" r="1"/><circle cx="515" cy="20" r="1.3"/><circle cx="585" cy="34" r="0.9"/>
+              <circle cx="16" cy="145" r="1.1"/><circle cx="24" cy="390" r="0.9"/><circle cx="14" cy="520" r="1.2"/>
+              <circle cx="614" cy="175" r="1"/><circle cx="608" cy="410" r="1.2"/><circle cx="616" cy="590" r="0.9"/>
+              <circle cx="95" cy="856" r="1.1"/><circle cx="215" cy="865" r="0.8"/><circle cx="430" cy="862" r="1.1"/><circle cx="545" cy="852" r="0.9"/>
+            </g>
+
+            <!-- Top Swirling Astral Silk Ribbons -->
+            <path d="M-10,95 C35,10 155,-8 275,28 C185,8 75,24 18,115 Z" fill="url(#ribbonGradA)"/>
+            <path d="M640,95 C595,12 475,-8 355,28 C445,8 555,24 612,115 Z" fill="url(#ribbonGradB)"/>
+            <path d="M25,42 C110,-6 230,6 315,24 C400,6 520,-6 605,42" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.3" opacity="0.65"/>
+
+            <!-- Left & Right Flowing Nebula Ribbons -->
+            <path d="M6,160 C-8,260 36,330 22,445 C10,520 -4,610 34,710 C12,615 24,525 34,440 C44,330 8,255 24,165 Z" fill="url(#ribbonGradA)" opacity="0.85"/>
+            <path d="M624,150 C638,255 594,335 608,450 C620,530 634,615 596,715 C618,620 606,530 596,445 C586,335 622,250 606,155 Z" fill="url(#ribbonGradB)" opacity="0.85"/>
+
+            <!-- Floating Crystal Shards on Lower Outer Borders -->
+            <polygon points="14,555 32,572 24,602 8,582" fill="url(#ribbonGradA)" stroke="#e5cf9e" stroke-width="0.7" opacity="0.75"/>
+            <polygon points="616,548 598,568 606,598 622,578" fill="url(#ribbonGradB)" stroke="#e5cf9e" stroke-width="0.7" opacity="0.75"/>
+            <polygon points="10,705 28,688 36,725 14,742" fill="url(#ribbonGradB)" stroke="#cbd5e1" stroke-width="0.6" opacity="0.65"/>
+            <polygon points="620,700 602,685 594,722 616,738" fill="url(#ribbonGradA)" stroke="#cbd5e1" stroke-width="0.6" opacity="0.65"/>
+
+            <!-- Bottom Swirling Ribbons & Golden Gothic Web Filigree -->
+            <path d="M12,785 C65,868 185,882 315,848 C195,868 85,848 28,772 Z" fill="url(#ribbonGradA)"/>
+            <path d="M618,785 C565,868 445,882 315,848 C435,868 545,848 602,772 Z" fill="url(#ribbonGradB)"/>
+            <!-- Intricate Golden Tendrils Flanking Bottom Gem -->
+            <path d="M38,816 C115,802 195,820 278,828 C215,846 125,858 55,832" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.6" opacity="0.85"/>
+            <path d="M592,816 C515,802 435,820 352,828 C415,846 505,858 575,832" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.6" opacity="0.85"/>
+            <path d="M95,842 C155,815 225,815 285,836 M535,842 C475,815 405,815 345,836" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.1" opacity="0.7"/>
+          </svg>
+
+          <!-- LAYER 1: Inner Structural Card Stack -->
+          <div id="cardInnerBackground" class="w-full h-full flex flex-col justify-between px-[5.2%] pt-[4.4%] pb-[6.2%] relative z-10">
+
+            <!-- 1. Card Header (Marble Pill Bar + Celestial Star Crests) -->
+            <div id="cardHeaderBox" class="astrum-marble-header relative z-30 flex items-center justify-between pl-5 pr-3 py-1.5 rounded-[16px] border-[2.2px] border-[#dfca9f] text-[#17151f] shrink-0">
+              
+              <!-- Celestial Ornaments (Toggled via Crown Checkbox) -->
+              <div id="renderCrownWrapper" class="pointer-events-none">
+                <!-- Top-Center 4-Pointed Star sitting on the top border -->
+                <svg class="absolute -top-[12px] left-1/2 -translate-x-1/2 w-6 h-6 drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)] z-40" viewBox="0 0 32 32">
+                  <path d="M16 1 L19.2 12.8 L31 16 L19.2 19.2 L16 31 L12.8 19.2 L1 16 L12.8 12.8 Z" fill="url(#goldFiligreeGrad)" stroke="#231c12" stroke-width="1"/>
+                  <circle cx="16" cy="16" r="2" fill="#fffbeb"/>
+                </svg>
+                <!-- Top-Left Large Overlapping 4-Pointed Star Crest -->
+                <svg class="absolute -left-[15px] -top-[16px] w-11 h-[64px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] z-40" viewBox="0 0 44 68">
+                  <path d="M22 2 L25.5 26 L42 30 L25.5 34 L22 66 L18.5 34 L2 30 L18.5 26 Z" fill="url(#goldFiligreeGrad)" stroke="#1f1910" stroke-width="1.1"/>
+                  <path d="M22 8 L23.8 27.8 L36 30 L23.8 32.2 L22 58 L20.2 32.2 L8 30 L20.2 27.8 Z" fill="#fff9eb" opacity="0.7"/>
+                </svg>
+              </div>
+
+              <div id="renderCardName" class="font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#181520]">
+                Kindlet, the Emberling
+              </div>
+              <div id="renderManaCost" class="mana-cost-group">
+                <!-- Mana Symbols Rendered Here -->
+              </div>
+            </div>
+
+            <!-- 2. Card Illustration Frame (Exact 5:3 Ratio + Flanking Celestial Edge Stars) -->
+            <div id="cardArtWrapper" class="mx-auto relative z-20 shrink-0 -mt-[2px] border-x-[2.5px] border-[#d8c193] shadow-[0_0_0_1.5px_#121017]" style="width: 95.5%; aspect-ratio: 5 / 3;">
+              <!-- Clipped Image Box -->
+              <div id="cardArtContainer" class="w-full h-full relative overflow-hidden flex items-center justify-center bg-[#0b0a0f]">
+                <img id="renderCardArt" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80" alt="Card Art" class="min-w-full min-h-full object-cover select-none pointer-events-none transition-transform duration-75">
+                <!-- Subtle Inner Vignette -->
+                <div class="absolute inset-0 shadow-[inset_0_0_12px_rgba(0,0,0,0.65)] pointer-events-none"></div>
+              </div>
+
+              <!-- Mid-Left Astral Star & Overlapping Silk Ribbon -->
+              <svg class="absolute -left-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
+                <path d="M22,4 C8,26 12,42 38,62" fill="none" stroke="url(#ribbonGradA)" stroke-width="2.2" opacity="0.85"/>
+                <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="1"/>
+                <circle cx="22" cy="48" r="2.2" fill="#ffffff"/>
+              </svg>
+
+              <!-- Mid-Right Astral Star & Overlapping Silk Ribbon -->
+              <svg class="absolute -right-[22px] top-1/2 -translate-y-1/2 w-11 h-24 pointer-events-none z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" viewBox="0 0 44 96">
+                <path d="M22,4 C36,26 32,42 6,62" fill="none" stroke="url(#ribbonGradB)" stroke-width="2.2" opacity="0.85"/>
+                <path d="M22 24 L25.2 44.8 L42 48 L25.2 51.2 L22 72 L18.8 51.2 L2 48 L18.8 44.8 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="1"/>
+                <circle cx="22" cy="48" r="2.2" fill="#ffffff"/>
+              </svg>
+            </div>
+
+            <!-- 3. Dark Obsidian Type Line Bar & 8-Pointed Rarity Star -->
+            <div id="cardTypeBox" class="astrum-obsidian-bar relative z-30 flex items-center justify-between px-3 py-1 rounded-[15px] border-[2px] border-[#d8c193] text-[#f3ece0] shrink-0 -mt-[2px]" style="background: linear-gradient(135deg, #262330 0%, #121018 48%, #1f1c29 80%, #0d0c12 100%);">
+              <!-- Small Left 4-Pointed Star Accent -->
+              <svg class="w-3.5 h-3.5 mr-1.5 shrink-0" viewBox="0 0 24 24">
+                <path d="M12 2 L14.4 9.6 L22 12 L14.4 14.4 L12 22 L9.6 14.4 L2 12 L9.6 9.6 Z" fill="url(#goldFiligreeGrad)"/>
+              </svg>
+              <div id="renderTypeLine" class="font-card-type text-[10.5px] sm:text-[11.5px] font-bold tracking-wide truncate flex-1 text-[#f4efe4] drop-shadow">
+                Legendary Creature — Elemental Beast
+              </div>
+              <div id="renderSetSymbol" class="shrink-0 flex items-center justify-center pl-1.5">
+                <!-- 8-Pointed Rarity SVG Icon -->
+              </div>
+            </div>
+
+            <!-- 4. Alabaster Marble Text Box + Center Celestial Watermark + P/T + Bottom Gem -->
+            <div id="cardTextBox" class="astrum-marble-box relative z-20 mx-auto flex flex-col justify-between px-3.5 pt-2.5 pb-4 border-x-[2.5px] border-b-[2.5px] border-[#d8c193] rounded-b-[10px] flex-1 -mt-[2px] min-h-[115px] text-[#17151e]" style="width: 95.5%;">
+
+              <!-- Clipped Marble Veins & Center Celestial Halo Star Watermark -->
+              <div class="absolute inset-0 overflow-hidden rounded-b-[8px] pointer-events-none z-0 flex items-center justify-center">
+                <svg class="w-[74%] h-[74%] opacity-[0.095]" viewBox="0 0 200 200">
+                  <!-- Orbital Ring -->
+                  <ellipse cx="100" cy="108" rx="88" ry="26" transform="rotate(-8 100 108)" fill="none" stroke="#1e1b26" stroke-width="5"/>
+                  <ellipse cx="100" cy="108" rx="68" ry="18" transform="rotate(-8 100 108)" fill="none" stroke="#1e1b26" stroke-width="2"/>
+                  <!-- Gothic Crescent Arcs -->
+                  <circle cx="100" cy="102" r="42" fill="none" stroke="#1e1b26" stroke-width="3.5" stroke-dasharray="180 40"/>
+                  <!-- Tall 4-Pointed Celestial Crest -->
+                  <path d="M100 10 L112 86 L178 102 L112 118 L100 190 L88 118 L22 102 L88 86 Z" fill="#1e1b26"/>
+                  <path d="M100 45 L105 95 L145 102 L105 109 L100 155 L95 109 L55 102 L95 95 Z" fill="#e3dfd7"/>
+                </svg>
+              </div>
+
+              <!-- Rules / Pokemon Skills Content -->
+              <div id="renderRulesText" class="relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#18161f]">
+                <!-- Dynamically rendered rules or skills -->
+              </div>
+
+              <!-- Flavor Text with Signature Star-Centered Divider Line -->
+              <div id="renderFlavorContainer" class="relative z-10 mt-auto pt-1.5">
+                <div class="flex items-center w-full mb-1">
+                  <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
+                  <svg class="w-2.5 h-2.5 mx-1 shrink-0 text-[#2c2836]" viewBox="0 0 16 16">
+                    <path d="M8 0 L10.2 5.8 L16 8 L10.2 10.2 L8 16 L5.8 10.2 L0 8 L5.8 5.8 Z" fill="currentColor"/>
+                  </svg>
+                  <div class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#2c2836]/65 to-[#2c2836]/80"></div>
+                </div>
+                <div id="renderFlavorText" class="font-card-flavor text-[10px] sm:text-[10.5px] text-[#2d2938] pr-12 select-text">
+                  “From the ashes, it rises again.”
+                </div>
+              </div>
+
+              <!-- Bottom-Left Golden Corner Filigree Spur -->
+              <svg class="absolute -left-[12px] -bottom-[11px] w-7 h-7 pointer-events-none z-30" viewBox="0 0 28 28">
+                <path d="M14 2 L16 14 L26 16 L12 20 L2 26 L10 14 Z" fill="url(#goldFiligreeGrad)" stroke="#1b1712" stroke-width="0.9"/>
+              </svg>
+
+              <!-- Bottom-Center Ornate Cabochon Gem & Golden Setting -->
+              <div id="renderHoloStamp" class="absolute left-1/2 -bottom-[22px] -translate-x-1/2 w-24 h-11 pointer-events-none z-30 flex items-center justify-center">
+                <svg class="w-full h-full drop-shadow-[0_3px_5px_rgba(0,0,0,0.95)]" viewBox="0 0 96 46">
+                  <defs>
+                    <radialGradient id="cabochonGemGrad" cx="35%" cy="30%" r="65%">
+                      <stop id="gemStopLight" offset="0%" stop-color="#e9d5ff"/>
+                      <stop id="gemStopCore" offset="45%" stop-color="#6b21a8"/>
+                      <stop id="gemStopDark" offset="100%" stop-color="#1e0536"/>
+                    </radialGradient>
+                  </defs>
+                  <!-- Golden Winged Bezel Setting -->
+                  <path d="M8,18 C24,18 32,8 48,4 C64,8 72,18 88,18 C74,22 64,28 48,44 C32,28 22,22 8,18 Z" fill="url(#goldFiligreeGrad)" stroke="#1c160e" stroke-width="1.1"/>
+                  <!-- Inner Dark Socket -->
+                  <circle cx="48" cy="20" r="11.5" fill="#0f0d14" stroke="#fff3d1" stroke-width="0.8"/>
+                  <!-- Glowing Elemental Cabochon Orb -->
+                  <circle cx="48" cy="20" r="9.8" fill="url(#cabochonGemGrad)"/>
+                  <!-- Specular Glass Highlight -->
+                  <ellipse cx="44.8" cy="16.5" rx="3.4" ry="2" transform="rotate(-25 44.8 16.5)" fill="#ffffff" opacity="0.65"/>
+                </svg>
+              </div>
+
+              <!-- Power / Toughness Stone Plaque (Bottom-Right) -->
+              <div id="renderPTBox" class="astrum-pt-plaque absolute -bottom-[11px] -right-[10px] px-3.5 py-0.5 rounded-[12px] border-[2.2px] border-[#dfca9f] flex items-center justify-center z-30 min-w-[54px]">
+                <span id="renderPTVal" class="font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#17151f] tracking-tight">2/2</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- LAYER 2: Bottom Corner Metadata (Left & Right of Gem) -->
+          <div id="renderFooterBar" class="absolute bottom-[5px] left-[5.5%] right-[5.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-zinc-300/85 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]">
+            <div class="flex items-center gap-1 max-w-[40%] truncate">
+              <span id="renderSetAndLang" class="font-bold text-[#ebd9b4]">GEN • EN</span>
+              <span class="text-zinc-500">•</span>
+              <span id="renderArtist" class="text-zinc-200 truncate">Lucas Graciano</span>
+            </div>
+            <div id="renderCopyright" class="text-zinc-300/80 max-w-[40%] truncate text-right">™ &amp; © 2026 AETHERIUM</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 1. Global State Variables
+    let currentColor = 'IGNIS';
+    let textMode = 'pokemon';
+    let skillsData = [
+      {
+        cost: '{IGNIS}',
+        name: 'Ember Rush',
+        damage: '20',
+        desc: '이 카드가 공격할 때마다 상대에게 1 데미지를 줍니다.'
+      },
+      {
+        cost: '{IGNIS}{IGNIS}',
+        name: 'Blazing Sacrifice',
+        damage: '60',
+        desc: '{IGNIS}{IGNIS}, 이 카드를 희생한다: 임의의 대상에게 3 데미지를 입힙니다.'
+      }
+    ];
+
+    // 2. Rarity Set Symbols (8-Pointed Celestial Star Crest matching CARD_FORM)
+    const RARITY_SVGS = {
+      common: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="#52525b" stroke="#e4e4e7" stroke-width="1"/></svg>`,
+      uncommon: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="uncommonGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#cbd5e1"/><stop offset="100%" stop-color="#64748b"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#uncommonGrad)" stroke="#0f172a" stroke-width="0.9"/></svg>`,
+      rare: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="rareGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fffbeb"/><stop offset="45%" stop-color="#ebd08d"/><stop offset="100%" stop-color="#926c24"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#rareGrad)" stroke="#1c1608" stroke-width="0.9"/></svg>`,
+      epic: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="epicGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f3e8ff"/><stop offset="50%" stop-color="#c084fc"/><stop offset="100%" stop-color="#6b21a8"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#epicGrad)" stroke="#1e1b4b" stroke-width="0.9"/></svg>`,
+      legendary: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="legendaryGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffedd5"/><stop offset="50%" stop-color="#fb923c"/><stop offset="100%" stop-color="#9a3412"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#legendaryGrad)" stroke="#1c1917" stroke-width="0.9"/></svg>`,
+      mythic: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="mythicGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef08a"/><stop offset="45%" stop-color="#f97316"/><stop offset="100%" stop-color="#991b1b"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#mythicGrad)" stroke="#1c1917" stroke-width="0.9"/></svg>`,
+      secret: `<svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24"><defs><linearGradient id="secretGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f472b6"/><stop offset="33%" stop-color="#38bdf8"/><stop offset="66%" stop-color="#4ade80"/><stop offset="100%" stop-color="#facc15"/></linearGradient></defs><path d="M12 1L14.2 8.5L21 5L16.5 11.2L23 12L16.5 13.8L21 19L14.2 15.5L12 23L9.8 15.5L3 19L7.5 13.8L1 12L7.5 11.2L3 5L9.8 8.5Z" fill="url(#secretGrad)" stroke="#ffffff" stroke-width="0.8"/></svg>`
+    };
+
+    // 3. Mana / Energy Tokenizer
+    function parseManaTokens(str) {
+      if (!str || typeof str !== 'string') return [];
+      const tokens = [];
+      const regex = /\{([A-Za-z0-9_-]+)\}|([0-9]+)|([IAVULBWRGCTEN])/gi;
+      let match;
+      while ((match = regex.exec(str)) !== null) {
+        if (match[1]) tokens.push(match[1].toUpperCase());
+        else if (match[2]) tokens.push(match[2]);
+        else if (match[3]) tokens.push(match[3].toUpperCase());
+      }
+      return tokens;
+    }
+
+    // 4. Render Single Mana/Energy Symbol (Metallic Bevel Emblem Design matching TYPE_SYMBOL_v2)
+    function renderSingleManaSymbol(code, isInline = false) {
+      const c = String(code).trim().toUpperCase();
+      const szClass = isInline ? 'mana-symbol-inline' : 'mana-symbol';
+      
+      // Shared Metallic Silver Gradient & Filter IDs inside inline SVGs
+      const silverGrad = `<defs>
+        <linearGradient id="metalSilver" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="30%" stop-color="#e2e8f0"/>
+          <stop offset="55%" stop-color="#94a3b8"/>
+          <stop offset="80%" stop-color="#f8fafc"/>
+          <stop offset="100%" stop-color="#64748b"/>
+        </linearGradient>
+        <linearGradient id="metalRim" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#f1f5f9"/>
+          <stop offset="50%" stop-color="#94a3b8"/>
+          <stop offset="100%" stop-color="#334155"/>
+        </linearGradient>
+      </defs>`;
+
+      // 1. IGNIS (화염 - Red Crimson Metallic Flame)
+      if (['IGNIS', 'I', 'R', 'RED', 'FIRE'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #b91c1c 0%, #7f1d1d 65%, #450a0a 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #450a0a;">
+          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
+            ${silverGrad}
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
+            <path d="M18.5 5.5c1.5 3.5 1 6.5-.5 8.5 2.5-.8 4.2-3 4.2-5.5 2.2 2.5 3.3 5.8 2.8 9.2 1.2-1 2-2.4 2.2-4 1.6 2.8 1.5 7.2-1 10.3-2.2 2.8-5.5 4.2-8.7 4.2-3.8 0-7.2-2.2-8.6-5.8-1.2-3.2-.5-7 1.8-9.8-.2 1.8.4 3.4 1.5 4.4-.5-3.2.8-6.8 3.5-9.2-.3 1.6.1 3.2 1 4.2-.2-2.5.6-4.8 1.8-6.5z" fill="url(#metalSilver)" stroke="#1e293b" stroke-width="0.9" stroke-linejoin="round"/>
+          </svg>
+        </span>`;
+      }
+      
+      // 2. AQUA (물 - Deep Sapphire Water Drop & Wave)
+      if (['AQUA', 'A', 'U', 'BLUE', 'WATER'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #1d4ed8 0%, #1e3a8a 65%, #172554 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #172554;">
+          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
+            ${silverGrad}
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
+            <path d="M18 6.5c0 0-5.5 6.8-5.5 10.8a5.5 5.5 0 0011 0C23.5 13.3 18 6.5 18 6.5z" fill="url(#metalSilver)" stroke="#0f172a" stroke-width="0.9"/>
+            <path d="M9.5 23.5c3.5 3.8 10.5 4.5 15.5.8 1.8-1.3 2.5-3.5 1.2-4.8-1.2-1.2-3-.2-2.5 1.2.3.8-.5 1.8-2 2.2-3.8 1-8.5-.5-12.2.6z" fill="url(#metalSilver)" stroke="#0f172a" stroke-width="0.9" stroke-linejoin="round"/>
+          </svg>
+        </span>`;
+      }
+
+      // 3. VERDANT (자연 - Emerald Three-Leaf Sprig)
+      if (['VERDANT', 'V', 'G', 'GREEN', 'NATURE'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #15803d 0%, #14532d 65%, #052e16 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #052e16;">
+          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
+            ${silverGrad}
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
+            <path d="M18 6c-3 3.2-3.8 7.5-1.5 11h3c2.3-3.5 1.5-7.8-1.5-11z" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.9"/>
+            <path d="M8.5 14.5c1.5 4.2 5.2 6.5 9 6v-2.2c-2.5-2.5-5.8-3.8-9-3.8z" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.9"/>
+            <path d="M27.5 14.5c-3.2 0-6.5 1.3-9 3.8v2.2c3.8.5 7.5-1.8 9-6z" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.9"/>
+            <rect x="17" y="16.5" width="2" height="12.5" rx="1" fill="url(#metalSilver)" stroke="#052e16" stroke-width="0.7"/>
+          </svg>
+        </span>`;
+      }
+
+      // 4. LUMEN (광휘 - Golden Radiant 8-Point Starburst)
+      if (['LUMEN', 'LUM', 'W', 'LIGHT', 'HOLY'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #facc15 0%, #ca8a04 65%, #713f12 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #fef08a, inset 0 0 0 2.5px #713f12;">
+          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
+            ${silverGrad}
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
+            <path d="M18 5.5l2.4 8.5 8.6-2.5-5.5 7 5.5 7-8.6-2.5L18 30.5l-2.4-7.5-8.6 2.5 5.5-7-5.5-7 8.6 2.5z" fill="url(#metalSilver)" stroke="#422006" stroke-width="0.9" stroke-linejoin="round"/>
+            <polygon points="18,14.5 21.5,18 18,21.5 14.5,18" fill="#eab308" stroke="#422006" stroke-width="0.7"/>
+          </svg>
+        </span>`;
+      }
+
+      // 5. VOLT (전격 - Royal Violet Lightning Bolt)
+      if (['VOLT', 'E', 'L', 'VLT', 'LIGHTNING', 'ENERGY'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #7e22ce 0%, #581c87 65%, #3b0764 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #3b0764;">
+          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
+            ${silverGrad}
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
+            <path d="M20.5 6.5h-6l-3 11.5h5.5l-2.5 11.5 10.5-14h-6l1.5-9z" fill="url(#metalSilver)" stroke="#1e1b4b" stroke-width="0.95" stroke-linejoin="round"/>
+          </svg>
+        </span>`;
+      }
+
+      // 6. NEUTRA (무속성 - Slate Steel Interlocking Rings)
+      if (['NEUTRA', 'N', 'C'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #475569 0%, #334155 65%, #0f172a 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #0f172a;">
+          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
+            ${silverGrad}
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
+            <circle cx="14.5" cy="18" r="6.2" fill="none" stroke="url(#metalSilver)" stroke-width="2.4"/>
+            <circle cx="14.5" cy="18" r="6.2" fill="none" stroke="#0f172a" stroke-width="0.6"/>
+            <circle cx="21.5" cy="18" r="6.2" fill="none" stroke="url(#metalSilver)" stroke-width="2.4"/>
+            <circle cx="21.5" cy="18" r="6.2" fill="none" stroke="#0f172a" stroke-width="0.6"/>
+          </svg>
+        </span>`;
+      }
+
+      // 7. UMBRA (암흑 - Dark Obsidian Swirling Vortex)
+      if (['UMBRA', 'UMB', 'B', 'BLACK', 'DARK', 'SHADOW'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #3b0764 0%, #1e1b4b 65%, #09090b 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.8), inset 0 0 0 1.5px #cbd5e1, inset 0 0 0 2.5px #09090b;">
+          <svg viewBox="0 0 36 36" class="w-[88%] h-[88%]">
+            ${silverGrad}
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#metalRim)" stroke-width="1.6"/>
+            <path d="M18 8c5.5 0 10 4.5 10 10 0 4.2-2.8 7.8-6.8 9 2.2-2 3.3-4.8 2.8-7.6-.5-3-3.2-5.2-6.2-5.2-2.5 0-4.6 1.6-5.2 3.8-.5 1.8.4 3.6 2 4.4-2.8-.2-5-2.5-5-5.4 0-5 4-9 8.4-9z" fill="url(#metalSilver)" stroke="#09090b" stroke-width="0.8"/>
+            <path d="M18 28c-5.5 0-10-4.5-10-10 0-4.2 2.8-7.8 6.8-9-2.2 2-3.3 4.8-2.8 7.6.5 3 3.2 5.2 6.2 5.2 1.8 0 3.4-.9 4.3-2.3-.6 4.8-4.5 8.5-4.5 8.5z" fill="url(#metalSilver)" stroke="#09090b" stroke-width="0.8" opacity="0.9"/>
+            <circle cx="18" cy="18" r="2.3" fill="url(#metalSilver)" stroke="#09090b" stroke-width="0.6"/>
+          </svg>
+        </span>`;
+      }
+
+      // 8. TAP Symbol ({T})
+      if (['T', 'TAP'].includes(c)) {
+        return `<span class="${szClass}" style="background: radial-gradient(circle at 35% 30%, #e2e8f0 0%, #94a3b8 65%, #475569 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.7), inset 0 0 0 1.2px #f8fafc;">
+          <svg viewBox="0 0 24 24" class="w-[74%] h-[74%]">
+            <path d="M7 14a5 5 0 0 1 8.5-3.5L18 8v7h-7l2.5-2.5A3 3 0 0 0 9 14H7z" fill="#0f172a"/>
+          </svg>
+        </span>`;
+      }
+
+      // 9. Generic Number / Variable Cost (0, 1, 2, X, *)
+      const fontSize = isInline ? '10.5px' : '13px';
+      return `<span class="${szClass} font-card-title font-black text-[#141218]" style="background: radial-gradient(circle at 35% 30%, #f1efe9 0%, #cdc8be 65%, #8c857b 100%); box-shadow: 0 1.5px 3px rgba(0,0,0,0.75), inset 0 1px 1px #ffffff, inset 0 0 0 1.3px #27242e; font-size: ${fontSize}; line-height: 1;">${c}</span>`;
+    }
+
+    // 5. Parse Multiple Mana Symbols into HTML
+    function parseManaSymbols(str, isInline = false) {
+      try {
+        const tokens = parseManaTokens(str);
+        if (!tokens || tokens.length === 0) return '';
+        return tokens.map(token => renderSingleManaSymbol(token, isInline)).join('');
+      } catch (e) {
+        console.error('Mana parse error:', e);
+        return '';
+      }
+    }
+
+    // 6. Themes Definition (Astral Cosmic Ribbons, Obsidian Type Sheen & Cabochon Gem Colors)
+    const COLOR_THEMES = {
+      IGNIS: {
+        nebula1: '#dc2626',
+        nebula2: '#450a0a',
+        ribbonA: '#f87171',
+        ribbonB: '#7f1d1d',
+        ribbonC: '#fb923c',
+        trimBorder: '#e2c290',
+        obsidianBg: 'linear-gradient(135deg, #2b1718 0%, #140b0c 48%, #241214 80%, #0d0708 100%)',
+        gemLight: '#fecaca',
+        gemCore: '#dc2626',
+        gemDark: '#450a0a'
+      },
+      AQUA: {
+        nebula1: '#0284c7',
+        nebula2: '#082f49',
+        ribbonA: '#38bdf8',
+        ribbonB: '#0369a1',
+        ribbonC: '#67e8f9',
+        trimBorder: '#d2deeb',
+        obsidianBg: 'linear-gradient(135deg, #162433 0%, #0b121c 48%, #13202e 80%, #070b12 100%)',
+        gemLight: '#bae6fd',
+        gemCore: '#0284c7',
+        gemDark: '#082f49'
+      },
+      VERDANT: {
+        nebula1: '#16a34a',
+        nebula2: '#052e16',
+        ribbonA: '#4ade80',
+        ribbonB: '#15803d',
+        ribbonC: '#86efac',
+        trimBorder: '#d8cca3',
+        obsidianBg: 'linear-gradient(135deg, #16291e 0%, #0a140f 48%, #12241a 80%, #060d09 100%)',
+        gemLight: '#bbf7d0',
+        gemCore: '#16a34a',
+        gemDark: '#052e16'
+      },
+      VOLT: {
+        nebula1: '#9333ea',
+        nebula2: '#422006',
+        ribbonA: '#facc15',
+        ribbonB: '#6b21a8',
+        ribbonC: '#c084fc',
+        trimBorder: '#ebd28e',
+        obsidianBg: 'linear-gradient(135deg, #282118 0%, #14100b 48%, #24192b 80%, #0d0a0f 100%)',
+        gemLight: '#fef08a',
+        gemCore: '#ca8a04',
+        gemDark: '#3b0764'
+      },
+      UMBRA: {
+        nebula1: '#7e22ce',
+        nebula2: '#2e1065',
+        ribbonA: '#c084fc',
+        ribbonB: '#4c1d95',
+        ribbonC: '#a855f7',
+        trimBorder: '#dfca9f',
+        obsidianBg: 'linear-gradient(135deg, #262330 0%, #121018 48%, #1f1c29 80%, #0d0c12 100%)',
+        gemLight: '#e9d5ff',
+        gemCore: '#6b21a8',
+        gemDark: '#1e0536'
+      },
+      LUMEN: {
+        nebula1: '#eab308',
+        nebula2: '#422006',
+        ribbonA: '#fef08a',
+        ribbonB: '#a16207',
+        ribbonC: '#fde68a',
+        trimBorder: '#f2dfb3',
+        obsidianBg: 'linear-gradient(135deg, #2b271c 0%, #14120c 48%, #242016 80%, #0d0b07 100%)',
+        gemLight: '#fef9c3',
+        gemCore: '#eab308',
+        gemDark: '#422006'
+      },
+      NEUTRA: {
+        nebula1: '#94a3b8',
+        nebula2: '#1e293b',
+        ribbonA: '#e2e8f0',
+        ribbonB: '#475569',
+        ribbonC: '#cbd5e1',
+        trimBorder: '#d6dae0',
+        obsidianBg: 'linear-gradient(135deg, #25282e 0%, #111317 48%, #1d2026 80%, #0b0c0f 100%)',
+        gemLight: '#f1f5f9',
+        gemCore: '#64748b',
+        gemDark: '#0f172a'
+      }
+    };
+
+    // 7. Theme Selection
+    window.selectColor = function(colorKey) {
+      if (!COLOR_THEMES[colorKey]) return;
+      currentColor = colorKey;
+      const theme = COLOR_THEMES[colorKey];
+
+      document.querySelectorAll('#colorSelectors button').forEach(btn => {
+        if (btn.getAttribute('data-color') === colorKey) {
+          btn.classList.add('ring-2', 'ring-white', 'scale-105', 'font-bold');
+        } else {
+          btn.classList.remove('ring-2', 'ring-white', 'scale-105', 'font-bold');
+        }
+      });
+
+      // Update Cosmic SVG Nebula & Ribbon Stops
+      const setStop = (id, color) => {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute('stop-color', color);
+      };
+      setStop('nebulaStop1', theme.nebula1);
+      setStop('nebulaStop2', theme.nebula2);
+      setStop('nebulaBotStop1', theme.nebula1);
+      setStop('nebulaBotStop2', theme.nebula2);
+      setStop('ribbonColorA', theme.ribbonA);
+      setStop('ribbonColorB', theme.ribbonB);
+      setStop('ribbonColorC', theme.ribbonC);
+
+      // Update Bottom Cabochon Gem Stops
+      setStop('gemStopLight', theme.gemLight);
+      setStop('gemStopCore', theme.gemCore);
+      setStop('gemStopDark', theme.gemDark);
+
+      // Update Metallic Trim Borders & Dark Obsidian Type Bar
+      const headerBox = document.getElementById('cardHeaderBox');
+      if (headerBox) headerBox.style.borderColor = theme.trimBorder;
+
+      const artWrapper = document.getElementById('cardArtWrapper');
+      if (artWrapper) artWrapper.style.borderColor = theme.trimBorder;
+
+      const typeBox = document.getElementById('cardTypeBox');
+      if (typeBox) {
+        typeBox.style.borderColor = theme.trimBorder;
+        typeBox.style.background = theme.obsidianBg;
+      }
+
+      const textBox = document.getElementById('cardTextBox');
+      if (textBox) textBox.style.borderColor = theme.trimBorder;
+
+      const ptBox = document.getElementById('renderPTBox');
+      if (ptBox) ptBox.style.borderColor = theme.trimBorder;
+
+      updateCard();
+    };
+
+    // 8. Artwork Adjustments
+    window.updateArtworkTransform = function() {
+      const img = document.getElementById('renderCardArt');
+      if (!img) return;
+      const zoom = document.getElementById('inputArtZoom')?.value || 100;
+      const posX = document.getElementById('inputArtPosX')?.value || 50;
+      const posY = document.getElementById('inputArtPosY')?.value || 50;
+
+      const scale = zoom / 100;
+      const translateX = (posX - 50) * 1.5;
+      const translateY = (posY - 50) * 1.5;
+
+      img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      img.style.transformOrigin = 'center center';
+    };
+
+    window.resetArtAdjustments = function() {
+      const z = document.getElementById('inputArtZoom');
+      const x = document.getElementById('inputArtPosX');
+      const y = document.getElementById('inputArtPosY');
+      if (z) z.value = 100;
+      if (x) x.value = 50;
+      if (y) y.value = 50;
+      updateArtworkTransform();
+    };
+
+    // 9. Card Export
+    window.downloadCard = function() {
+      const cardEl = document.getElementById('cardPreviewTarget');
+      if (!cardEl || typeof html2canvas !== 'function') return;
+
+      const btn = document.getElementById('btnDownload');
+      const origText = btn ? btn.innerHTML : '';
+      if (btn) btn.innerHTML = '<span>생성 중...</span>';
+
+      html2canvas(cardEl, {
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null
+      }).then(canvas => {
+        const link = document.createElement('a');
+        const name = (document.getElementById('inputName')?.value || 'card').trim().replace(/\s+/g, '_');
+        link.download = `AETHERIUM_${name}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        if (btn) btn.innerHTML = origText;
+      }).catch(err => {
+        console.error('Export error:', err);
+        if (btn) btn.innerHTML = origText;
+      });
+    };
+
+    // 10. Rules Formatting
+    function formatRulesText(text) {
+      if (!text || typeof text !== 'string') return '';
+      
+      // Split by lines first
+      const lines = text.split('\n');
+      
+      return lines.map(line => {
+        if (!line.trim()) {
+          return '<p class="min-h-[1.2em] leading-normal">&nbsp;</p>';
+        }
+        
+        // Split line by symbol tokens like {IGNIS}, {AQUA}, {1}, etc.
+        const parts = line.split(/(\{[A-Za-z0-9_-]+\})/g);
+        const renderedLine = parts.map(part => {
+          const match = part.match(/^\{([A-Za-z0-9_-]+)\}$/);
+          if (match) {
+            const token = match[1];
+            return renderSingleManaSymbol(token, true);
+          }
+          // Escape regular text safely
+          return part
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        }).join('');
+        
+        return `<p class="min-h-[1.25em] leading-relaxed">${renderedLine}</p>`;
+      }).join('');
+    }
+
+    // 11. Symbol Insertion
+    window.insertSymbol = function(sym) {
+      if (textMode === 'pokemon') {
+        if (skillsData.length > 0) {
+          skillsData[skillsData.length - 1].cost = (skillsData[skillsData.length - 1].cost || '') + sym;
+          renderSkillsEditor();
+          updateCard();
+        }
+      } else {
+        const ta = document.getElementById('inputText');
+        if (!ta) return;
+        const start = ta.selectionStart || 0;
+        const end = ta.selectionEnd || 0;
+        const val = ta.value;
+        ta.value = val.substring(0, start) + sym + val.substring(end);
+        ta.selectionStart = ta.selectionEnd = start + sym.length;
+        ta.focus();
+        updateCard();
+      }
+    };
+
+    // 12. Render Pokemon Skills inside Card
+    function renderPokemonSkills() {
+      if (!skillsData || skillsData.length === 0) {
+        return '<p class="text-zinc-500 italic text-[11px] py-2 text-center">등록된 기술이 없습니다.</p>';
+      }
+
+      return skillsData.map((skill, idx) => {
+        const costHtml = skill.cost ? `<div class="pokemon-energy-cost">${parseManaSymbols(skill.cost, true)}</div>` : '';
+        const damageHtml = skill.damage ? `<div class="font-card-title text-xs sm:text-[13px] font-black tracking-tight text-zinc-950 ml-auto shrink-0 whitespace-nowrap">${skill.damage}</div>` : '';
+        const borderClass = idx > 0 ? 'border-t border-zinc-800/15 pt-1.5' : '';
+        
+        let descHtml = '';
+        if (skill.desc && typeof skill.desc === 'string' && skill.desc.trim()) {
+          descHtml = `<div class="font-card-body text-[10px] sm:text-[10.5px] text-zinc-900 leading-snug pt-0.5">${formatRulesText(skill.desc)}</div>`;
+        }
+
+        return `
+          <div class="pokemon-skill-row ${borderClass}">
+            <div class="pokemon-skill-header">
+              ${costHtml}
+              <div class="font-card-title text-[11.5px] sm:text-[12.5px] font-extrabold tracking-tight text-zinc-950 flex-1 min-w-0 truncate">
+                ${skill.name || '기술명'}
+              </div>
+              ${damageHtml}
+            </div>
+            ${descHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 13. Render Skills Form Editor
+    function renderSkillsEditor() {
+      const container = document.getElementById('skillsList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      skillsData.forEach((skill, index) => {
+        const card = document.createElement('div');
+        card.className = 'p-3 bg-zinc-900 rounded-xl border border-zinc-700/80 space-y-2 relative';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-400">기술 #${index + 1}</span>
+            <button type="button" class="text-xs text-rose-400 hover:text-rose-300 font-semibold transition" onclick="removeSkill(${index})">삭제</button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div>
+              <label class="block text-[10px] text-zinc-400 mb-0.5">에너지 코스트 (예: {IGNIS}{IGNIS})</label>
+              <input type="text" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-2 py-1 text-xs text-zinc-100" 
+                value="${skill.cost || ''}" oninput="updateSkillField(${index}, 'cost', this.value)">
+            </div>
+            <div>
+              <label class="block text-[10px] text-zinc-400 mb-0.5">기술 이름</label>
+              <input type="text" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-2 py-1 text-xs text-zinc-100 font-semibold" 
+                value="${skill.name || ''}" oninput="updateSkillField(${index}, 'name', this.value)">
+            </div>
+            <div>
+              <label class="block text-[10px] text-zinc-400 mb-0.5">데미지 (예: 20, 80+, -)</label>
+              <input type="text" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-2 py-1 text-xs text-zinc-100 font-bold" 
+                value="${skill.damage || ''}" oninput="updateSkillField(${index}, 'damage', this.value)">
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] text-zinc-400 mb-0.5">기술 설명 및 추가 효과</label>
+            <textarea rows="1" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg p-1.5 text-xs text-zinc-100" 
+              oninput="updateSkillField(${index}, 'desc', this.value)">${skill.desc || ''}</textarea>
+          </div>
+          <div class="flex items-center gap-1 pt-1 flex-wrap">
+            <span class="text-[9px] text-zinc-500">코스트 추가:</span>
+            <button type="button" class="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[10px] text-rose-300" onclick="appendSkillCost(${index}, '{IGNIS}')">+IGNIS</button>
+            <button type="button" class="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[10px] text-sky-300" onclick="appendSkillCost(${index}, '{AQUA}')">+AQUA</button>
+            <button type="button" class="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[10px] text-emerald-300" onclick="appendSkillCost(${index}, '{VERDANT}')">+VERDANT</button>
+            <button type="button" class="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[10px] text-amber-300" onclick="appendSkillCost(${index}, '{VOLT}')">+VOLT</button>
+            <button type="button" class="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[10px] text-purple-300" onclick="appendSkillCost(${index}, '{UMBRA}')">+UMBRA</button>
+            <button type="button" class="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[10px] text-yellow-300" onclick="appendSkillCost(${index}, '{LUMEN}')">+LUMEN</button>
+            <button type="button" class="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[10px] text-zinc-300" onclick="appendSkillCost(${index}, '{NEUTRA}')">+NEUTRA</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.updateSkillField = function(index, field, value) {
+      if (skillsData && skillsData[index]) {
+        skillsData[index][field] = value;
+        updateCard();
+      }
+    };
+
+    window.appendSkillCost = function(index, symbol) {
+      if (skillsData && skillsData[index]) {
+        skillsData[index].cost = (skillsData[index].cost || '') + symbol;
+        renderSkillsEditor();
+        updateCard();
+      }
+    };
+
+    window.removeSkill = function(index) {
+      if (skillsData && skillsData.length > index) {
+        skillsData.splice(index, 1);
+        renderSkillsEditor();
+        updateCard();
+      }
+    };
+
+    // 14. Realtime Card Preview Update
+    function updateCard() {
+      try {
+        // 1. Name & Mana
+        const name = document.getElementById('inputName')?.value || 'Untitled';
+        const renderNameEl = document.getElementById('renderCardName');
+        if (renderNameEl) renderNameEl.textContent = name;
+
+        const manaVal = document.getElementById('inputMana')?.value || '';
+        const renderManaEl = document.getElementById('renderManaCost');
+        if (renderManaEl) renderManaEl.innerHTML = parseManaSymbols(manaVal, false);
+
+        // 2. Type & Rarity
+        const typeLine = document.getElementById('inputTypeLine')?.value || 'Card';
+        const renderTypeEl = document.getElementById('renderTypeLine');
+        if (renderTypeEl) renderTypeEl.textContent = typeLine;
+
+        const rarity = document.getElementById('selectRarity')?.value || 'mythic';
+        const renderSetSymbolEl = document.getElementById('renderSetSymbol');
+        if (renderSetSymbolEl) {
+          renderSetSymbolEl.innerHTML = RARITY_SVGS[rarity] || RARITY_SVGS.mythic;
+        }
+
+        const holoStamp = document.getElementById('renderHoloStamp');
+        if (holoStamp) {
+          holoStamp.style.display = ['rare', 'epic', 'legendary', 'mythic', 'secret'].includes(rarity) ? 'flex' : 'none';
+        }
+
+        // 3. Text Body
+        const rulesContainer = document.getElementById('renderRulesText');
+        if (rulesContainer) {
+          if (textMode === 'pokemon') {
+            rulesContainer.innerHTML = renderPokemonSkills();
+          } else {
+            const rules = document.getElementById('inputText')?.value || '';
+            rulesContainer.innerHTML = formatRulesText(rules);
+          }
+        }
+
+        const flavor = document.getElementById('inputFlavor')?.value || '';
+        const flavorContainer = document.getElementById('renderFlavorContainer');
+        const flavorEl = document.getElementById('renderFlavorText');
+        if (flavorContainer && flavorEl) {
+          if (flavor.trim()) {
+            flavorContainer.style.display = 'block';
+            flavorEl.textContent = flavor;
+          } else {
+            flavorContainer.style.display = 'none';
+          }
+        }
+
+        // 4. P/T Plaque
+        const ptBox = document.getElementById('renderPTBox');
+        const ptToggle = document.getElementById('togglePT');
+        if (ptBox && ptToggle) {
+          if (ptToggle.checked) {
+            ptBox.style.display = 'flex';
+            const ptVal = document.getElementById('inputPT')?.value || '2/2';
+            const renderPTValEl = document.getElementById('renderPTVal');
+            if (renderPTValEl) renderPTValEl.textContent = ptVal;
+          } else {
+            ptBox.style.display = 'none';
+          }
+        }
+
+        // 5. Celestial Star Crest
+        const crownToggle = document.getElementById('toggleCrown');
+        const crownWrapper = document.getElementById('renderCrownWrapper');
+        if (crownWrapper && crownToggle) {
+          crownWrapper.style.display = crownToggle.checked ? 'block' : 'none';
+        }
+
+        // 6. Metadata Footer
+        const footerToggle = document.getElementById('toggleFooter');
+        const footerBar = document.getElementById('renderFooterBar');
+        if (footerBar && footerToggle) {
+          footerBar.style.display = footerToggle.checked ? 'flex' : 'none';
+        }
+
+        const setCode = document.getElementById('inputSetCode')?.value || 'GEN';
+        const langCode = document.getElementById('inputLang')?.value || 'EN';
+        const artist = document.getElementById('inputArtist')?.value || 'Lucas Graciano';
+        const copyright = document.getElementById('inputCopyright')?.value || '™ & © 2026 AETHERIUM';
+
+        const setLangEl = document.getElementById('renderSetAndLang');
+        if (setLangEl) setLangEl.textContent = `${setCode} • ${langCode}`;
+
+        const artistEl = document.getElementById('renderArtist');
+        if (artistEl) artistEl.textContent = artist;
+
+        const copyEl = document.getElementById('renderCopyright');
+        if (copyEl) copyEl.textContent = copyright;
+
+      } catch (err) {
+        console.error('Update error:', err);
+      }
+    }
+
+    // 15. Setup Listeners
+    function setupApp() {
+      // Inputs binding
+      const inputIds = [
+        'inputName', 'inputMana', 'inputTypeLine', 'selectRarity',
+        'inputText', 'inputFlavor', 'togglePT', 'inputPT', 'toggleCrown', 'toggleFooter',
+        'inputSetCode', 'inputLang', 'inputArtist', 'inputCopyright'
+      ];
+      inputIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', updateCard);
+          el.addEventListener('change', updateCard);
+        }
+      });
+
+      // Artwork zoom & position sliders
+      ['inputArtZoom', 'inputArtPosX', 'inputArtPosY'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', updateArtworkTransform);
+        }
+      });
+
+      // Artwork local file upload
+      const artFileInput = document.getElementById('inputArtFile');
+      if (artFileInput) {
+        artFileInput.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const img = document.getElementById('renderCardArt');
+            if (img && ev.target?.result) {
+              img.src = ev.target.result;
+              resetArtAdjustments();
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // Pokemon vs Classic mode tabs
+      const tabPokemon = document.getElementById('tabModePokemon');
+      const tabClassic = document.getElementById('tabModeClassic');
+      const secPokemon = document.getElementById('sectionPokemonStyle');
+      const secClassic = document.getElementById('sectionClassicStyle');
+
+      if (tabPokemon && tabClassic && secPokemon && secClassic) {
+        tabPokemon.addEventListener('click', () => {
+          textMode = 'pokemon';
+          secPokemon.classList.remove('hidden');
+          secClassic.classList.add('hidden');
+          tabPokemon.className = 'px-3 py-1.5 rounded-md transition-all bg-amber-500 text-zinc-950 font-bold shadow-sm flex items-center gap-1.5';
+          tabClassic.className = 'px-3 py-1.5 rounded-md text-zinc-400 hover:text-zinc-200 transition-all flex items-center gap-1.5';
+          updateCard();
+        });
+
+        tabClassic.addEventListener('click', () => {
+          textMode = 'classic';
+          secClassic.classList.remove('hidden');
+          secPokemon.classList.add('hidden');
+          tabClassic.className = 'px-3 py-1.5 rounded-md transition-all bg-amber-500 text-zinc-950 font-bold shadow-sm flex items-center gap-1.5';
+          tabPokemon.className = 'px-3 py-1.5 rounded-md text-zinc-400 hover:text-zinc-200 transition-all flex items-center gap-1.5';
+          updateCard();
+        });
+      }
+
+      // Add new skill button
+      const btnAddSkill = document.getElementById('btnAddSkill');
+      if (btnAddSkill) {
+        btnAddSkill.addEventListener('click', () => {
+          skillsData.push({
+            cost: `{${currentColor}}`,
+            name: '새로운 기술',
+            damage: '30',
+            desc: '기술 효과를 입력하세요.'
+          });
+          renderSkillsEditor();
+          updateCard();
+        });
+      }
+
+      // Render Lucide icons
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+
+      // Initialize defaults
+      selectColor('UMBRA');
+      renderSkillsEditor();
+      updateCard();
+      updateArtworkTransform();
+    }
+
+    // Run setup on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupApp);
+    } else {
+      setupApp();
+    }
+  </script>
+</body>
+</html>
