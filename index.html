@@ -259,6 +259,73 @@
       animation: primordialTwinkle 2.8s ease-in-out infinite;
     }
 
+    /* Secret-Rare Ornate Sterling Silver & Platinum Frame Styles */
+    .secret-outer-glow {
+      box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.95),
+        0 0 32px rgba(226, 232, 240, 0.48),
+        0 0 14px rgba(186, 230, 253, 0.32),
+        inset 0 0 20px rgba(248, 250, 252, 0.42) !important;
+      border-color: #f8fafc !important;
+    }
+
+    .secret-silver-header {
+      background-color: #eef2f6;
+      background-image:
+        radial-gradient(ellipse at 22% 25%, rgba(255, 255, 255, 0.96) 0%, transparent 55%),
+        radial-gradient(ellipse at 82% 75%, rgba(148, 163, 184, 0.36) 0%, transparent 52%),
+        linear-gradient(180deg, #ffffff 0%, #e6ecf2 50%, #cbd5e1 100%);
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.85),
+        0 0 14px rgba(226, 232, 240, 0.38),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.98),
+        inset 0 -1.5px 3px rgba(51, 65, 85, 0.35),
+        inset 0 0 0 1.2px #1e293b;
+    }
+
+    .secret-silver-box {
+      background-color: #f1f5f9;
+      background-image:
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.92) 0%, transparent 46%),
+        radial-gradient(circle at 82% 28%, rgba(148, 163, 184, 0.28) 0%, transparent 48%),
+        radial-gradient(circle at 50% 85%, rgba(226, 232, 240, 0.35) 0%, transparent 55%),
+        linear-gradient(165deg, #ffffff 0%, #e9eef5 50%, #d5dee9 100%);
+      box-shadow:
+        inset 0 2px 6px rgba(30, 41, 59, 0.2),
+        inset 0 0 0 1.2px #1e293b,
+        0 0 15px rgba(226, 232, 240, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.85);
+    }
+
+    .secret-pt-plaque {
+      background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 52%, #94a3b8 100%);
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.9),
+        0 0 12px rgba(241, 245, 249, 0.55),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.98),
+        inset 0 0 0 1.2px #1e293b;
+    }
+
+    @keyframes secretAuraPulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes secretTwinkle {
+      0%, 100% { opacity: 0.45; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .secret-pulse {
+      animation: secretAuraPulse 3.4s ease-in-out infinite;
+    }
+
+    .secret-twinkle {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: secretTwinkle 2.5s ease-in-out infinite;
+    }
+
     /* Stabilization rules applied momentarily during PNG export */
     .exporting-card {
       box-shadow: none !important;
@@ -268,8 +335,14 @@
       box-shadow: inset 0 0 18px rgba(253, 224, 71, 0.35) !important;
       transform: none !important;
     }
+    .exporting-card.secret-outer-glow {
+      box-shadow: inset 0 0 20px rgba(248, 250, 252, 0.42) !important;
+      transform: none !important;
+    }
     .exporting-card .primordial-pulse,
     .exporting-card .primordial-twinkle,
+    .exporting-card .secret-pulse,
+    .exporting-card .secret-twinkle,
     .exporting-card .foil-hologram {
       animation: none !important;
       opacity: 1 !important;
@@ -308,14 +381,14 @@
     <!-- Left Column: Form Controls (7 cols on lg) -->
     <div class="lg:col-span-7 space-y-5 order-2 lg:order-1">
 
-      <!-- 0. Card Frame Layout Selector (Standard 5:3 / Full-Art 63:88 / Primordial-Rare) -->
+      <!-- 0. Card Frame Layout Selector (Standard 5:3 / Full-Art 63:88 / Secret-Rare / Primordial-Rare) -->
       <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2 shrink-0">
             <i data-lucide="maximize-2" class="w-4 h-4 text-amber-400"></i>
             카드 프레임 양식 (FRAME &amp; SPECIAL TIER)
           </h2>
-          <div class="grid grid-cols-3 gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs">
             <button type="button" id="btnFrameStandard" onclick="setFrameMode('standard')" class="px-2.5 py-1.5 rounded-lg font-bold transition-all bg-amber-500 text-zinc-950 shadow-sm flex items-center justify-center gap-1">
               <i data-lucide="layout-template" class="w-3.5 h-3.5 shrink-0"></i>
               <span class="truncate">기본 (5:3)</span>
@@ -324,10 +397,65 @@
               <i data-lucide="sparkles" class="w-3.5 h-3.5 shrink-0"></i>
               <span class="truncate">풀아트</span>
             </button>
+            <button type="button" id="btnFrameSecret" onclick="setFrameMode('secret')" class="px-2.5 py-1.5 rounded-lg font-semibold text-slate-200 hover:text-white transition-all flex items-center justify-center gap-1">
+              <i data-lucide="gem" class="w-3.5 h-3.5 shrink-0"></i>
+              <span class="truncate">Secret 틀</span>
+            </button>
             <button type="button" id="btnFramePrimordial" onclick="setFrameMode('primordial')" class="px-2.5 py-1.5 rounded-lg font-semibold text-amber-300/90 hover:text-amber-200 transition-all flex items-center justify-center gap-1">
               <i data-lucide="crown" class="w-3.5 h-3.5 shrink-0"></i>
               <span class="truncate">Primordial 틀</span>
             </button>
+          </div>
+        </div>
+
+        <!-- Secret-Rare Exclusive Sub-Options (Ornate Sterling Silver Filigree) -->
+        <div id="secretOptionsPanel" class="hidden pt-3 border-t border-slate-400/25 space-y-3">
+          <div class="flex items-center justify-between bg-slate-900/70 border border-slate-300/30 rounded-xl px-3 py-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-slate-100 animate-ping"></span>
+              <span class="text-xs font-bold text-slate-100">SECRET RARE 백은 바로크 성좌 세공 틀 활성화됨</span>
+            </div>
+            <span class="text-[10px] text-slate-300/80">스털링 실버 필리그리</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] text-zinc-400 mb-1.5">시크릿 일러스트 규격</label>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button type="button" id="btnSecArtStandard" onclick="setSecretArtMode('standard')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-slate-200 text-slate-100 transition">
+                  5:3 은빛 성소
+                </button>
+                <button type="button" id="btnSecArtFull" onclick="setSecretArtMode('fullart')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition">
+                  63:88 풀아트
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-[11px] text-zinc-400">테두리 은빛 세공 광채 강도</label>
+                <span id="labelSecretGlow" class="text-[11px] font-mono text-slate-200">92%</span>
+              </div>
+              <input type="range" id="inputSecretGlow" min="35" max="100" value="92" class="w-full accent-slate-200 mt-1">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1.5">시크릿 텍스트 박스 스타일</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" data-secstyle="silver-marble" onclick="setSecretBoxStyle('silver-marble')" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-slate-200 text-slate-100 transition flex flex-col items-center gap-0.5">
+                <span>은빛 성소 마블</span>
+                <span class="text-[10px] font-normal text-zinc-400">플래티넘 펄</span>
+              </button>
+              <button type="button" data-secstyle="frost-obsidian" onclick="setSecretBoxStyle('frost-obsidian')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>프로스트 옵시디언</span>
+                <span class="text-[10px] font-normal text-zinc-500">다크 실버 글래스</span>
+              </button>
+              <button type="button" data-secstyle="floating" onclick="setSecretBoxStyle('floating')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>시크릿 플로팅</span>
+                <span class="text-[10px] font-normal text-zinc-500">테두리 없는 뷰</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -699,7 +827,19 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
               <!-- Top Swirling Astral Silk Ribbons -->
               <path d="M-10,95 C35,10 155,-8 275,28 C185,8 75,24 18,115 Z" fill="url(#ribbonGradA)"/>
               <path d="M640,95 C595,12 475,-8 355,28 C445,8 555,24 612,115 Z" fill="url(#ribbonGradB)"/>
-              <path d="M25,42 C110,-6 230,6 315,24 C400,6 520,-6 605,42" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.3" opacity="0.65"/>
+              <path d="M25,42 C110,-6 230,6 315,24 C400,6 520,-6 605,42" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.5" opacity="0.78"/>
+              <path d="M58,28 C135,2 225,14 315,30 C405,14 495,2 572,28" fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="0.9" stroke-dasharray="5 3" opacity="0.62"/>
+
+              <!-- Intricate Outer Astral Filigree Corner Scrollwork (Base Frame) -->
+              <g fill="none" stroke="url(#goldFiligreeGrad)" stroke-width="1.15" opacity="0.68">
+                <path d="M12,88 C10,36 36,12 92,12 C62,18 42,26 28,42 C18,54 14,68 12,88 Z"/>
+                <path d="M618,88 C620,36 594,12 538,12 C568,18 588,26 602,42 C612,54 616,68 618,88 Z"/>
+                <path d="M12,792 C10,844 36,868 92,868 C62,862 42,854 28,838 C18,826 14,812 12,792 Z"/>
+                <path d="M618,792 C620,844 594,868 538,868 C568,862 588,854 602,838 C612,826 616,812 618,792 Z"/>
+                <!-- Delicate Side Astral Tracery -->
+                <path d="M22,195 Q36,240 20,285 Q8,330 24,375 M22,505 Q36,550 20,595 Q8,640 24,685"/>
+                <path d="M608,195 Q594,240 610,285 Q622,330 606,375 M608,505 Q594,550 610,595 Q622,640 606,685"/>
+              </g>
 
               <!-- Left & Right Flowing Nebula Ribbons -->
               <path d="M6,160 C-8,260 36,330 22,445 C10,520 -4,610 34,710 C12,615 24,525 34,440 C44,330 8,255 24,165 Z" fill="url(#ribbonGradA)" opacity="0.85"/>
@@ -772,6 +912,8 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
                 <canvas id="renderCardArtCanvas" width="1000" height="600" class="w-full h-full block select-none pointer-events-none"></canvas>
                 <!-- Subtle Inner Vignette -->
                 <div id="artInnerVignette" class="absolute inset-0 shadow-[inset_0_0_12px_rgba(0,0,0,0.65)] pointer-events-none"></div>
+                <!-- Ornate Inner Corner Filigree Spandrels (Shown in 5:3 Secret / Primordial Modes) -->
+                <svg id="artFiligreeSpandrels" xmlns="http://www.w3.org/2000/svg" width="540" height="324" class="hidden absolute inset-0 w-full h-full pointer-events-none z-20" viewBox="0 0 540 324" preserveAspectRatio="none"></svg>
               </div>
 
               <!-- Mid-Left Astral Star & Overlapping Silk Ribbon -->
@@ -901,6 +1043,11 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
                       <stop id="gemStopDark" offset="100%" stop-color="#1e0536"/>
                     </radialGradient>
                   </defs>
+                  <!-- Secret-Rare Ornate Silver Filigree Gem Halo -->
+                  <g id="secretGemHalo" class="hidden">
+                    <circle cx="48" cy="20" r="21" fill="#e2e8f0" opacity="0.32"/>
+                    <path d="M2,18 L18,12 L34,14 L48,0 L62,14 L78,12 L94,18 L76,26 L62,28 L48,46 L34,28 L20,26 Z" fill="url(#stampGoldGrad)" stroke="#1e293b" stroke-width="0.7" opacity="0.95"/>
+                  </g>
                   <!-- Primordial Solar Gem Halo (Shown in Primordial-Rare) -->
                   <g id="primordialGemHalo" class="hidden">
                     <circle cx="48" cy="20" r="20" fill="#fbbf24" opacity="0.28"/>
@@ -1086,6 +1233,9 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
             </g>
           </svg>
 
+          <!-- LAYER 3.5: SECRET-RARE Hyper-Ornate Sterling Silver Baroque Cathedral & Diamond Lacework Overlay -->
+          <svg id="secretBorderOverlay" xmlns="http://www.w3.org/2000/svg" width="630" height="880" class="hidden absolute inset-0 w-full h-full pointer-events-none z-40" viewBox="0 0 630 880" preserveAspectRatio="none"></svg>
+
         </div>
       </div>
     </div>
@@ -1094,8 +1244,10 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
   <script>
     // 1. Global State Variables
     let currentColor = 'IGNIS';
-    let frameMode = 'standard'; // 'standard' | 'fullart' | 'primordial'
+    let frameMode = 'standard'; // 'standard' | 'fullart' | 'secret' | 'primordial'
     let fullArtStyle = 'dark-glass'; // 'dark-glass' | 'floating' | 'light-glass'
+    let secretArtMode = 'standard'; // 'standard' | 'fullart'
+    let secretBoxStyle = 'silver-marble'; // 'silver-marble' | 'frost-obsidian' | 'floating'
     let primordialArtMode = 'standard'; // 'standard' | 'fullart'
     let primordialBoxStyle = 'gilded-marble'; // 'gilded-marble' | 'dark-gold' | 'floating'
     let textMode = 'pokemon';
@@ -1204,11 +1356,12 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       epic: createRarityStarSvg('#7e22ce', '#d8b4fe', '#fae8ff', '#2e1065'),
       legendary: createRarityStarSvg('#b91c1c', '#fca5a5', '#fef2f2', '#450a0a'),
       mythic: createRarityStarSvg('#c2410c', '#fdba74', '#fff7ed', '#431407'),
-      secret: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-4 h-4 drop-shadow-[0_0_4px_rgba(244,114,182,0.85)]" viewBox="0 0 24 24">
-        <path d="M5.2 5.2 L10.4 9.2 L18.8 5.2 L14.8 10.4 L18.8 18.8 L13.6 14.8 L5.2 18.8 L9.2 13.6 Z" fill="#38bdf8" stroke="#0f172a" stroke-width="0.6"/>
-        <path d="M12 1.2 L13.9 10.1 L22.8 12 L13.9 13.9 L12 22.8 L10.1 13.9 L1.2 12 L10.1 10.1 Z" fill="#f472b6" stroke="#fffbeb" stroke-width="0.7"/>
-        <polygon points="12,7.5 13.5,10.5 16.5,12 13.5,13.5 12,16.5 10.5,13.5 7.5,12 10.5,10.5" fill="#fde047"/>
-        <circle cx="12" cy="12" r="1.8" fill="#ffffff"/>
+      secret: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-[18px] h-[18px] drop-shadow-[0_0_5px_rgba(241,245,249,0.95)]" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9.4" fill="none" stroke="#e2e8f0" stroke-width="0.9" stroke-dasharray="2 1.5"/>
+        <path d="M4.4 4.4 L10.2 9.2 L19.6 4.4 L14.8 10.2 L19.6 19.6 L13.8 14.8 L4.4 19.6 L9.2 13.8 Z" fill="#94a3b8" stroke="#1e293b" stroke-width="0.6"/>
+        <path d="M12 0.6 L14.1 9.9 L23.4 12 L14.1 14.1 L12 23.4 L9.9 14.1 L0.6 12 L9.9 9.9 Z" fill="#ffffff" stroke="#334155" stroke-width="0.7"/>
+        <polygon points="12,6.5 13.7,10.3 17.5,12 13.7,13.7 12,17.5 10.3,13.7 6.5,12 10.3,10.3" fill="#e0f2fe"/>
+        <circle cx="12" cy="12" r="2" fill="#ffffff"/>
       </svg>`,
       primordial: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-[18px] h-[18px] drop-shadow-[0_0_5px_rgba(253,224,71,0.95)]" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9.2" fill="none" stroke="#fde047" stroke-width="0.9" opacity="0.85"/>
@@ -1314,65 +1467,64 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           <circle cx="20.8" cy="18" r="5.5" fill="none" stroke="#181c20" stroke-width="3.3"/>
           <circle cx="15.2" cy="18" r="5.5" fill="none" stroke="#dce1e8" stroke-width="2.1"/>
           <circle cx="20.8" cy="18" r="5.5" fill="none" stroke="#f8fafc" stroke-width="2.1"/>
+          <path d="M18 13.3 A5.5 5.5 0 0 1 20.7 18" fill="none" stroke="#dce1e8" stroke-width="2.1"/>
         `);
       }
 
-      // UMBRA (Dark Obsidian Swirling Vortex Emblem)
-      if (code === 'UMBRA' || code === 'UM' || code === 'B') {
-        return buildMetallicOrb(cls, '#211132', '#9333ea', `
-          <path d="M18 9.2 C23.2 9.2 26.8 13.2 26.4 18.4 C26 23.2 21.8 26.2 17.2 25.4 C13.4 24.8 11.2 21.2 12.2 17.6 C13 14.8 16 13.4 18.8 14.4 C20.8 15.2 21.6 17.4 20.6 19.2 C19.8 20.6 18 20.8 16.8 19.8" fill="none" stroke="#e2e8f0" stroke-width="2.3" stroke-linecap="round"/>
-          <circle cx="18" cy="18" r="2.1" fill="#ffffff"/>
+      // UMBRA (Dark Obsidian Vortex Swirl Emblem)
+      if (code === 'UMBRA' || code === 'B' || code === 'D') {
+        return buildMetallicOrb(cls, '#24123b', '#a855f7', `
+          <path d="M18 8.5 C23.5 8.5 27.2 12.8 26.8 18.2 C26.4 22.8 22.4 25.5 18.2 24.8 C21.2 23.8 22.8 20.8 22.2 17.6 C21.6 14.6 18.6 13.2 15.8 14.4 C17.6 11.4 16.2 8.5 18 8.5 Z" fill="#e2e8f0" stroke="#0d0517" stroke-width="0.75"/>
+          <path d="M18 27.5 C12.5 27.5 8.8 23.2 9.2 17.8 C9.6 13.2 13.6 10.5 17.8 11.2 C14.8 12.2 13.2 15.2 13.8 18.4 C14.4 21.4 17.4 22.8 20.2 21.6 C18.4 24.6 19.8 27.5 18 27.5 Z" fill="#cbd5e1" stroke="#0d0517" stroke-width="0.75"/>
+          <circle cx="18" cy="18" r="2.4" fill="#ffffff"/>
         `);
       }
 
-      // TAP Symbol ({T})
+      // TAP Symbol
       if (code === 'T' || code === 'TAP') {
-        return buildMetallicOrb(cls, '#47433e', '#d6d3d1', `
-          <path d="M13 21.5 C12.5 15.5 16.5 12 22 13.2 L20.2 10.6 L25.5 14.2 L20.4 17.8 L21.8 15.4 C17.6 14.6 15.2 17.2 15.6 21.5 Z" fill="#f8fafc" stroke="#1c1917" stroke-width="0.7"/>
+        return buildMetallicOrb(cls, '#334155', '#cbd5e1', `
+          <path d="M13 21.5 C12.5 16.2 16.2 12.5 21.2 13.2 L19.4 10.5 L25.2 14.5 L19.8 18.2 L20.8 15.6 C17.4 15.1 15.2 17.4 15.6 21.5 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="0.8" stroke-linejoin="round"/>
         `);
       }
 
-      // Generic Numeric / Variable Cost Orb (e.g., 1, 2, 3, X)
-      const label = code.slice(0, 2) || '0';
-      return `<span class="${cls}"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" class="w-full h-full block" viewBox="0 0 36 36">
-        <circle cx="18" cy="18" r="17.2" fill="#17151c"/>
-        <circle cx="18" cy="18" r="15.6" fill="#dfdbd2"/>
-        <ellipse cx="15" cy="12" rx="8" ry="5" transform="rotate(-15 15 12)" fill="#ffffff" opacity="0.65"/>
-        <text x="18" y="24.2" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-weight="900" font-size="${label.length > 1 ? '15' : '18.5'}" fill="#141218">${label}</text>
-      </svg></span>`;
+      // Generic Numeric / Variable Cost Orb
+      const safeLabel = String(code).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const fontSize = safeLabel.length > 1 ? '11.5' : '14.5';
+      return buildMetallicOrb(cls, '#475569', '#cbd5e1', `
+        <text x="18" y="22.8" text-anchor="middle" font-family="Cinzel, serif" font-weight="800" font-size="${fontSize}" fill="#f8fafc" stroke="#0f172a" stroke-width="0.6" paint-order="stroke">${safeLabel}</text>
+      `);
     }
 
-    // 6. Render Sequence of Mana Symbols
+    // 6. Parse Mana / Energy Cost String into Metallic Orbs
     function parseManaSymbols(str, isInline = false) {
       try {
         const tokens = parseManaTokens(str);
         if (!tokens.length) return '';
-        return tokens.map(token => renderSingleManaSymbol(token, isInline)).join('');
+        return tokens.map(tok => renderSingleManaSymbol(tok, isInline)).join('');
       } catch (e) {
-        console.error('Mana symbol parse error:', e);
+        console.error('Mana parse error:', e);
         return '';
       }
     }
 
-    // 7. Attribute Color Theme Switcher
-    window.selectColor = function(color) {
-      if (!COLOR_THEMES[color]) color = 'IGNIS';
-      currentColor = color;
-      const theme = COLOR_THEMES[color];
+    // 7. Select Card Element Attribute Theme
+    window.selectColor = function(colorKey) {
+      if (!COLOR_THEMES[colorKey]) return;
+      currentColor = colorKey;
+      const theme = COLOR_THEMES[colorKey];
 
       document.querySelectorAll('#colorSelectors button[data-color]').forEach(btn => {
-        if (btn.getAttribute('data-color') === color) {
-          btn.classList.add('ring-2', 'ring-white', 'scale-[1.03]');
+        if (btn.getAttribute('data-color') === colorKey) {
+          btn.classList.add('ring-2', 'ring-white');
         } else {
-          btn.classList.remove('ring-2', 'ring-white', 'scale-[1.03]');
+          btn.classList.remove('ring-2', 'ring-white');
         }
       });
 
-      const setStop = (id, stopColor) => {
+      const setStop = (id, color) => {
         const el = document.getElementById(id);
-        if (el) el.setAttribute('stop-color', stopColor);
+        if (el) el.setAttribute('stop-color', color);
       };
-
       setStop('nebulaStop1', theme.nebulaTop[0]);
       setStop('nebulaStop2', theme.nebulaTop[1]);
       setStop('nebulaBotStop1', theme.nebulaBot[0]);
@@ -1390,20 +1542,51 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       updateCard();
     };
 
-    // 7.5. Frame Mode, Full-Art & Primordial-Rare Switchers
+    // 7.5. Frame Mode, Full-Art, Secret-Rare & Primordial-Rare Switchers
     function isFullArtActive() {
-      return frameMode === 'fullart' || (frameMode === 'primordial' && primordialArtMode === 'fullart');
+      return frameMode === 'fullart' ||
+        (frameMode === 'primordial' && primordialArtMode === 'fullart') ||
+        (frameMode === 'secret' && secretArtMode === 'fullart');
     }
 
     function isFullArtDarkTextMode() {
       if (frameMode === 'fullart') return fullArtStyle !== 'light-glass';
       if (frameMode === 'primordial') return primordialBoxStyle !== 'gilded-marble';
+      if (frameMode === 'secret') return secretBoxStyle !== 'silver-marble';
       return false;
+    }
+
+    // Synchronize inner star crests, filigree tendrils & gem bezel between Sterling Silver (Secret) and Champagne Gold
+    function syncOrnamentMetalPalette(useSilver) {
+      const palette = useSilver
+        ? ['#ffffff', '#e2e8f0', '#94a3b8', '#334155']
+        : ['#fff6e0', '#e5cf9e', '#ab8d56', '#5c4724'];
+      const gradIds = [
+        'goldFiligreeGrad',
+        'crownTopGoldGrad',
+        'crownLeftGoldGrad',
+        'edgeGoldGradL',
+        'edgeGoldGradR',
+        'typeStarGoldGrad',
+        'spurGoldGrad',
+        'stampGoldGrad'
+      ];
+      gradIds.forEach(id => {
+        const stops = document.getElementById(id)?.querySelectorAll('stop');
+        if (stops && stops.length >= 4) {
+          stops[0].setAttribute('stop-color', palette[0]);
+          stops[1].setAttribute('stop-color', palette[1]);
+          stops[2].setAttribute('stop-color', palette[2]);
+          stops[3].setAttribute('stop-color', palette[3]);
+        }
+      });
     }
 
     window.setFrameMode = function(mode, syncRarity = true) {
       if (mode === 'primordial') {
         frameMode = 'primordial';
+      } else if (mode === 'secret') {
+        frameMode = 'secret';
       } else if (mode === 'fullart') {
         frameMode = 'fullart';
       } else {
@@ -1414,44 +1597,89 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       if (syncRarity && raritySelect) {
         if (frameMode === 'primordial') {
           raritySelect.value = 'primordial';
-        } else if (raritySelect.value === 'primordial') {
+        } else if (frameMode === 'secret') {
+          raritySelect.value = 'secret';
+        } else if (raritySelect.value === 'primordial' || raritySelect.value === 'secret') {
           raritySelect.value = 'mythic';
         }
       }
 
       const btnStd = document.getElementById('btnFrameStandard');
       const btnFull = document.getElementById('btnFrameFullArt');
+      const btnSec = document.getElementById('btnFrameSecret');
       const btnPrim = document.getElementById('btnFramePrimordial');
       const fullArtPanel = document.getElementById('fullArtOptionsPanel');
+      const secPanel = document.getElementById('secretOptionsPanel');
       const primPanel = document.getElementById('primordialOptionsPanel');
       const artTitle = document.getElementById('artSectionTitle');
       const artUploadLabel = document.getElementById('artUploadLabel');
 
       const activeBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-amber-500 text-zinc-950 shadow-sm flex items-center justify-center gap-1';
+      const activeSecBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-gradient-to-r from-white via-slate-200 to-slate-400 text-zinc-950 shadow-[0_0_12px_rgba(226,232,240,0.55)] flex items-center justify-center gap-1';
       const activePrimBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 text-zinc-950 shadow-[0_0_12px_rgba(251,191,36,0.5)] flex items-center justify-center gap-1';
       const inactiveBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-zinc-400 hover:text-zinc-200 transition-all flex items-center justify-center gap-1';
+      const inactiveSecBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-slate-200 hover:text-white transition-all flex items-center justify-center gap-1';
       const inactivePrimBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-amber-300/90 hover:text-amber-200 transition-all flex items-center justify-center gap-1';
 
       if (btnStd) btnStd.className = frameMode === 'standard' ? activeBtnCls : inactiveBtnCls;
       if (btnFull) btnFull.className = frameMode === 'fullart' ? activeBtnCls : inactiveBtnCls;
+      if (btnSec) btnSec.className = frameMode === 'secret' ? activeSecBtnCls : inactiveSecBtnCls;
       if (btnPrim) btnPrim.className = frameMode === 'primordial' ? activePrimBtnCls : inactivePrimBtnCls;
 
       if (fullArtPanel) fullArtPanel.classList.toggle('hidden', frameMode !== 'fullart');
+      if (secPanel) secPanel.classList.toggle('hidden', frameMode !== 'secret');
       if (primPanel) primPanel.classList.toggle('hidden', frameMode !== 'primordial');
 
       if (isFullArtActive()) {
-        if (artTitle) artTitle.textContent = frameMode === 'primordial'
-          ? '일러스트레이션 설정 (Primordial 63:88 풀아트 재단)'
-          : '일러스트레이션 설정 (63:88 풀아트 자동 재단)';
+        if (artTitle) {
+          artTitle.textContent = frameMode === 'primordial'
+            ? '일러스트레이션 설정 (Primordial 63:88 풀아트 재단)'
+            : frameMode === 'secret'
+              ? '일러스트레이션 설정 (Secret 63:88 풀아트 재단)'
+              : '일러스트레이션 설정 (63:88 풀아트 자동 재단)';
+        }
         if (artUploadLabel) artUploadLabel.textContent = '이미지 파일 불러오기 (업로드 시 63:88 카드 전체 규격으로 자동 재단됩니다)';
       } else {
-        if (artTitle) artTitle.textContent = frameMode === 'primordial'
-          ? '일러스트레이션 설정 (Primordial 5:3 자동 재단)'
-          : '일러스트레이션 설정 (5:3 자동 재단)';
+        if (artTitle) {
+          artTitle.textContent = frameMode === 'primordial'
+            ? '일러스트레이션 설정 (Primordial 5:3 자동 재단)'
+            : frameMode === 'secret'
+              ? '일러스트레이션 설정 (Secret 5:3 자동 재단)'
+              : '일러스트레이션 설정 (5:3 자동 재단)';
+        }
         if (artUploadLabel) artUploadLabel.textContent = '이미지 파일 불러오기 (업로드 시 5:3 규격으로 자동 재단됩니다)';
       }
 
       updateArtworkTransform();
+      updateCard();
+    };
+
+    window.setSecretArtMode = function(artMode) {
+      secretArtMode = artMode === 'fullart' ? 'fullart' : 'standard';
+      const btnStd = document.getElementById('btnSecArtStandard');
+      const btnFull = document.getElementById('btnSecArtFull');
+      if (btnStd) {
+        btnStd.className = secretArtMode === 'standard'
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-slate-200 text-slate-100 transition'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition';
+      }
+      if (btnFull) {
+        btnFull.className = secretArtMode === 'fullart'
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-slate-200 text-slate-100 transition'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition';
+      }
+      setFrameMode('secret', false);
+    };
+
+    window.setSecretBoxStyle = function(style) {
+      secretBoxStyle = style;
+      document.querySelectorAll('#secretOptionsPanel button[data-secstyle]').forEach(btn => {
+        if (btn.getAttribute('data-secstyle') === style) {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-slate-200 text-slate-100 transition flex flex-col items-center gap-0.5';
+        } else {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5';
+        }
+      });
       updateCard();
     };
 
@@ -1507,15 +1735,29 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const labelPrimGlow = document.getElementById('labelPrimordialGlow');
       if (labelPrimGlow) labelPrimGlow.textContent = `${Math.round(primGlowRaw)}%`;
 
+      const secGlowRaw = parseFloat(document.getElementById('inputSecretGlow')?.value ?? 92);
+      const labelSecGlow = document.getElementById('labelSecretGlow');
+      if (labelSecGlow) labelSecGlow.textContent = `${Math.round(secGlowRaw)}%`;
+
       const rarityVal = document.getElementById('selectRarity')?.value || 'mythic';
       const isPrimordial = frameMode === 'primordial' || rarityVal === 'primordial';
+      const isSecret = !isPrimordial && (frameMode === 'secret' || rarityVal === 'secret');
       const showCosmicRibbons = document.getElementById('toggleCosmicRibbons')?.checked ?? true;
+
+      // Switch inner ornaments to Sterling Silver when Secret Rare is active
+      syncOrnamentMetalPalette(isSecret);
 
       const cardTarget = document.getElementById('cardPreviewTarget');
       const primOverlay = document.getElementById('primordialBorderOverlay');
       const primGlowWash = document.getElementById('primordialGlowWash');
       const primGemHalo = document.getElementById('primordialGemHalo');
+
+      const secOverlay = document.getElementById('secretBorderOverlay');
+      const secGlowWash = document.getElementById('secretGlowWash');
+      const secGemHalo = document.getElementById('secretGemHalo');
+
       const footerBar = document.getElementById('renderFooterBar');
+      const setLangEl = document.getElementById('renderSetAndLang');
 
       const fullArtContainer = document.getElementById('fullArtContainer');
       const fullArtBottomScrim = document.getElementById('fullArtBottomScrim');
@@ -1528,6 +1770,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const artContainer = document.getElementById('cardArtContainer');
       const stdCanvas = document.getElementById('renderCardArtCanvas');
       const artVignette = document.getElementById('artInnerVignette');
+      const artSpandrels = document.getElementById('artFiligreeSpandrels');
       const starLeft = document.getElementById('artEdgeStarLeft');
       const starRight = document.getElementById('artEdgeStarRight');
 
@@ -1543,9 +1786,10 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const ptBox = document.getElementById('renderPTBox');
       const ptValEl = document.getElementById('renderPTVal');
 
-      // Toggle Primordial-Rare Outer Golden Filigree & Halo Layer
+      // Toggle Primordial-Rare & Secret-Rare Outer Filigree & Halo Layers
       if (cardTarget) {
         cardTarget.classList.toggle('primordial-outer-glow', isPrimordial);
+        cardTarget.classList.toggle('secret-outer-glow', isSecret);
       }
       if (primOverlay) {
         primOverlay.classList.toggle('hidden', !isPrimordial);
@@ -1557,16 +1801,247 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       if (primGemHalo) {
         primGemHalo.classList.toggle('hidden', !isPrimordial);
       }
-      if (footerBar) {
-        footerBar.className = isPrimordial
-          ? 'absolute bottom-[13px] left-[7.5%] right-[7.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-amber-200/95 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.98)]'
-          : 'absolute bottom-[5px] left-[5.5%] right-[5.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-zinc-300/85 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]';
+
+      if (secOverlay) {
+        secOverlay.classList.toggle('hidden', !isSecret);
+        secOverlay.style.opacity = String(secGlowRaw / 100);
+      }
+      if (secGlowWash) {
+        secGlowWash.style.opacity = String(Math.min(1, (secGlowRaw / 100) * 1.05));
+      }
+      if (secGemHalo) {
+        secGemHalo.classList.toggle('hidden', !isSecret);
       }
 
-      // Reset custom Primordial box classes before applying mode-specific classes
-      if (headerBox) headerBox.classList.remove('primordial-gilded-header');
-      if (textBox) textBox.classList.remove('primordial-gilded-box');
-      if (ptBox) ptBox.classList.remove('primordial-pt-plaque');
+      // Toggle Inner 5:3 Artwork Corner Filigree Spandrels for Secret-Rare only
+      if (artSpandrels) {
+        const showSpandrels = isSecret && secretArtMode === 'standard';
+        artSpandrels.classList.toggle('hidden', !showSpandrels);
+        if (showSpandrels) {
+          const secGroup = artSpandrels.querySelector('#spandrelSecGroup');
+          if (secGroup) secGroup.style.display = 'block';
+        }
+      }
+
+      if (setLangEl) {
+        setLangEl.className = isSecret
+          ? 'font-bold text-[#f1f5f9]'
+          : 'font-bold text-[#ebd9b4]';
+      }
+
+      if (footerBar) {
+        if (isPrimordial) {
+          footerBar.className = 'absolute bottom-[13px] left-[7.5%] right-[7.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-amber-200/95 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.98)]';
+        } else if (isSecret) {
+          footerBar.className = 'absolute bottom-[13px] left-[7.5%] right-[7.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-slate-100/95 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.98)]';
+        } else {
+          footerBar.className = 'absolute bottom-[5px] left-[5.5%] right-[5.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-zinc-300/85 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]';
+        }
+      }
+
+      // Reset custom special tier box classes before applying mode-specific classes
+      if (headerBox) headerBox.classList.remove('primordial-gilded-header', 'secret-silver-header');
+      if (textBox) textBox.classList.remove('primordial-gilded-box', 'secret-silver-box');
+      if (ptBox) ptBox.classList.remove('primordial-pt-plaque', 'secret-pt-plaque');
+
+      // SECRET-RARE DEDICATED STERLING SILVER FRAME MODE
+      if (frameMode === 'secret') {
+        const silverBorder = '#f1f5f9';
+        const silverTypeBg = 'linear-gradient(135deg, #242c38 0%, #0f141c 48%, #1e2631 80%, #090d12 100%)';
+
+        if (secretArtMode === 'fullart') {
+          if (fullArtContainer) fullArtContainer.classList.remove('hidden');
+          if (cosmicBaseRect) cosmicBaseRect.style.display = 'none';
+          if (cosmicDecorGroup) cosmicDecorGroup.style.display = 'block';
+          if (artWrapper) {
+            artWrapper.style.borderLeftWidth = '0px';
+            artWrapper.style.borderRightWidth = '0px';
+            artWrapper.style.boxShadow = 'none';
+          }
+          if (artContainer) artContainer.style.backgroundColor = 'transparent';
+          if (stdCanvas) stdCanvas.style.opacity = '0';
+          if (artVignette) artVignette.style.display = 'none';
+          if (starLeft) starLeft.style.display = 'none';
+          if (starRight) starRight.style.display = 'none';
+        } else {
+          if (fullArtContainer) fullArtContainer.classList.add('hidden');
+          if (cosmicBaseRect) cosmicBaseRect.style.display = 'block';
+          if (cosmicDecorGroup) cosmicDecorGroup.style.display = 'block';
+          if (artWrapper) {
+            artWrapper.style.borderLeftWidth = '2.5px';
+            artWrapper.style.borderRightWidth = '2.5px';
+            artWrapper.style.borderColor = silverBorder;
+            artWrapper.style.boxShadow = '0 0 15px rgba(226, 232, 240, 0.38), 0 0 0 1.5px #1e293b';
+          }
+          if (artContainer) artContainer.style.backgroundColor = '#0b0a0f';
+          if (stdCanvas) stdCanvas.style.opacity = '1';
+          if (artVignette) artVignette.style.display = 'block';
+          if (starLeft) starLeft.style.display = 'block';
+          if (starRight) starRight.style.display = 'block';
+        }
+
+        if (secretBoxStyle === 'silver-marble') {
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(226,232,240,0.08) 0%, rgba(0,0,0,0) 45%, rgba(15,23,42,0.48) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.classList.add('secret-silver-header');
+            headerBox.style.background = '';
+            headerBox.style.boxShadow = '';
+            headerBox.style.borderWidth = '2.2px';
+            headerBox.style.borderColor = silverBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#0f172a]';
+          }
+          if (typeBox) {
+            typeBox.classList.add('astrum-obsidian-bar');
+            typeBox.style.background = silverTypeBg;
+            typeBox.style.borderWidth = '2px';
+            typeBox.style.borderColor = silverBorder;
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.classList.add('secret-silver-box');
+            textBox.style.background = '';
+            textBox.style.boxShadow = '';
+            textBox.style.borderLeftWidth = '2.5px';
+            textBox.style.borderRightWidth = '2.5px';
+            textBox.style.borderBottomWidth = '2.5px';
+            textBox.style.borderColor = silverBorder;
+          }
+          if (watermark) {
+            watermark.style.color = '#334155';
+            watermark.style.opacity = '0.13';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#0f172a]';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#334155] pr-12 select-text';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#475569]/55 to-[#334155]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#334155]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#475569]/55 to-[#334155]/85';
+          if (cornerSpur) cornerSpur.style.display = 'block';
+
+          if (ptBox) {
+            ptBox.classList.remove('astrum-pt-plaque');
+            ptBox.classList.add('secret-pt-plaque');
+            ptBox.style.background = '';
+            ptBox.style.borderColor = '#ffffff';
+          }
+          if (ptValEl) {
+            ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#0f172a] tracking-tight';
+          }
+        } else if (secretBoxStyle === 'floating') {
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(0,0,0,0) 22%, rgba(15,23,42,0.12) 48%, rgba(10,15,26,0.8) 74%, rgba(6,9,16,0.94) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.style.background = 'linear-gradient(180deg, rgba(22,30,44,0.8) 0%, rgba(11,16,26,0.6) 100%)';
+            headerBox.style.boxShadow = '0 2px 12px rgba(226,232,240,0.28)';
+            headerBox.style.borderWidth = '1.6px';
+            headerBox.style.borderColor = silverBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#f8fafc] fullart-crisp-shadow';
+          }
+          if (typeBox) {
+            typeBox.classList.remove('astrum-obsidian-bar');
+            typeBox.style.background = 'linear-gradient(90deg, rgba(22,29,42,0.84) 0%, rgba(12,17,26,0.68) 100%)';
+            typeBox.style.borderWidth = '1.4px';
+            typeBox.style.borderColor = 'rgba(241, 245, 249, 0.8)';
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.style.background = 'transparent';
+            textBox.style.boxShadow = 'none';
+            textBox.style.borderLeftWidth = '0px';
+            textBox.style.borderRightWidth = '0px';
+            textBox.style.borderBottomWidth = '0px';
+          }
+          if (watermark) {
+            watermark.style.color = '#f1f5f9';
+            watermark.style.opacity = '0.09';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#f8fafc] fullart-crisp-shadow';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#e2e8f0] pr-12 select-text fullart-crisp-shadow';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#e2e8f0]/55 to-[#f8fafc]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#f8fafc]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#e2e8f0]/55 to-[#f8fafc]/85';
+          if (cornerSpur) cornerSpur.style.display = 'none';
+
+          if (ptBox) {
+            ptBox.classList.remove('astrum-pt-plaque');
+            ptBox.style.background = 'linear-gradient(180deg, rgba(30,41,59,0.92) 0%, rgba(11,16,26,0.96) 100%)';
+            ptBox.style.borderColor = silverBorder;
+          }
+          if (ptValEl) {
+            ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#f8fafc] tracking-tight fullart-crisp-shadow';
+          }
+        } else {
+          // Frost Obsidian & Silver Glass
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(226,232,240,0.1) 0%, rgba(0,0,0,0) 35%, rgba(10,15,26,0.62) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.style.background = 'linear-gradient(180deg, rgba(26,34,48,0.9) 0%, rgba(12,17,26,0.94) 100%)';
+            headerBox.style.boxShadow = '0 3px 12px rgba(0,0,0,0.85), 0 0 12px rgba(226,232,240,0.28), inset 0 1px 1px rgba(255,255,255,0.4)';
+            headerBox.style.borderWidth = '2px';
+            headerBox.style.borderColor = silverBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13px] sm:text-[14.5px] font-extrabold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#f8fafc] fullart-crisp-shadow';
+          }
+          if (typeBox) {
+            typeBox.classList.add('astrum-obsidian-bar');
+            typeBox.style.background = silverTypeBg;
+            typeBox.style.borderWidth = '2px';
+            typeBox.style.borderColor = silverBorder;
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.style.background = 'linear-gradient(165deg, rgba(22,30,42,0.85) 0%, rgba(10,14,22,0.92) 100%)';
+            textBox.style.boxShadow = '0 4px 14px rgba(0,0,0,0.85), 0 0 14px rgba(226,232,240,0.22), inset 0 1px 1px rgba(255,255,255,0.25)';
+            textBox.style.borderLeftWidth = '2.2px';
+            textBox.style.borderRightWidth = '2.2px';
+            textBox.style.borderBottomWidth = '2.2px';
+            textBox.style.borderColor = silverBorder;
+          }
+          if (watermark) {
+            watermark.style.color = '#e2e8f0';
+            watermark.style.opacity = '0.1';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-1.5 font-card-body text-[11px] sm:text-[11.5px] leading-relaxed select-text text-[#f1f5f9] fullart-crisp-shadow';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#cbd5e1] pr-12 select-text fullart-crisp-shadow';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#cbd5e1]/55 to-[#f8fafc]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#f8fafc]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#cbd5e1]/55 to-[#f8fafc]/85';
+          if (cornerSpur) cornerSpur.style.display = 'block';
+
+          if (ptBox) {
+            ptBox.classList.remove('astrum-pt-plaque');
+            ptBox.style.background = 'linear-gradient(180deg, rgba(34,45,64,0.95) 0%, rgba(13,18,28,0.98) 100%)';
+            ptBox.style.borderColor = silverBorder;
+          }
+          if (ptValEl) {
+            ptValEl.className = 'font-card-title text-[12.5px] sm:text-[13.5px] font-black text-[#f8fafc] tracking-tight fullart-crisp-shadow';
+          }
+        }
+        return;
+      }
 
       // PRIMORDIAL-RARE DEDICATED FRAME MODE
       if (frameMode === 'primordial') {
@@ -2215,6 +2690,466 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       updateCard();
     };
 
+    // 10.5. Masterwork Baroque, Gothic Cathedral & Celestial Armillary SVG Filigree Builder
+    function buildMasterworkFiligreeOverlays() {
+      const f = (n) => Number(n).toFixed(1);
+      const polar = (cx, cy, r, deg) => {
+        const rad = (deg * Math.PI) / 180;
+        return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+      };
+
+      // Generates a fine guilloché spirograph / rose-engine geometric engraving path
+      const guillochePath = (cx, cy, rBase, amp, lobes, steps = 180) => {
+        let d = '';
+        for (let i = 0; i <= steps; i++) {
+          const t = (i / steps) * Math.PI * 2;
+          const r = rBase + amp * Math.cos(lobes * t);
+          const x = cx + r * Math.cos(t);
+          const y = cy + r * Math.sin(t);
+          d += (i === 0 ? 'M' : 'L') + `${f(x)},${f(y)}`;
+        }
+        return d + 'Z';
+      };
+
+      // Generates multi-pointed compass / sunburst stars
+      const starPts = (cx, cy, points, rOut, rIn, rotDeg = -90) => {
+        const pts = [];
+        const total = points * 2;
+        for (let i = 0; i < total; i++) {
+          const r = i % 2 === 0 ? rOut : rIn;
+          const [x, y] = polar(cx, cy, r, rotDeg + (i * 360) / total);
+          pts.push(`${f(x)},${f(y)}`);
+        }
+        return pts.join(' ');
+      };
+
+      // Generates calibrated astrolabe degree ticks along an arc
+      const astrolabeTicks = (cx, cy, r1, r2, startDeg, endDeg, stepDeg, stroke, width = 0.75) => {
+        let d = '';
+        for (let a = startDeg; a <= endDeg + 0.01; a += stepDeg) {
+          const isMajor = Math.round(a - startDeg) % (stepDeg * 3) === 0;
+          const inner = isMajor ? r1 - 2.2 : r1;
+          const [x1, y1] = polar(cx, cy, inner, a);
+          const [x2, y2] = polar(cx, cy, r2, a);
+          d += `M${f(x1)},${f(y1)}L${f(x2)},${f(y2)}`;
+        }
+        return `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${width}" opacity="0.88"/>`;
+      };
+
+      // Distributes 3D shaded metallic rosary beads & faceted spacer rondelles along a rounded rect
+      const buildPerimeterRosary = (x, y, w, h, rx, step, beadFill, rimColor, specColor) => {
+        const pts = [];
+        const straightW = w - 2 * rx;
+        const straightH = h - 2 * rx;
+        const arcLen = 0.5 * Math.PI * rx;
+        const pushEdge = (x1, y1, x2, y2, len) => {
+          const count = Math.max(2, Math.round(len / step));
+          for (let i = 0; i < count; i++) {
+            const t = i / count;
+            pts.push([x1 + (x2 - x1) * t, y1 + (y2 - y1) * t]);
+          }
+        };
+        const pushCorner = (cx, cy, startDeg) => {
+          const count = Math.max(3, Math.round(arcLen / step));
+          for (let i = 0; i < count; i++) {
+            pts.push(polar(cx, cy, rx, startDeg + (i / count) * 90));
+          }
+        };
+        pushEdge(x + rx, y, x + w - rx, y, straightW);
+        pushCorner(x + w - rx, y + rx, -90);
+        pushEdge(x + w, y + rx, x + w, y + h - rx, straightH);
+        pushCorner(x + w - rx, y + h - rx, 0);
+        pushEdge(x + w - rx, y + h, x + rx, y + h, straightW);
+        pushCorner(x + rx, y + h - rx, 90);
+        pushEdge(x, y + h - rx, x, y + rx, straightH);
+        pushCorner(x + rx, y + rx, 180);
+
+        return pts.map(([bx, by], idx) => {
+          const major = idx % 5 === 0;
+          const r = major ? 2.25 : 1.45;
+          return `<circle cx="${f(bx)}" cy="${f(by)}" r="${r}" fill="${beadFill}" stroke="${rimColor}" stroke-width="0.55"/>` +
+            `<circle cx="${f(bx - r * 0.28)}" cy="${f(by - r * 0.28)}" r="${f(r * 0.36)}" fill="${specColor}"/>`;
+        }).join('');
+      };
+
+      // Builds continuous Gothic cathedral lacework & Baroque S-scroll frieze along vertical margins
+      const buildVerticalCathedralFrieze = (yStart, yEnd, count, metalGrad, shadowCol, hiCol, gemFill) => {
+        const segH = (yEnd - yStart) / count;
+        let shadows = '';
+        let metals = '';
+        let highlights = '';
+        let cusps = '';
+        for (let i = 0; i < count; i++) {
+          const y0 = yStart + i * segH;
+          const ym = y0 + segH * 0.5;
+          const y1 = y0 + segH;
+          // Pointed Gothic trefoil arch + S-scroll volute spanning x=15..41
+          const arch = `M15.5,${f(y0)} C27,${f(y0 + segH * 0.12)} 38.5,${f(y0 + segH * 0.28)} 40.5,${f(ym)} C38.5,${f(y0 + segH * 0.72)} 27,${f(y0 + segH * 0.88)} 15.5,${f(y1)}`;
+          const innerCurl = `M16,${f(y0 + segH * 0.2)} C25,${f(y0 + segH * 0.24)} 30,${f(y0 + segH * 0.38)} 26,${f(ym)} C22,${f(y0 + segH * 0.6)} 25,${f(y0 + segH * 0.76)} 16,${f(y0 + segH * 0.8)}`;
+          shadows += arch + innerCurl;
+          metals += arch + innerCurl;
+          highlights += `M24,${f(y0 + segH * 0.2)} Q36.5,${f(ym)} 24,${f(y0 + segH * 0.8)}`;
+          // Fleur-de-lis diamond cusp tip at x=41.5
+          cusps += `<polygon points="36.5,${f(ym)} 40.5,${f(ym - 2.6)} 44.5,${f(ym)} 40.5,${f(ym + 2.6)}" fill="${gemFill}" stroke="${shadowCol}" stroke-width="0.55"/>`;
+          if (i % 2 === 0) {
+            cusps += `<circle cx="24" cy="${f(ym)}" r="1.4" fill="${hiCol}" stroke="${shadowCol}" stroke-width="0.45"/>`;
+          }
+        }
+        return `
+          <path d="${shadows}" fill="none" stroke="${shadowCol}" stroke-width="2.7" stroke-linecap="round"/>
+          <path d="${metals}" fill="none" stroke="${metalGrad}" stroke-width="1.55" stroke-linecap="round"/>
+          <path d="${highlights}" fill="none" stroke="${hiCol}" stroke-width="0.65" opacity="0.9"/>
+          ${cusps}
+        `;
+      };
+
+      // Builds horizontal scalloped rose-lace festoons along top/bottom margins
+      const buildHorizontalLace = (xStart, xEnd, yBase, dir, count, metalGrad, shadowCol, hiCol) => {
+        const segW = (xEnd - xStart) / count;
+        let pathD = '';
+        let subD = '';
+        let drops = '';
+        for (let i = 0; i < count; i++) {
+          const x0 = xStart + i * segW;
+          const xm = x0 + segW * 0.5;
+          const x1 = x0 + segW;
+          const peakY = yBase + dir * 13.5;
+          const subY = yBase + dir * 8.2;
+          pathD += `M${f(x0)},${f(yBase)} Q${f(xm)},${f(peakY)} ${f(x1)},${f(yBase)}`;
+          subD += `M${f(x0 + 3)},${f(yBase)} Q${f(xm)},${f(subY)} ${f(x1 - 3)},${f(yBase)}`;
+          drops += `<polygon points="${f(xm)},${f(peakY - dir * 2.2)} ${f(xm + 2.2)},${f(peakY + dir * 1.5)} ${f(xm)},${f(peakY + dir * 5.2)} ${f(xm - 2.2)},${f(peakY + dir * 1.5)}" fill="${hiCol}" stroke="${shadowCol}" stroke-width="0.55"/>`;
+        }
+        return `
+          <path d="${pathD}" fill="none" stroke="${shadowCol}" stroke-width="2.5"/>
+          <path d="${pathD}" fill="none" stroke="${metalGrad}" stroke-width="1.4"/>
+          <path d="${subD}" fill="none" stroke="${hiCol}" stroke-width="0.75" stroke-dasharray="2 1.8"/>
+          ${drops}
+        `;
+      };
+
+      // Builds one monumental quadrant corner (0,0 top-left reference) with 7-pinion seraphim wings,
+      // Baroque acanthus volutes, 36-lobe guilloché astrolabe & faceted princess-cut jewel
+      const buildMonumentalCornerUnit = (p) => {
+        const g1 = guillochePath(34, 34, 21.5, 3.2, 18, 144);
+        const g2 = guillochePath(34, 34, 14.5, 2.1, 12, 108);
+        // 7 layered vertical wing pinions sweeping down left margin (y=36..218)
+        const vFeathers = [
+          'M6,62 C4,108 10,165 20,218 C22,175 24,132 34,86 Z',
+          'M10,54 C10,98 18,148 30,192 C31,152 33,115 40,74 Z',
+          'M15,46 C18,86 26,128 39,164 C39,130 40,98 44,64 Z',
+          'M20,40 C26,72 34,105 46,134 C45,106 44,82 46,54 Z',
+          'M8,96 C14,132 22,164 35,184 C28,150 22,122 16,90 Z'
+        ].map((d, idx) => `
+          <path d="${d}" fill="${idx % 2 === 0 ? p.metal : p.metalAlt}" stroke="${p.shadow}" stroke-width="0.85"/>
+        `).join('');
+
+        // 5 layered horizontal wing pinions sweeping across top margin (x=36..196)
+        const hFeathers = [
+          'M62,6 C108,4 156,9 198,19 C160,21 122,23 82,31 Z',
+          'M52,10 C94,10 138,16 174,28 C140,29 108,30 72,36 Z',
+          'M44,15 C80,18 118,25 148,37 C120,37 92,37 62,39 Z',
+          'M38,20 C68,25 98,32 122,42 C98,41 76,40 52,41 Z'
+        ].map((d, idx) => `
+          <path d="${d}" fill="${idx % 2 === 0 ? p.metal : p.metalAlt}" stroke="${p.shadow}" stroke-width="0.85"/>
+        `).join('');
+
+        return `
+          <circle cx="34" cy="34" r="42" fill="${p.bloom}"/>
+          ${vFeathers}
+          ${hFeathers}
+          <!-- Feather Spine Specular Ridges -->
+          <path d="M14,68 C13,115 17,158 20,210 M21,58 C22,98 26,138 30,186 M28,50 C31,84 35,118 39,158 M68,13 C112,12 152,15 190,19 M58,19 C96,20 132,23 168,28" fill="none" stroke="${p.hi}" stroke-width="0.75" opacity="0.88"/>
+
+          <!-- Heavy Sculpted Baroque Acanthus C-Scrolls & Spiral Volutes -->
+          <path d="M8,108 C8,42 42,8 112,8 C78,15 54,24 38,40 C24,54 15,78 8,108 Z" fill="${p.metal}" stroke="${p.shadow}" stroke-width="1"/>
+          <path d="M22,94 C36,78 52,84 47,99 C43,109 30,107 33,96 C35,90 42,91 41,96" fill="none" stroke="${p.shadow}" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M22,94 C36,78 52,84 47,99 C43,109 30,107 33,96 C35,90 42,91 41,96" fill="none" stroke="${p.hi}" stroke-width="1.45" stroke-linecap="round"/>
+
+          <path d="M94,22 C78,36 84,52 99,47 C109,43 107,30 96,33 C90,35 91,42 96,41" fill="none" stroke="${p.shadow}" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M94,22 C78,36 84,52 99,47 C109,43 107,30 96,33 C90,35 91,42 96,41" fill="none" stroke="${p.hi}" stroke-width="1.45" stroke-linecap="round"/>
+
+          <!-- Inner Corner Spandrel Embrace -->
+          <path d="M40,66 C58,60 66,46 56,34 M66,40 C60,58 46,66 34,56" fill="none" stroke="${p.shadow}" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M40,66 C58,60 66,46 56,34 M66,40 C60,58 46,66 34,56" fill="none" stroke="${p.metal}" stroke-width="1.4" stroke-linecap="round"/>
+
+          <!-- 36-Ray Guilloché Astrolabe Medallion -->
+          <circle cx="34" cy="34" r="24" fill="${p.darkCore}" fill-opacity="0.72" stroke="${p.metal}" stroke-width="1.2"/>
+          <path d="${g1}" fill="none" stroke="${p.hi}" stroke-width="0.65" opacity="0.82"/>
+          <path d="${g2}" fill="none" stroke="${p.accent}" stroke-width="0.7" opacity="0.9"/>
+          ${astrolabeTicks(34, 34, 21.5, 24, -45, 135, 10, p.hi, 0.65)}
+
+          <!-- 12-Pointed Compass Rose & Faceted Princess-Cut Star Jewel -->
+          <polygon points="${starPts(34, 34, 8, 22, 9.5, -67.5)}" fill="${p.metalAlt}" stroke="${p.shadow}" stroke-width="0.7"/>
+          <polygon points="${starPts(34, 34, 4, 27, 6.2, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.85"/>
+          <polygon points="${starPts(34, 34, 4, 15, 4.2, -45)}" fill="${p.hi}" opacity="0.92"/>
+          <circle cx="34" cy="34" r="4.6" fill="${p.gemCore}" stroke="${p.hi}" stroke-width="0.9"/>
+          <circle cx="32.6" cy="32.6" r="1.5" fill="#ffffff"/>
+
+          <!-- Satellite Marquise Jewels on Wing Roots -->
+          <polygon points="24,122 28.5,130 24,138 19.5,130" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.7"/>
+          <polygon points="122,24 130,28.5 138,24 130,19.5" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.7"/>
+        `;
+      };
+
+      // Builds Left-Side Cardinal (y=432) & Intercardinal (y=245, y=635) Grand Astrolabe Rose Clasps
+      const buildSideClaspColumn = (p) => {
+        const roseG = guillochePath(20, 432, 18.5, 3.4, 16, 128);
+        const brooches = [245, 635].map((cy) => `
+          <g>
+            <circle cx="22" cy="${cy}" r="24" fill="${p.bloom}"/>
+            <path d="M8,${cy - 44} C28,${cy - 26} 34,${cy - 12} 22,${cy} C34,${cy + 12} 28,${cy + 26} 8,${cy + 44} C17,${cy + 24} 18,${cy + 11} 7,${cy} C18,${cy - 11} 17,${cy - 24} 8,${cy - 44} Z" fill="${p.metal}" stroke="${p.shadow}" stroke-width="0.85"/>
+            <path d="M16,${cy - 24} C32,${cy - 18} 36,${cy - 6} 26,${cy} C36,${cy + 6} 32,${cy + 18} 16,${cy + 24}" fill="none" stroke="${p.hi}" stroke-width="1.15"/>
+            <circle cx="21" cy="${cy}" r="11.5" fill="${p.darkCore}" fill-opacity="0.75" stroke="${p.metal}" stroke-width="1"/>
+            <polygon points="${starPts(21, cy, 8, 14.5, 5.2, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.7"/>
+            <polygon points="21,${cy - 6.5} 25.5,${cy} 21,${cy + 6.5} 16.5,${cy}" fill="${p.gemCore}" stroke="#ffffff" stroke-width="0.7"/>
+            <circle cx="21" cy="${cy - 19}" r="1.8" fill="#ffffff"/>
+            <circle cx="21" cy="${cy + 19}" r="1.8" fill="#ffffff"/>
+          </g>
+        `).join('');
+
+        return `
+          ${brooches}
+          <!-- Center Grand Cathedral Rose Window / Solar Armillary Clasp (y=432, spanning y=308..556) -->
+          <g>
+            <circle cx="22" cy="432" r="38" fill="${p.bloom}"/>
+            <!-- Sweeping Buttress Wings -->
+            <path d="M5,308 C24,352 34,392 20,432 C34,472 24,512 5,556 C15,512 18,472 4,432 C18,392 15,352 5,308 Z" fill="${p.metal}" stroke="${p.shadow}" stroke-width="0.95"/>
+            <path d="M11,338 C32,368 38,398 25,432 C38,466 32,496 11,526 C21,494 24,464 12,432 C24,400 21,370 11,338 Z" fill="${p.metalAlt}" stroke="${p.shadow}" stroke-width="0.8"/>
+            <!-- Baroque Volute Curls -->
+            <path d="M18,374 C36,382 42,398 32,408 C25,414 18,406 23,399 M18,490 C36,482 42,466 32,456 C25,450 18,458 23,465" fill="none" stroke="${p.shadow}" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M18,374 C36,382 42,398 32,408 C25,414 18,406 23,399 M18,490 C36,482 42,466 32,456 C25,450 18,458 23,465" fill="none" stroke="${p.hi}" stroke-width="1.3" stroke-linecap="round"/>
+            <!-- Calibrated Rose Medallion -->
+            <circle cx="20" cy="432" r="21" fill="${p.darkCore}" fill-opacity="0.8" stroke="${p.metal}" stroke-width="1.3"/>
+            <path d="${roseG}" fill="none" stroke="${p.hi}" stroke-width="0.7" opacity="0.88"/>
+            ${astrolabeTicks(20, 432, 18.5, 21, -85, 85, 10, p.hi, 0.7)}
+            <polygon points="${starPts(20, 432, 8, 19, 7.2, -67.5)}" fill="${p.metal}" stroke="${p.shadow}" stroke-width="0.7"/>
+            <polygon points="20,400 24.5,427 46,432 24.5,437 20,464 15.5,437 1,432 15.5,427" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.85"/>
+            <circle cx="20" cy="432" r="4.5" fill="${p.gemCore}" stroke="#ffffff" stroke-width="0.85"/>
+            <circle cx="18.7" cy="430.7" r="1.4" fill="#ffffff"/>
+          </g>
+        `;
+      };
+
+      // Builds Top-Center Sovereign Tiara & Bottom-Center Grand Reliquary Sanctuary
+      const buildCrownAndSanctuary = (p) => {
+        const topRose = guillochePath(315, 20, 24, 3.5, 20, 140);
+        const botSunRays = [];
+        for (let a = -165; a <= -15; a += 10) {
+          const rLong = a % 20 === 0 ? 64 : 46;
+          const [x1, y1] = polar(315, 864, 18, a);
+          const [x2, y2] = polar(315, 864, rLong, a);
+          botSunRays.push(`M${f(x1)},${f(y1)}L${f(x2)},${f(y2)}`);
+        }
+
+        return `
+          <!-- TOP-CENTER GRAND CATHEDRAL TIARA & ARMILLARY CROWN (x=78..552) -->
+          <g>
+            <ellipse cx="315" cy="20" rx="165" ry="28" fill="${p.bloom}" opacity="0.95"/>
+            <!-- Outer Armillary Ecliptic Rings -->
+            <path d="M185,6 A145,42 0 0,0 445,6" fill="none" stroke="${p.metal}" stroke-width="1.3"/>
+            <path d="M225,4 A98,34 0 0,0 405,4" fill="none" stroke="${p.hi}" stroke-width="1" stroke-dasharray="3 2.2"/>
+            ${astrolabeTicks(315, -6, 36, 41, 25, 155, 6, p.hi, 0.7)}
+
+            <!-- Sweeping Multi-Tiered Sovereign Crown Wings -->
+            <path d="M84,14 C155,34 238,38 315,4 C392,38 475,34 546,14 C482,25 398,26 315,0 C232,26 148,25 84,14 Z" fill="${p.metal}" stroke="${p.shadow}" stroke-width="0.95"/>
+            <path d="M132,18 C192,38 258,36 315,10 C372,36 438,38 498,18 C442,28 376,28 315,5 C254,28 188,28 132,18 Z" fill="${p.metalAlt}" stroke="${p.shadow}" stroke-width="0.8"/>
+
+            <!-- Symmetrical Baroque Swan-Neck Volutes -->
+            <path d="M168,16 C198,38 236,38 258,18 C246,32 222,34 214,24 M462,16 C432,38 394,38 372,18 C384,32 408,34 416,24" fill="none" stroke="${p.shadow}" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M168,16 C198,38 236,38 258,18 C246,32 222,34 214,24 M462,16 C432,38 394,38 372,18 C384,32 408,34 416,24" fill="none" stroke="${p.hi}" stroke-width="1.35" stroke-linecap="round"/>
+
+            <!-- Central Guilloché Halo & 9 Graduated Spires -->
+            <path d="${topRose}" fill="none" stroke="${p.hi}" stroke-width="0.6" opacity="0.72"/>
+            <polygon points="${starPts(315, 19, 8, 20, 6.5, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.85"/>
+            <circle cx="315" cy="19" r="4.2" fill="${p.gemCore}" stroke="#ffffff" stroke-width="0.85"/>
+            <polygon points="${starPts(268, 19, 4, 12.5, 3.6, -90)}" fill="${p.hi}" stroke="${p.shadow}" stroke-width="0.65"/>
+            <polygon points="${starPts(362, 19, 4, 12.5, 3.6, -90)}" fill="${p.hi}" stroke="${p.shadow}" stroke-width="0.65"/>
+            <polygon points="${starPts(224, 18, 4, 9.5, 2.8, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.6"/>
+            <polygon points="${starPts(406, 18, 4, 9.5, 2.8, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.6"/>
+            <polygon points="${starPts(182, 16, 4, 7.5, 2.2, -90)}" fill="${p.hi}"/>
+            <polygon points="${starPts(448, 16, 4, 7.5, 2.2, -90)}" fill="${p.hi}"/>
+          </g>
+
+          <!-- BOTTOM-CENTER MONUMENTAL RELIQUARY SANCTUARY (x=54..576, y=814..880) -->
+          <g>
+            <ellipse cx="315" cy="858" rx="185" ry="30" fill="${p.bloom}" opacity="0.92"/>
+            <!-- Radiating Celestial Sunburst / Moonburst Fan Behind Gem -->
+            <path d="${botSunRays.join('')}" fill="none" stroke="${p.hi}" stroke-width="0.85" opacity="0.68"/>
+            <path d="M255,868 A62,52 0 0,1 375,868" fill="none" stroke="${p.metal}" stroke-width="1.3" stroke-dasharray="3 2"/>
+
+            <!-- Grand Sweeping Sanctuary Wings -->
+            <path d="M58,866 C142,876 232,858 315,828 C398,858 488,876 572,866 C495,880 398,870 315,844 C232,870 135,880 58,866 Z" fill="${p.metal}" stroke="${p.shadow}" stroke-width="0.95"/>
+            <path d="M108,870 C178,874 248,858 315,836 C382,858 452,874 522,870 C452,879 382,868 315,849 C248,868 178,879 108,870 Z" fill="${p.metalAlt}" stroke="${p.shadow}" stroke-width="0.8"/>
+
+            <!-- Intricate Double Baroque Acanthus Arches & Pearl Swags -->
+            <path d="M136,864 C182,838 238,838 282,858 M494,864 C448,838 392,838 348,858" fill="none" stroke="${p.shadow}" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M136,864 C182,838 238,838 282,858 M494,864 C448,838 392,838 348,858" fill="none" stroke="${p.hi}" stroke-width="1.35" stroke-linecap="round"/>
+            <path d="M172,868 C206,846 246,848 274,865 M458,868 C424,846 384,848 356,865" fill="none" stroke="${p.metal}" stroke-width="1.2" stroke-dasharray="2.2 2.4"/>
+
+            <!-- Finial Stars Flanking the Bottom Cabochon Gem -->
+            <polygon points="${starPts(315, 861, 8, 17, 5.5, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.8"/>
+            <polygon points="${starPts(252, 856, 4, 11, 3.2, -90)}" fill="${p.hi}" stroke="${p.shadow}" stroke-width="0.65"/>
+            <polygon points="${starPts(378, 856, 4, 11, 3.2, -90)}" fill="${p.hi}" stroke="${p.shadow}" stroke-width="0.65"/>
+            <polygon points="${starPts(204, 860, 4, 8.5, 2.5, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.55"/>
+            <polygon points="${starPts(426, 860, 4, 8.5, 2.5, -90)}" fill="${p.facet}" stroke="${p.shadow}" stroke-width="0.55"/>
+          </g>
+        `;
+      };
+
+      // Assemble Full Masterwork Overlay SVG Content
+      const composeFullBorderSvg = (cfg) => {
+        const cornerUnit = buildMonumentalCornerUnit(cfg);
+        const sideColumn = buildSideClaspColumn(cfg);
+        const upperFrieze = buildVerticalCathedralFrieze(116, 368, 7, cfg.metal, cfg.shadow, cfg.hi, cfg.facet);
+        const lowerFrieze = buildVerticalCathedralFrieze(498, 764, 7, cfg.metal, cfg.shadow, cfg.hi, cfg.facet);
+        const leftTapestry = upperFrieze + lowerFrieze + sideColumn;
+        const topLace = buildHorizontalLace(116, 514, 16, 1, 12, cfg.metal, cfg.shadow, cfg.hi);
+        const botLace = buildHorizontalLace(116, 514, 864, -1, 12, cfg.metal, cfg.shadow, cfg.hi);
+        const rosary = buildPerimeterRosary(11, 11, 608, 858, 29, 17.5, cfg.beadFill, cfg.shadow, '#ffffff');
+        const crownSanctuary = buildCrownAndSanctuary(cfg);
+
+        return `
+          ${cfg.defs}
+          <!-- 1. Ambient Edge Luminescence Wash -->
+          <g id="${cfg.glowId}" class="${cfg.pulseClass}">
+            <rect x="0" y="0" width="630" height="44" fill="url(#${cfg.prefix}EdgeTop)"/>
+            <rect x="0" y="832" width="630" height="48" fill="url(#${cfg.prefix}EdgeBot)"/>
+            <rect x="0" y="0" width="44" height="880" fill="url(#${cfg.prefix}EdgeLeft)"/>
+            <rect x="586" y="0" width="44" height="880" fill="url(#${cfg.prefix}EdgeRight)"/>
+            <rect x="7" y="7" width="616" height="866" rx="32" fill="none" stroke="${cfg.haloStroke}" stroke-width="9" stroke-opacity="0.32"/>
+          </g>
+
+          <!-- 2. Multi-Bevel Architectural Moulding Rails & 160-Bead 3D Rosary Chain -->
+          <rect x="5.5" y="5.5" width="619" height="869" rx="33.5" fill="none" stroke="${cfg.shadow}" stroke-width="5.2"/>
+          <rect x="5.5" y="5.5" width="619" height="869" rx="33.5" fill="none" stroke="${cfg.metal}" stroke-width="3.4"/>
+          <rect x="7.5" y="7.5" width="615" height="865" rx="31.5" fill="none" stroke="${cfg.hi}" stroke-width="0.75" opacity="0.85"/>
+          <rect x="16" y="16" width="598" height="848" rx="24.5" fill="none" stroke="${cfg.shadow}" stroke-width="2.6"/>
+          <rect x="16" y="16" width="598" height="848" rx="24.5" fill="none" stroke="${cfg.metalAlt}" stroke-width="1.45"/>
+          <!-- Inner Chamber Hairline Frame -->
+          <line x1="39" y1="95" x2="39" y2="815" stroke="${cfg.metal}" stroke-width="0.85" stroke-dasharray="6 3" opacity="0.65"/>
+          <line x1="591" y1="95" x2="591" y2="815" stroke="${cfg.metal}" stroke-width="0.85" stroke-dasharray="6 3" opacity="0.65"/>
+          <g>${rosary}</g>
+
+          <!-- 3. Continuous Horizontal & Mirrored Vertical Cathedral Lacework Tapestry -->
+          <g>${topLace}${botLace}</g>
+          <g>${leftTapestry}</g>
+          <g transform="translate(630,0) scale(-1,1)">${leftTapestry}</g>
+
+          <!-- 4. Four Symmetrical Monumental Seraphim & Guilloché Astrolabe Corners -->
+          <g>${cornerUnit}</g>
+          <g transform="translate(630,0) scale(-1,1)">${cornerUnit}</g>
+          <g transform="translate(0,880) scale(1,-1)">${cornerUnit}</g>
+          <g transform="translate(630,880) scale(-1,-1)">${cornerUnit}</g>
+
+          <!-- 5. Top Sovereign Tiara & Bottom Grand Reliquary Sanctuary -->
+          ${crownSanctuary}
+
+          <!-- 6. Twinkling Diamond / Solar Starburst Glints -->
+          <g class="${cfg.twinkleClass}">
+            <polygon points="${starPts(155, 22, 4, 8, 1.8, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(475, 22, 4, 8, 1.8, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(24, 178, 4, 7.5, 1.7, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(606, 178, 4, 7.5, 1.7, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(24, 338, 4, 8, 1.8, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(606, 338, 4, 8, 1.8, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(24, 542, 4, 8, 1.8, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(606, 542, 4, 8, 1.8, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(24, 712, 4, 7.5, 1.7, -90)}" fill="#ffffff"/>
+            <polygon points="${starPts(606, 712, 4, 7.5, 1.7, -90)}" fill="#ffffff"/>
+          </g>
+        `;
+      };
+
+      // Populate SECRET-RARE Sterling Silver, Platinum & Ice-Diamond Masterwork
+      const secSvg = document.getElementById('secretBorderOverlay');
+      if (secSvg) {
+        secSvg.innerHTML = composeFullBorderSvg({
+          prefix: 'sec',
+          glowId: 'secretGlowWash',
+          pulseClass: 'secret-pulse',
+          twinkleClass: 'secret-twinkle',
+          metal: 'url(#secSilverLustre)',
+          metalAlt: 'url(#secPlatinumVert)',
+          facet: 'url(#secPrismFacet)',
+          bloom: 'url(#secStarBloom)',
+          beadFill: '#f1f5f9',
+          shadow: '#0f172a',
+          darkCore: '#0b1120',
+          hi: '#ffffff',
+          accent: '#bae6fd',
+          gemCore: '#e0f2fe',
+          haloStroke: '#f8fafc',
+          defs: `<defs>
+            <linearGradient id="secSilverLustre" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="15%" stop-color="#e2e8f0"/>
+              <stop offset="32%" stop-color="#64748b"/>
+              <stop offset="50%" stop-color="#ffffff"/>
+              <stop offset="68%" stop-color="#94a3b8"/>
+              <stop offset="85%" stop-color="#f8fafc"/>
+              <stop offset="100%" stop-color="#1e293b"/>
+            </linearGradient>
+            <linearGradient id="secPlatinumVert" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="24%" stop-color="#cbd5e1"/>
+              <stop offset="50%" stop-color="#475569"/>
+              <stop offset="76%" stop-color="#f8fafc"/>
+              <stop offset="100%" stop-color="#1e293b"/>
+            </linearGradient>
+            <linearGradient id="secPrismFacet" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="38%" stop-color="#e0f2fe"/>
+              <stop offset="72%" stop-color="#e0e7ff"/>
+              <stop offset="100%" stop-color="#ffffff"/>
+            </linearGradient>
+            <radialGradient id="secStarBloom" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.96"/>
+              <stop offset="32%" stop-color="#e2e8f0" stop-opacity="0.72"/>
+              <stop offset="68%" stop-color="#94a3b8" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#94a3b8" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="secEdgeTop" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.58"/><stop offset="100%" stop-color="#cbd5e1" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="secEdgeBot" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.62"/><stop offset="100%" stop-color="#cbd5e1" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="secEdgeLeft" x1="0%" y1="50%" x2="100%" y2="50%">
+              <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.52"/><stop offset="100%" stop-color="#cbd5e1" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="secEdgeRight" x1="100%" y1="50%" x2="0%" y2="50%">
+              <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.52"/><stop offset="100%" stop-color="#cbd5e1" stop-opacity="0"/>
+            </linearGradient>
+          </defs>`
+        });
+      }
+
+      // Populate Inner 5:3 Artwork Corner Spandrels for Secret-Rare (viewBox 540 x 324)
+      const spandrelSvg = document.getElementById('artFiligreeSpandrels');
+      if (spandrelSvg) {
+        const makeSpandrelSet = (gradUrl, strokeCol, hiCol) => {
+          const unit = `
+            <path d="M0,0 L56,0 C34,5 19,14 11,26 C6,34 3,44 0,56 Z" fill="${gradUrl}" stroke="${strokeCol}" stroke-width="0.9"/>
+            <path d="M12,32 C22,24 30,28 27,36 C24,41 17,39 19,34 M32,12 C24,22 28,30 36,27 C41,24 39,17 34,19" fill="none" stroke="${hiCol}" stroke-width="1.2" stroke-linecap="round"/>
+            <polygon points="10,10 13,17 20,20 13,23 10,30 7,23 0,20 7,17" fill="${hiCol}" stroke="${strokeCol}" stroke-width="0.6"/>
+          `;
+          return `<g>${unit}</g>` +
+            `<g transform="translate(540,0) scale(-1,1)">${unit}</g>` +
+            `<g transform="translate(0,324) scale(1,-1)">${unit}</g>` +
+            `<g transform="translate(540,324) scale(-1,-1)">${unit}</g>`;
+        };
+
+        spandrelSvg.innerHTML = `
+          <defs>
+            <linearGradient id="spanSilverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/><stop offset="45%" stop-color="#94a3b8"/><stop offset="100%" stop-color="#1e293b"/>
+            </linearGradient>
+          </defs>
+          <g id="spandrelSecGroup" style="display:none">${makeSpandrelSet('url(#spanSilverGrad)', '#0f172a', '#ffffff')}</g>
+        `;
+      }
+    }
+
     // 11. High-Resolution PNG Card Download (Untainted Native Vector + Canvas Export)
     function clipRoundedCardCanvas(sourceCanvas, width, height, radiusPx) {
       const out = document.createElement('canvas');
@@ -2472,15 +3407,20 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
     // 12. Render Pokemon Skills inside Card
     function renderPokemonSkills() {
       const darkOverlay = isFullArtDarkTextMode();
+      const isSecretDark = darkOverlay && frameMode === 'secret';
       if (!skillsData || skillsData.length === 0) {
         const emptyColor = darkOverlay ? 'text-zinc-300/80' : 'text-zinc-500';
         return `<p class="${emptyColor} italic text-[11px] py-2 text-center">등록된 기술이 없습니다.</p>`;
       }
 
       const nameColor = darkOverlay ? 'text-[#fbf8f1] fullart-crisp-shadow' : 'text-zinc-950';
-      const dmgColor = darkOverlay ? 'text-[#fde68a] fullart-crisp-shadow' : 'text-zinc-950';
+      const dmgColor = darkOverlay
+        ? (isSecretDark ? 'text-[#e2e8f0] fullart-crisp-shadow' : 'text-[#fde68a] fullart-crisp-shadow')
+        : 'text-zinc-950';
       const descColor = darkOverlay ? 'text-[#f1ede4] fullart-crisp-shadow' : 'text-zinc-900';
-      const dividerColor = darkOverlay ? 'border-amber-200/20' : 'border-zinc-800/15';
+      const dividerColor = darkOverlay
+        ? (isSecretDark ? 'border-slate-200/25' : 'border-amber-200/20')
+        : 'border-zinc-800/15';
 
       return skillsData.map((skill, idx) => {
         const costHtml = skill.cost ? `<div class="pokemon-energy-cost">${parseManaSymbols(skill.cost, true)}</div>` : '';
@@ -2687,7 +3627,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const inputIds = [
         'inputName', 'inputMana', 'inputTypeLine',
         'inputText', 'inputFlavor', 'togglePT', 'inputPT', 'toggleCrown', 'toggleFooter',
-        'inputBoxOpacity', 'toggleCosmicRibbons', 'inputPrimordialGlow',
+        'inputBoxOpacity', 'toggleCosmicRibbons', 'inputSecretGlow', 'inputPrimordialGlow',
         'inputSetCode', 'inputLang', 'inputArtist', 'inputCopyright'
       ];
       inputIds.forEach(id => {
@@ -2698,13 +3638,19 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
         }
       });
 
-      // Rarity selector sync (auto-switches Primordial frame when Primordial-Rare is chosen)
+      // Rarity selector sync (auto-switches Secret & Primordial frames when chosen)
       const raritySelect = document.getElementById('selectRarity');
       if (raritySelect) {
         raritySelect.addEventListener('change', (e) => {
           if (e.target.value === 'primordial' && frameMode !== 'primordial') {
             setFrameMode('primordial', false);
-          } else if (e.target.value !== 'primordial' && frameMode === 'primordial') {
+          } else if (e.target.value === 'secret' && frameMode !== 'secret') {
+            setFrameMode('secret', false);
+          } else if (
+            e.target.value !== 'primordial' &&
+            e.target.value !== 'secret' &&
+            (frameMode === 'primordial' || frameMode === 'secret')
+          ) {
             setFrameMode('standard', false);
           } else {
             updateCard();
@@ -2862,6 +3808,9 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       if (window.lucide && typeof window.lucide.createIcons === 'function') {
         window.lucide.createIcons();
       }
+
+      // Build ultra-intricate Baroque, Guilloché & Seraphim SVG borders
+      buildMasterworkFiligreeOverlays();
 
       // Initialize defaults
       selectColor('UMBRA');
