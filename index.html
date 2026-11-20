@@ -326,6 +326,66 @@
       animation: secretTwinkle 2.5s ease-in-out infinite;
     }
 
+    /* Exhaustion (Deck-Out / Fatigue) Crimson Point Frame Styles */
+    .exhaustion-outer-glow {
+      box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.96),
+        0 0 28px rgba(220, 38, 38, 0.52),
+        0 0 12px rgba(248, 113, 113, 0.35),
+        inset 0 0 22px rgba(185, 28, 28, 0.48) !important;
+      border-color: #ef4444 !important;
+    }
+
+    .exhaustion-crimson-header {
+      background: linear-gradient(180deg, #280a0e 0%, #140507 58%, #0c0304 100%);
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.9),
+        0 0 12px rgba(220, 38, 38, 0.32),
+        inset 0 1px 1px rgba(254, 202, 202, 0.28),
+        inset 0 -1.5px 3px rgba(0, 0, 0, 0.85);
+    }
+
+    .exhaustion-crimson-box {
+      background-color: #140608;
+      background-image:
+        radial-gradient(circle at 50% 18%, rgba(220, 38, 38, 0.16) 0%, transparent 58%),
+        radial-gradient(circle at 50% 90%, rgba(127, 29, 29, 0.24) 0%, transparent 55%),
+        linear-gradient(165deg, #1f090c 0%, #120507 52%, #0a0304 100%);
+      box-shadow:
+        inset 0 2px 10px rgba(0, 0, 0, 0.85),
+        0 0 14px rgba(220, 38, 38, 0.25),
+        0 4px 14px rgba(0, 0, 0, 0.9);
+    }
+
+    .exhaustion-marble-header {
+      background: linear-gradient(180deg, #f5e9e9 0%, #e4d1d1 55%, #cfb8b8 100%);
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.88),
+        0 0 12px rgba(220, 38, 38, 0.28),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.9);
+    }
+
+    .exhaustion-marble-box {
+      background-color: #ecdede;
+      background-image:
+        radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.75) 0%, transparent 48%),
+        radial-gradient(circle at 80% 78%, rgba(185, 28, 28, 0.1) 0%, transparent 52%),
+        linear-gradient(165deg, #f4eaea 0%, #e5d4d4 52%, #d5c0c0 100%);
+      box-shadow:
+        inset 0 2px 6px rgba(69, 10, 10, 0.22),
+        0 0 14px rgba(220, 38, 38, 0.25),
+        0 4px 12px rgba(0, 0, 0, 0.88);
+    }
+
+    @keyframes exhaustionPulse {
+      0%, 100% { opacity: 0.78; }
+      50% { opacity: 1; }
+    }
+
+    .exhaustion-pulse {
+      animation: exhaustionPulse 3.2s ease-in-out infinite;
+    }
+
     /* Stabilization rules applied momentarily during PNG export */
     .exporting-card {
       box-shadow: none !important;
@@ -339,10 +399,15 @@
       box-shadow: inset 0 0 20px rgba(248, 250, 252, 0.42) !important;
       transform: none !important;
     }
+    .exporting-card.exhaustion-outer-glow {
+      box-shadow: inset 0 0 22px rgba(185, 28, 28, 0.48) !important;
+      transform: none !important;
+    }
     .exporting-card .primordial-pulse,
     .exporting-card .primordial-twinkle,
     .exporting-card .secret-pulse,
     .exporting-card .secret-twinkle,
+    .exporting-card .exhaustion-pulse,
     .exporting-card .foil-hologram {
       animation: none !important;
       opacity: 1 !important;
@@ -350,45 +415,38 @@
     }
   </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
-
-  <!-- Header / Navigation Bar -->
-  <header class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 via-rose-600 to-amber-400 flex items-center justify-center shadow-lg shadow-rose-950/40">
-          <i data-lucide="sparkles" class="w-5 h-5 text-zinc-950"></i>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans selection:bg-amber-500/30">
+  <!-- Top App Header -->
+  <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80 px-4 sm:px-6 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-zinc-950 font-black shadow-lg shadow-amber-500/20">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
         </div>
         <div>
-          <h1 class="text-base sm:text-lg font-bold tracking-tight font-card-title flex items-center gap-2">
-            AETHERIUM <span class="text-xs px-2 py-0.5 rounded bg-zinc-800 text-amber-400 border border-zinc-700">TCG MAKER</span>
-          </h1>
-          <p class="text-[11px] text-zinc-400 hidden sm:block">전설적 크리처 & 배틀 스킬 카드 에디터</p>
+          <h1 class="text-sm sm:text-base font-extrabold tracking-wider text-zinc-100 font-card-title">AETHERIUM TCG</h1>
+          <p class="text-[10px] sm:text-xs text-zinc-400">Astral &amp; Celestial Card Studio</p>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <button id="btnDownload" onclick="downloadCard()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 text-xs font-bold rounded-lg shadow-md transition flex items-center gap-1.5 active:scale-95">
-          <i data-lucide="download" class="w-4 h-4"></i>
-          <span>카드 다운로드</span>
-        </button>
-      </div>
+      <button type="button" id="btnDownload" onclick="downloadCard()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-zinc-950 font-bold text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition flex items-center gap-2">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        <span>카드 다운로드 (PNG)</span>
+      </button>
     </div>
   </header>
 
-  <!-- Main Content Layout -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-    <!-- Left Column: Form Controls (7 cols on lg) -->
-    <div class="lg:col-span-7 space-y-5 order-2 lg:order-1">
-
-      <!-- 0. Card Frame Layout Selector (Standard 5:3 / Full-Art 63:88 / Secret-Rare / Primordial-Rare) -->
+  <!-- Main Workspace -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Left Column: Editor Controls (7 cols on lg) -->
+    <div class="lg:col-span-7 order-2 lg:order-1 space-y-5">
+      <!-- 0. Card Frame Layout Selector (Standard 5:3 / Full-Art 63:88 / Secret-Rare / Primordial-Rare / Exhaustion) -->
       <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2 shrink-0">
             <i data-lucide="maximize-2" class="w-4 h-4 text-amber-400"></i>
             카드 프레임 양식 (FRAME &amp; SPECIAL TIER)
           </h2>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs">
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs">
             <button type="button" id="btnFrameStandard" onclick="setFrameMode('standard')" class="px-2.5 py-1.5 rounded-lg font-bold transition-all bg-amber-500 text-zinc-950 shadow-sm flex items-center justify-center gap-1">
               <i data-lucide="layout-template" class="w-3.5 h-3.5 shrink-0"></i>
               <span class="truncate">기본 (5:3)</span>
@@ -405,7 +463,65 @@
               <i data-lucide="crown" class="w-3.5 h-3.5 shrink-0"></i>
               <span class="truncate">Primordial 틀</span>
             </button>
+            <button type="button" id="btnFrameExhaustion" onclick="setFrameMode('exhaustion')" class="px-2.5 py-1.5 rounded-lg font-semibold text-rose-400 hover:text-rose-300 transition-all flex items-center justify-center gap-1 col-span-2 sm:col-span-1">
+              <i data-lucide="hourglass" class="w-3.5 h-3.5 shrink-0"></i>
+              <span class="truncate">탈진 틀</span>
+            </button>
           </div>
+        </div>
+
+        <!-- Exhaustion (Deck Depletion) Exclusive Sub-Options -->
+        <div id="exhaustionOptionsPanel" class="hidden pt-3 border-t border-red-500/30 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 bg-red-950/35 border border-red-500/40 rounded-xl px-3 py-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+              <span class="text-xs font-bold text-red-200">탈진(EXHAUSTION) 전용 틀 활성화 — 이름 · 일러스트 · 설명 3단 구성</span>
+            </div>
+            <button type="button" onclick="applyExhaustionPreset()" class="px-2.5 py-1 rounded-lg bg-red-600/90 hover:bg-red-500 text-white text-[11px] font-bold transition shadow-sm">
+              탈진 기본 문구 채우기
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] text-zinc-400 mb-1.5">탈진 일러스트 규격</label>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button type="button" id="btnExhArtStandard" onclick="setExhaustionArtMode('standard')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-red-500 text-red-300 transition">
+                  5:3 크림슨 프레임
+                </button>
+                <button type="button" id="btnExhArtFull" onclick="setExhaustionArtMode('fullart')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition">
+                  63:88 풀아트
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-[11px] text-zinc-400">붉은색 포인트 테두리 강도</label>
+                <span id="labelExhaustionGlow" class="text-[11px] font-mono text-red-400">92%</span>
+              </div>
+              <input type="range" id="inputExhaustionGlow" min="35" max="100" value="92" class="w-full accent-red-500 mt-1">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] text-zinc-400 mb-1.5">탈진 설명칸 스타일</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" data-exhstyle="crimson-obsidian" onclick="setExhaustionBoxStyle('crimson-obsidian')" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-red-500 text-red-300 transition flex flex-col items-center gap-0.5">
+                <span>다크 크림슨</span>
+                <span class="text-[10px] font-normal text-zinc-400">칠흑 &amp; 적색 테두리</span>
+              </button>
+              <button type="button" data-exhstyle="blood-marble" onclick="setExhaustionBoxStyle('blood-marble')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>잿빛 블러드 마블</span>
+                <span class="text-[10px] font-normal text-zinc-500">밝은 대리석 &amp; 적색</span>
+              </button>
+              <button type="button" data-exhstyle="floating-omen" onclick="setExhaustionBoxStyle('floating-omen')" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5">
+                <span>플로팅 오멘</span>
+                <span class="text-[10px] font-normal text-zinc-500">테두리 없는 암적색</span>
+              </button>
+            </div>
+          </div>
+          <p class="text-[11px] text-zinc-400">안내: 탈진 카드에서는 소환 코스트, 유형 바, 공방(P/T) 수치가 자동으로 숨겨지며 아래의 <strong>룰 텍스트(설명칸)</strong> 내용이 중앙에 표시됩니다.</p>
         </div>
 
         <!-- Secret-Rare Exclusive Sub-Options (Ornate Sterling Silver Filigree) -->
@@ -969,29 +1085,41 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
                     <stop offset="100%" stop-color="#5c4724"/>
                   </linearGradient>
                 </defs>
-                <path d="M12 2 L14.4 9.6 L22 12 L14.4 14.4 L12 22 L9.6 14.4 L2 12 L9.6 9.6 Z" fill="url(#typeStarGoldGrad)"/>
+                <path d="M12 1 L14.4 9.6 L23 12 L14.4 14.4 L12 23 L9.6 14.4 L1 12 L9.6 9.6 Z" fill="url(#typeStarGoldGrad)" stroke="#14110d" stroke-width="0.9"/>
               </svg>
-              <div id="renderTypeLine" class="font-card-type text-[10.5px] sm:text-[11.5px] font-bold tracking-wide truncate flex-1 text-[#f4efe4] drop-shadow">
+              <div id="renderTypeLine" class="font-card-type text-[10.5px] sm:text-[11.5px] font-bold tracking-tight truncate flex-1 min-w-0 mr-2 text-[#f3ece0] fullart-crisp-shadow">
                 Legendary Creature — Elemental Beast
               </div>
-              <div id="renderSetSymbol" class="shrink-0 flex items-center justify-center pl-1.5">
-                <!-- 8-Pointed Rarity SVG Icon -->
+              <div id="renderSetSymbol" class="shrink-0 flex items-center justify-center">
+                <!-- Rarity Star Symbol -->
               </div>
             </div>
 
-            <!-- 4. Alabaster Marble Text Box + Center Celestial Watermark + P/T + Bottom Gem -->
-            <div id="cardTextBox" class="astrum-marble-box relative z-20 mx-auto flex flex-col justify-between px-3.5 pt-2.5 pb-4 border-x-[2.5px] border-b-[2.5px] border-[#d8c193] rounded-b-[10px] flex-1 -mt-[2px] min-h-[115px] text-[#17151e]" style="width: 95.5%;">
-
-              <!-- Clipped Marble Veins & Center Celestial Halo Star Watermark -->
+            <!-- 4. Alabaster Marble Rules & Flavor Text Box -->
+            <div id="cardTextBox" class="astrum-marble-box mx-auto relative z-20 flex-1 min-h-0 flex flex-col justify-between px-3.5 pt-2.5 pb-3 rounded-b-[10px] border-x-[2.5px] border-b-[2.5px] border-[#d8c193] -mt-[2px]" style="width: 95.5%;">
+              <!-- Clipped Marble Veins & Center Celestial Halo Star / Exhaustion Hourglass Watermark -->
               <div class="absolute inset-0 overflow-hidden rounded-b-[8px] pointer-events-none z-0 flex items-center justify-center">
                 <svg id="textBoxWatermark" xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="w-[74%] h-[74%] opacity-[0.095]" viewBox="0 0 200 200">
-                  <!-- Orbital Ring -->
-                  <ellipse cx="100" cy="108" rx="88" ry="26" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="5"/>
-                  <ellipse cx="100" cy="108" rx="68" ry="18" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="2"/>
-                  <!-- Gothic Crescent Arcs -->
-                  <circle cx="100" cy="102" r="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-dasharray="180 40"/>
-                  <!-- Tall 4-Pointed Celestial Crest -->
-                  <path d="M100 10 L112 86 L178 102 L112 118 L100 190 L88 118 L22 102 L88 86 Z" fill="currentColor" fill-opacity="0.85"/>
+                  <g id="watermarkCelestialGroup">
+                    <!-- Orbital Ring -->
+                    <ellipse cx="100" cy="108" rx="88" ry="26" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="5"/>
+                    <ellipse cx="100" cy="108" rx="68" ry="18" transform="rotate(-8 100 108)" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <!-- Gothic Crescent Arcs -->
+                    <circle cx="100" cy="102" r="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-dasharray="180 40"/>
+                    <!-- Tall 4-Pointed Celestial Crest -->
+                    <path d="M100 10 L112 86 L178 102 L112 118 L100 190 L88 118 L22 102 L88 86 Z" fill="currentColor" fill-opacity="0.85"/>
+                  </g>
+                  <!-- Depleted Hourglass & Shattered Deck Watermark for Exhaustion Mode -->
+                  <g id="watermarkExhaustionGroup" class="hidden">
+                    <circle cx="100" cy="100" r="72" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="10 6"/>
+                    <path d="M58 34 L142 34 M58 166 L142 166" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                    <path d="M66 34 C66 72 94 88 100 100 C106 88 134 72 134 34 Z" fill="none" stroke="currentColor" stroke-width="4.5"/>
+                    <path d="M66 166 C66 128 94 112 100 100 C106 112 134 128 134 166 Z" fill="none" stroke="currentColor" stroke-width="4.5"/>
+                    <!-- Depleted Sand Pile at Bottom -->
+                    <path d="M74 162 C86 144 114 144 126 162 Z" fill="currentColor" fill-opacity="0.75"/>
+                    <circle cx="100" cy="118" r="2.6" fill="currentColor"/>
+                    <circle cx="100" cy="131" r="2.2" fill="currentColor"/>
+                  </g>
                 </svg>
               </div>
 
@@ -1236,6 +1364,119 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           <!-- LAYER 3.5: SECRET-RARE Hyper-Ornate Sterling Silver Baroque Cathedral & Diamond Lacework Overlay -->
           <svg id="secretBorderOverlay" xmlns="http://www.w3.org/2000/svg" width="630" height="880" class="hidden absolute inset-0 w-full h-full pointer-events-none z-40" viewBox="0 0 630 880" preserveAspectRatio="none"></svg>
 
+          <!-- LAYER 3.8: EXHAUSTION (Deck Depletion) Crimson Omen Point Border Overlay -->
+          <svg id="exhaustionBorderOverlay" xmlns="http://www.w3.org/2000/svg" width="630" height="880" class="hidden absolute inset-0 w-full h-full pointer-events-none z-40" viewBox="0 0 630 880" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="exhCrimsonLustre" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffe4e6"/>
+                <stop offset="18%" stop-color="#f87171"/>
+                <stop offset="42%" stop-color="#dc2626"/>
+                <stop offset="62%" stop-color="#fecaca"/>
+                <stop offset="82%" stop-color="#991b1b"/>
+                <stop offset="100%" stop-color="#450a0a"/>
+              </linearGradient>
+              <linearGradient id="exhScarletVert" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" stop-color="#fecaca"/>
+                <stop offset="28%" stop-color="#ef4444"/>
+                <stop offset="52%" stop-color="#7f1d1d"/>
+                <stop offset="76%" stop-color="#f87171"/>
+                <stop offset="100%" stop-color="#450a0a"/>
+              </linearGradient>
+              <radialGradient id="exhRubyBloom" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff1f2" stop-opacity="0.95"/>
+                <stop offset="30%" stop-color="#ef4444" stop-opacity="0.72"/>
+                <stop offset="68%" stop-color="#991b1b" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#7f1d1d" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="exhEdgeTop" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" stop-color="#dc2626" stop-opacity="0.58"/>
+                <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="exhEdgeBot" x1="50%" y1="100%" x2="50%" y2="0%">
+                <stop offset="0%" stop-color="#dc2626" stop-opacity="0.62"/>
+                <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="exhEdgeLeft" x1="0%" y1="50%" x2="100%" y2="50%">
+                <stop offset="0%" stop-color="#dc2626" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="exhEdgeRight" x1="100%" y1="50%" x2="0%" y2="50%">
+                <stop offset="0%" stop-color="#dc2626" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Smoldering Crimson Edge Aura Wash -->
+            <g id="exhaustionGlowWash" class="exhaustion-pulse">
+              <rect x="0" y="0" width="630" height="42" fill="url(#exhEdgeTop)"/>
+              <rect x="0" y="838" width="630" height="42" fill="url(#exhEdgeBot)"/>
+              <rect x="0" y="0" width="36" height="880" fill="url(#exhEdgeLeft)"/>
+              <rect x="594" y="0" width="36" height="880" fill="url(#exhEdgeRight)"/>
+              <rect x="8.5" y="8.5" width="613" height="863" rx="18.5" fill="none" stroke="#ef4444" stroke-width="8" stroke-opacity="0.32"/>
+            </g>
+
+            <!-- Sleek Double Crimson Metallic Perimeter Frame Rails -->
+            <rect x="7" y="7" width="616" height="866" rx="19" fill="none" stroke="#2a0406" stroke-width="4.8"/>
+            <rect x="7" y="7" width="616" height="866" rx="19" fill="none" stroke="url(#exhCrimsonLustre)" stroke-width="3.2"/>
+            <rect x="13.5" y="13.5" width="603" height="853" rx="14.5" fill="none" stroke="url(#exhScarletVert)" stroke-width="1.25"/>
+
+            <!-- Four Sharp Crimson Blade Corner Brackets & Ruby Diamonds -->
+            <!-- Top-Left -->
+            <g>
+              <circle cx="23" cy="23" r="22" fill="url(#exhRubyBloom)"/>
+              <path d="M6,74 C6,26 26,6 76,6 C50,12 35,19 24,30 C16,38 11,52 6,74 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.9"/>
+              <path d="M13,104 L13,34 L34,13 L104,13 L38,18 L18,38 Z" fill="#fca5a5" opacity="0.85"/>
+              <polygon points="22,9 26,18 35,22 26,26 22,35 18,26 9,22 18,18" fill="#fff1f2" stroke="#7f1d1d" stroke-width="0.8"/>
+              <circle cx="22" cy="22" r="2.8" fill="#dc2626"/>
+            </g>
+            <!-- Top-Right -->
+            <g>
+              <circle cx="607" cy="23" r="22" fill="url(#exhRubyBloom)"/>
+              <path d="M624,74 C624,26 604,6 554,6 C580,12 595,19 606,30 C614,38 619,52 624,74 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.9"/>
+              <path d="M617,104 L617,34 L596,13 L526,13 L592,18 L612,38 Z" fill="#fca5a5" opacity="0.85"/>
+              <polygon points="608,9 612,18 621,22 612,26 608,35 604,26 595,22 604,18" fill="#fff1f2" stroke="#7f1d1d" stroke-width="0.8"/>
+              <circle cx="608" cy="22" r="2.8" fill="#dc2626"/>
+            </g>
+            <!-- Bottom-Left -->
+            <g>
+              <circle cx="23" cy="857" r="22" fill="url(#exhRubyBloom)"/>
+              <path d="M6,806 C6,854 26,874 76,874 C50,868 35,861 24,850 C16,842 11,828 6,806 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.9"/>
+              <path d="M13,776 L13,846 L34,867 L104,867 L38,862 L18,842 Z" fill="#fca5a5" opacity="0.85"/>
+              <polygon points="22,845 26,854 35,858 26,862 22,871 18,862 9,858 18,854" fill="#fff1f2" stroke="#7f1d1d" stroke-width="0.8"/>
+              <circle cx="22" cy="858" r="2.8" fill="#dc2626"/>
+            </g>
+            <!-- Bottom-Right -->
+            <g>
+              <circle cx="607" cy="857" r="22" fill="url(#exhRubyBloom)"/>
+              <path d="M624,806 C624,854 604,874 554,874 C580,868 595,861 606,850 C614,842 619,828 624,806 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.9"/>
+              <path d="M617,776 L617,846 L596,867 L526,867 L592,862 L612,842 Z" fill="#fca5a5" opacity="0.85"/>
+              <polygon points="608,845 612,854 621,858 612,862 608,871 604,862 595,858 604,854" fill="#fff1f2" stroke="#7f1d1d" stroke-width="0.8"/>
+              <circle cx="608" cy="858" r="2.8" fill="#dc2626"/>
+            </g>
+
+            <!-- Top-Center & Bottom-Center Sharp Crimson Omen Points -->
+            <g>
+              <ellipse cx="315" cy="14" rx="68" ry="15" fill="url(#exhRubyBloom)" opacity="0.85"/>
+              <path d="M236,9 C268,17 292,18 315,3 C338,18 362,17 394,9 C364,13 338,13 315,1 C292,13 266,13 236,9 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.8"/>
+              <polygon points="315,2 318.5,11.5 328,14 318.5,16.5 315,26 311.5,16.5 302,14 311.5,11.5" fill="#fff1f2" stroke="#7f1d1d" stroke-width="0.7"/>
+
+              <ellipse cx="315" cy="866" rx="76" ry="16" fill="url(#exhRubyBloom)" opacity="0.85"/>
+              <path d="M226,871 C262,864 290,862 315,876 C340,862 368,864 404,871 C370,867 340,867 315,879 C290,867 260,867 226,871 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.8"/>
+              <polygon points="315,854 318.5,863.5 328,866 318.5,868.5 315,878 311.5,868.5 302,866 311.5,863.5" fill="#fff1f2" stroke="#7f1d1d" stroke-width="0.7"/>
+            </g>
+
+            <!-- Left & Right Crimson Pulse Finials -->
+            <g>
+              <circle cx="13" cy="440" r="16" fill="url(#exhRubyBloom)"/>
+              <path d="M7,382 C18,408 18,424 13,440 C18,456 18,472 7,498 C13,472 13,456 5,440 C13,424 13,408 7,382 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.7"/>
+              <polygon points="13,426 16.2,436.8 25,440 16.2,443.2 13,454 9.8,443.2 2,440 9.8,436.8" fill="#fecaca" stroke="#7f1d1d" stroke-width="0.65"/>
+
+              <circle cx="617" cy="440" r="16" fill="url(#exhRubyBloom)"/>
+              <path d="M623,382 C612,408 612,424 617,440 C612,456 612,472 623,498 C617,472 617,456 625,440 C617,424 617,408 623,382 Z" fill="url(#exhCrimsonLustre)" stroke="#2c0507" stroke-width="0.7"/>
+              <polygon points="617,426 620.2,436.8 628,440 620.2,443.2 617,454 613.8,443.2 605,440 613.8,436.8" fill="#fecaca" stroke="#7f1d1d" stroke-width="0.65"/>
+            </g>
+          </svg>
+
         </div>
       </div>
     </div>
@@ -1244,12 +1485,14 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
   <script>
     // 1. Global State Variables
     let currentColor = 'IGNIS';
-    let frameMode = 'standard'; // 'standard' | 'fullart' | 'secret' | 'primordial'
+    let frameMode = 'standard'; // 'standard' | 'fullart' | 'secret' | 'primordial' | 'exhaustion'
     let fullArtStyle = 'dark-glass'; // 'dark-glass' | 'floating' | 'light-glass'
     let secretArtMode = 'standard'; // 'standard' | 'fullart'
     let secretBoxStyle = 'silver-marble'; // 'silver-marble' | 'frost-obsidian' | 'floating'
     let primordialArtMode = 'standard'; // 'standard' | 'fullart'
     let primordialBoxStyle = 'gilded-marble'; // 'gilded-marble' | 'dark-gold' | 'floating'
+    let exhaustionArtMode = 'standard'; // 'standard' | 'fullart'
+    let exhaustionBoxStyle = 'crimson-obsidian'; // 'crimson-obsidian' | 'blood-marble' | 'floating-omen'
     let textMode = 'pokemon';
     let skillsData = [
       {
@@ -1433,134 +1676,117 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
         `);
       }
 
-      // VERDANT (Three-Leaf Sprout Emblem)
-      if (code === 'VERDANT' || code === 'V' || code === 'G') {
-        return buildMetallicOrb(cls, '#155c39', '#4ade80', `
-          <path d="M18 7.8 C15.2 11.2 15.2 15.6 18 18.5 C20.8 15.6 20.8 11.2 18 7.8 Z" fill="#e2e8f0" stroke="#092c1b" stroke-width="0.85"/>
-          <path d="M9.8 15.2 C10.6 19.4 13.8 21.4 17.4 20.6 C16.6 17.2 13.8 15.2 9.8 15.2 Z" fill="#dcdfe5" stroke="#092c1b" stroke-width="0.85"/>
-          <path d="M26.2 15.2 C25.4 19.4 22.2 21.4 18.6 20.6 C19.4 17.2 22.2 15.2 26.2 15.2 Z" fill="#dcdfe5" stroke="#092c1b" stroke-width="0.85"/>
-          <path d="M18 11 L18 27 M18 20.6 L13.2 17.6 M18 20.6 L22.8 17.6" stroke="#ffffff" stroke-width="1.45" stroke-linecap="round"/>
+      // VERDANT (Three-Leaf Botanical Stem Emblem)
+      if (code === 'VERDANT' || code === 'G') {
+        return buildMetallicOrb(cls, '#14532d', '#4ade80', `
+          <path d="M18 8.2 C15.5 11.4 15.5 15.6 18 18.2 C20.5 15.6 20.5 11.4 18 8.2 Z" fill="#e2e8f0" stroke="#052e16" stroke-width="0.8"/>
+          <path d="M10.2 15.6 C11.4 19.6 14.8 21.4 17.6 20.4 C16.8 17.2 13.8 15.2 10.2 15.6 Z" fill="#dcdfe5" stroke="#052e16" stroke-width="0.8"/>
+          <path d="M25.8 15.6 C24.6 19.6 21.2 21.4 18.4 20.4 C19.2 17.2 22.2 15.2 25.8 15.6 Z" fill="#dcdfe5" stroke="#052e16" stroke-width="0.8"/>
+          <path d="M18 17.8 L18 27.2" stroke="#e2e8f0" stroke-width="1.9" stroke-linecap="round"/>
         `);
       }
 
       // LUMEN (8-Pointed Radiant Star Emblem)
-      if (code === 'LUMEN' || code === 'LU' || code === 'W') {
-        return buildMetallicOrb(cls, '#ca9618', '#fef08a', `
-          <path d="M11.2 11.2 L16.2 15.2 L24.8 11.2 L20.8 16.2 L24.8 24.8 L19.8 20.8 L11.2 24.8 L15.2 19.8 Z" fill="#cbd5e1" stroke="#422c04" stroke-width="0.7"/>
-          <path d="M18 6.8 L20.1 15.9 L29.2 18 L20.1 20.1 L18 29.2 L15.9 20.1 L6.8 18 L15.9 15.9 Z" fill="#f8fafc" stroke="#422c04" stroke-width="0.8"/>
-          <polygon points="18,14.8 21.2,18 18,21.2 14.8,18" fill="#eab308" stroke="#ffffff" stroke-width="0.6"/>
+      if (code === 'LUMEN' || code === 'L' || code === 'W') {
+        return buildMetallicOrb(cls, '#b48212', '#fef08a', `
+          <polygon points="18,7.2 20.2,15.8 28.8,18 20.2,20.2 18,28.8 15.8,20.2 7.2,18 15.8,15.8" fill="#f8fafc" stroke="#422006" stroke-width="0.75"/>
+          <polygon points="11.5,11.5 16.5,16.5 24.5,11.5 19.5,16.5 24.5,24.5 19.5,19.5 11.5,24.5 16.5,19.5" fill="#cbd5e1" stroke="#422006" stroke-width="0.55"/>
+          <polygon points="18,14.2 19.4,16.6 21.8,18 19.4,19.4 18,21.8 16.6,19.4 14.2,18 16.6,16.6" fill="#fde047"/>
         `);
       }
 
-      // VOLT (Royal Purple Lightning Emblem)
-      if (code === 'VOLT' || code === 'E' || code === 'L') {
+      // VOLT (Metallic Lightning Bolt on Deep Violet Orb)
+      if (code === 'VOLT' || code === 'V') {
         return buildMetallicOrb(cls, '#4c1d95', '#c084fc', `
-          <polygon points="20.8,7.4 12.6,18.2 17.8,18.2 14.4,28.6 24.2,16.6 18.8,16.6" fill="#e2e8f0" stroke="#1e093d" stroke-width="0.9" stroke-linejoin="round"/>
-          <polygon points="19.8,9.4 14.3,17.4 18.2,17.4 16.2,24.8 22.3,17.4 18.2,17.4" fill="#ffffff" opacity="0.88"/>
+          <polygon points="20.8,7.4 12.2,18.8 17.6,18.8 14.6,28.6 24.2,16.6 18.6,16.6" fill="#f1f5f9" stroke="#1e0536" stroke-width="0.85" stroke-linejoin="round"/>
+          <polygon points="19.8,9.2 14.1,17.8 18.2,17.8 16.3,25.2 22.3,17.6 18.1,17.6" fill="#ffffff" opacity="0.85"/>
         `);
       }
 
-      // NEUTRA (Interlocking Silver Rings Emblem)
+      // NEUTRA (Interlocking Silver Rings on Slate Orb)
       if (code === 'NEUTRA' || code === 'N' || code === 'C') {
-        return buildMetallicOrb(cls, '#3f4852', '#94a3b8', `
-          <circle cx="15.2" cy="18" r="5.5" fill="none" stroke="#181c20" stroke-width="3.3"/>
-          <circle cx="20.8" cy="18" r="5.5" fill="none" stroke="#181c20" stroke-width="3.3"/>
-          <circle cx="15.2" cy="18" r="5.5" fill="none" stroke="#dce1e8" stroke-width="2.1"/>
-          <circle cx="20.8" cy="18" r="5.5" fill="none" stroke="#f8fafc" stroke-width="2.1"/>
-          <path d="M18 13.3 A5.5 5.5 0 0 1 20.7 18" fill="none" stroke="#dce1e8" stroke-width="2.1"/>
+        return buildMetallicOrb(cls, '#3b424f', '#cbd5e1', `
+          <circle cx="15.2" cy="18" r="5.2" fill="none" stroke="#111827" stroke-width="2.9"/>
+          <circle cx="20.8" cy="18" r="5.2" fill="none" stroke="#111827" stroke-width="2.9"/>
+          <circle cx="15.2" cy="18" r="5.2" fill="none" stroke="#e2e8f0" stroke-width="1.85"/>
+          <circle cx="20.8" cy="18" r="5.2" fill="none" stroke="#f8fafc" stroke-width="1.85"/>
         `);
       }
 
-      // UMBRA (Dark Obsidian Vortex Swirl Emblem)
-      if (code === 'UMBRA' || code === 'B' || code === 'D') {
-        return buildMetallicOrb(cls, '#24123b', '#a855f7', `
-          <path d="M18 8.5 C23.5 8.5 27.2 12.8 26.8 18.2 C26.4 22.8 22.4 25.5 18.2 24.8 C21.2 23.8 22.8 20.8 22.2 17.6 C21.6 14.6 18.6 13.2 15.8 14.4 C17.6 11.4 16.2 8.5 18 8.5 Z" fill="#e2e8f0" stroke="#0d0517" stroke-width="0.75"/>
-          <path d="M18 27.5 C12.5 27.5 8.8 23.2 9.2 17.8 C9.6 13.2 13.6 10.5 17.8 11.2 C14.8 12.2 13.2 15.2 13.8 18.4 C14.4 21.4 17.4 22.8 20.2 21.6 C18.4 24.6 19.8 27.5 18 27.5 Z" fill="#cbd5e1" stroke="#0d0517" stroke-width="0.75"/>
-          <circle cx="18" cy="18" r="2.4" fill="#ffffff"/>
+      // UMBRA (Dark Obsidian Swirling Vortex Emblem)
+      if (code === 'UMBRA' || code === 'B') {
+        return buildMetallicOrb(cls, '#221033', '#a855f7', `
+          <path d="M18,9.2 C23.2,9.2 26.8,13.4 25.8,18.5 C24.8,22.8 20.2,24.4 17.2,22.2 C19.8,22.2 22.2,20.2 22.2,17.2 C22.2,13.8 19.2,12.2 15.8,13.4 C13.2,14.4 12.2,17.6 13.6,20.4 C10.4,18.2 11.2,9.2 18,9.2 Z" fill="#e2e8f0" stroke="#0f0718" stroke-width="0.75"/>
+          <path d="M18,26.8 C12.8,26.8 9.2,22.6 10.2,17.5 C11.2,13.2 15.8,11.6 18.8,13.8 C16.2,13.8 13.8,15.8 13.8,18.8 C13.8,22.2 16.8,23.8 20.2,22.6 C22.8,21.6 23.8,18.4 22.4,15.6 C25.6,17.8 24.8,26.8 18,26.8 Z" fill="#cbd5e1" stroke="#0f0718" stroke-width="0.75"/>
+          <circle cx="18" cy="18" r="2.2" fill="#ffffff"/>
         `);
       }
 
-      // TAP Symbol
+      // TAP Symbol ({T})
       if (code === 'T' || code === 'TAP') {
-        return buildMetallicOrb(cls, '#334155', '#cbd5e1', `
-          <path d="M13 21.5 C12.5 16.2 16.2 12.5 21.2 13.2 L19.4 10.5 L25.2 14.5 L19.8 18.2 L20.8 15.6 C17.4 15.1 15.2 17.4 15.6 21.5 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="0.8" stroke-linejoin="round"/>
+        return buildMetallicOrb(cls, '#27272a', '#a1a1aa', `
+          <path d="M12.5 21.5 C12.5 15.5 16.5 12.5 21.5 13.5 L20.2 10.8 L25.5 14.6 L20.4 18.2 L21.2 15.8 C17.5 15.2 15.2 17.2 15.2 21.5 Z" fill="#f4f4f5" stroke="#09090b" stroke-width="0.7"/>
         `);
       }
 
-      // Generic Numeric / Variable Cost Orb
-      const safeLabel = String(code).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      const fontSize = safeLabel.length > 1 ? '11.5' : '14.5';
-      return buildMetallicOrb(cls, '#475569', '#cbd5e1', `
-        <text x="18" y="22.8" text-anchor="middle" font-family="Cinzel, serif" font-weight="800" font-size="${fontSize}" fill="#f8fafc" stroke="#0f172a" stroke-width="0.6" paint-order="stroke">${safeLabel}</text>
+      // Generic Numeric or Variable Cost Orb (e.g., 1, 2, X, *)
+      const displayLabel = escapeHtml(code.slice(0, 2));
+      return buildMetallicOrb(cls, '#475060', '#e2e8f0', `
+        <text x="18" y="22.8" text-anchor="middle" fill="#ffffff" stroke="#0f172a" stroke-width="0.7" paint-order="stroke" font-family="Cinzel, serif" font-weight="900" font-size="14">${displayLabel}</text>
       `);
     }
 
-    // 6. Parse Mana / Energy Cost String into Metallic Orbs
+    // 6. Parse Mana Cost String to HTML Orbs
     function parseManaSymbols(str, isInline = false) {
       try {
         const tokens = parseManaTokens(str);
         if (!tokens.length) return '';
         return tokens.map(tok => renderSingleManaSymbol(tok, isInline)).join('');
-      } catch (e) {
-        console.error('Mana parse error:', e);
+      } catch (err) {
+        console.error('Mana symbol parse error:', err);
         return '';
       }
     }
 
-    // 7. Select Card Element Attribute Theme
+    // 7. Attribute Color Theme Selector
     window.selectColor = function(colorKey) {
       if (!COLOR_THEMES[colorKey]) return;
       currentColor = colorKey;
-      const theme = COLOR_THEMES[colorKey];
 
       document.querySelectorAll('#colorSelectors button[data-color]').forEach(btn => {
         if (btn.getAttribute('data-color') === colorKey) {
-          btn.classList.add('ring-2', 'ring-white');
+          btn.classList.add('ring-2', 'ring-white', 'scale-[1.03]');
         } else {
-          btn.classList.remove('ring-2', 'ring-white');
+          btn.classList.remove('ring-2', 'ring-white', 'scale-[1.03]');
         }
       });
-
-      const setStop = (id, color) => {
-        const el = document.getElementById(id);
-        if (el) el.setAttribute('stop-color', color);
-      };
-      setStop('nebulaStop1', theme.nebulaTop[0]);
-      setStop('nebulaStop2', theme.nebulaTop[1]);
-      setStop('nebulaBotStop1', theme.nebulaBot[0]);
-      setStop('nebulaBotStop2', theme.nebulaBot[1]);
-      setStop('ribbonColorA', theme.ribbonA);
-      setStop('ribbonColorB', theme.ribbonB);
-      setStop('ribbonColorC', theme.ribbonC);
-      setStop('edgeRibbonStopL1', theme.ribbonA);
-      setStop('edgeRibbonStopL2', theme.ribbonB);
-      setStop('edgeRibbonStopR1', theme.ribbonC);
-      setStop('gemStopLight', theme.gem[0]);
-      setStop('gemStopCore', theme.gem[1]);
-      setStop('gemStopDark', theme.gem[2]);
 
       updateCard();
     };
 
-    // 7.5. Frame Mode, Full-Art, Secret-Rare & Primordial-Rare Switchers
+    // 7.5. Frame Mode, Full-Art, Secret-Rare, Primordial-Rare & Exhaustion Switchers
     function isFullArtActive() {
       return frameMode === 'fullart' ||
         (frameMode === 'primordial' && primordialArtMode === 'fullart') ||
-        (frameMode === 'secret' && secretArtMode === 'fullart');
+        (frameMode === 'secret' && secretArtMode === 'fullart') ||
+        (frameMode === 'exhaustion' && exhaustionArtMode === 'fullart');
     }
 
     function isFullArtDarkTextMode() {
       if (frameMode === 'fullart') return fullArtStyle !== 'light-glass';
       if (frameMode === 'primordial') return primordialBoxStyle !== 'gilded-marble';
       if (frameMode === 'secret') return secretBoxStyle !== 'silver-marble';
+      if (frameMode === 'exhaustion') return exhaustionBoxStyle !== 'blood-marble';
       return false;
     }
 
-    // Synchronize inner star crests, filigree tendrils & gem bezel between Sterling Silver (Secret) and Champagne Gold
-    function syncOrnamentMetalPalette(useSilver) {
-      const palette = useSilver
+    // Synchronize inner star crests, filigree tendrils & gem bezel between Sterling Silver, Crimson, and Champagne Gold
+    function syncOrnamentMetalPalette(metalType) {
+      const palette = metalType === 'silver'
         ? ['#ffffff', '#e2e8f0', '#94a3b8', '#334155']
-        : ['#fff6e0', '#e5cf9e', '#ab8d56', '#5c4724'];
+        : metalType === 'crimson'
+          ? ['#ffe4e6', '#f87171', '#b91c1c', '#450a0a']
+          : ['#fff6e0', '#e5cf9e', '#ab8d56', '#5c4724'];
       const gradIds = [
         'goldFiligreeGrad',
         'crownTopGoldGrad',
@@ -1582,15 +1808,64 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       });
     }
 
+    // Synchronize background cosmic SVG nebula/ribbons between Crimson Exhaustion aura and selected Element
+    function syncCosmicPaletteForMode(isExhaustion) {
+      const theme = isExhaustion
+        ? {
+            nebulaTop: ['#dc2626', '#450a0a'],
+            nebulaBot: ['#991b1b', '#2a0406'],
+            ribbonA: '#ef4444',
+            ribbonB: '#450a0a',
+            ribbonC: '#b91c1c',
+            gem: ['#fecaca', '#dc2626', '#450a0a']
+          }
+        : (COLOR_THEMES[currentColor] || COLOR_THEMES.UMBRA);
+
+      const setStop = (id, color) => {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute('stop-color', color);
+      };
+      setStop('nebulaStop1', theme.nebulaTop[0]);
+      setStop('nebulaStop2', theme.nebulaTop[1]);
+      setStop('nebulaBotStop1', theme.nebulaBot[0]);
+      setStop('nebulaBotStop2', theme.nebulaBot[1]);
+      setStop('ribbonColorA', theme.ribbonA);
+      setStop('ribbonColorB', theme.ribbonB);
+      setStop('ribbonColorC', theme.ribbonC);
+      setStop('edgeRibbonStopL1', theme.ribbonA);
+      setStop('edgeRibbonStopL2', theme.ribbonB);
+      setStop('edgeRibbonStopR1', theme.ribbonC);
+      setStop('gemStopLight', theme.gem[0]);
+      setStop('gemStopCore', theme.gem[1]);
+      setStop('gemStopDark', theme.gem[2]);
+    }
+
     window.setFrameMode = function(mode, syncRarity = true) {
       if (mode === 'primordial') {
         frameMode = 'primordial';
       } else if (mode === 'secret') {
         frameMode = 'secret';
+      } else if (mode === 'exhaustion') {
+        frameMode = 'exhaustion';
       } else if (mode === 'fullart') {
         frameMode = 'fullart';
       } else {
         frameMode = 'standard';
+      }
+
+      // Switch to free description mode automatically when entering Exhaustion mode
+      if (frameMode === 'exhaustion' && textMode !== 'classic') {
+        textMode = 'classic';
+        const tabPokemon = document.getElementById('tabModePokemon');
+        const tabClassic = document.getElementById('tabModeClassic');
+        const secPokemon = document.getElementById('sectionPokemonStyle');
+        const secClassic = document.getElementById('sectionClassicStyle');
+        if (tabPokemon && tabClassic && secPokemon && secClassic) {
+          secClassic.classList.remove('hidden');
+          secPokemon.classList.add('hidden');
+          tabClassic.className = 'px-3 py-1.5 rounded-md transition-all bg-amber-500 text-zinc-950 font-bold shadow-sm flex items-center gap-1.5';
+          tabPokemon.className = 'px-3 py-1.5 rounded-md text-zinc-400 hover:text-zinc-200 transition-all flex items-center gap-1.5';
+        }
       }
 
       const raritySelect = document.getElementById('selectRarity');
@@ -1599,7 +1874,10 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           raritySelect.value = 'primordial';
         } else if (frameMode === 'secret') {
           raritySelect.value = 'secret';
-        } else if (raritySelect.value === 'primordial' || raritySelect.value === 'secret') {
+        } else if (
+          frameMode !== 'exhaustion' &&
+          (raritySelect.value === 'primordial' || raritySelect.value === 'secret')
+        ) {
           raritySelect.value = 'mythic';
         }
       }
@@ -1608,27 +1886,36 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const btnFull = document.getElementById('btnFrameFullArt');
       const btnSec = document.getElementById('btnFrameSecret');
       const btnPrim = document.getElementById('btnFramePrimordial');
+      const btnExh = document.getElementById('btnFrameExhaustion');
+
       const fullArtPanel = document.getElementById('fullArtOptionsPanel');
       const secPanel = document.getElementById('secretOptionsPanel');
       const primPanel = document.getElementById('primordialOptionsPanel');
+      const exhPanel = document.getElementById('exhaustionOptionsPanel');
+
       const artTitle = document.getElementById('artSectionTitle');
       const artUploadLabel = document.getElementById('artUploadLabel');
 
       const activeBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-amber-500 text-zinc-950 shadow-sm flex items-center justify-center gap-1';
       const activeSecBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-gradient-to-r from-white via-slate-200 to-slate-400 text-zinc-950 shadow-[0_0_12px_rgba(226,232,240,0.55)] flex items-center justify-center gap-1';
       const activePrimBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 text-zinc-950 shadow-[0_0_12px_rgba(251,191,36,0.5)] flex items-center justify-center gap-1';
+      const activeExhBtnCls = 'px-2.5 py-1.5 rounded-lg font-bold transition-all bg-gradient-to-r from-red-600 via-rose-500 to-red-700 text-white shadow-[0_0_12px_rgba(220,38,38,0.6)] flex items-center justify-center gap-1 col-span-2 sm:col-span-1';
+
       const inactiveBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-zinc-400 hover:text-zinc-200 transition-all flex items-center justify-center gap-1';
       const inactiveSecBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-slate-200 hover:text-white transition-all flex items-center justify-center gap-1';
       const inactivePrimBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-amber-300/90 hover:text-amber-200 transition-all flex items-center justify-center gap-1';
+      const inactiveExhBtnCls = 'px-2.5 py-1.5 rounded-lg font-semibold text-rose-400 hover:text-rose-300 transition-all flex items-center justify-center gap-1 col-span-2 sm:col-span-1';
 
       if (btnStd) btnStd.className = frameMode === 'standard' ? activeBtnCls : inactiveBtnCls;
       if (btnFull) btnFull.className = frameMode === 'fullart' ? activeBtnCls : inactiveBtnCls;
       if (btnSec) btnSec.className = frameMode === 'secret' ? activeSecBtnCls : inactiveSecBtnCls;
       if (btnPrim) btnPrim.className = frameMode === 'primordial' ? activePrimBtnCls : inactivePrimBtnCls;
+      if (btnExh) btnExh.className = frameMode === 'exhaustion' ? activeExhBtnCls : inactiveExhBtnCls;
 
       if (fullArtPanel) fullArtPanel.classList.toggle('hidden', frameMode !== 'fullart');
       if (secPanel) secPanel.classList.toggle('hidden', frameMode !== 'secret');
       if (primPanel) primPanel.classList.toggle('hidden', frameMode !== 'primordial');
+      if (exhPanel) exhPanel.classList.toggle('hidden', frameMode !== 'exhaustion');
 
       if (isFullArtActive()) {
         if (artTitle) {
@@ -1636,7 +1923,9 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
             ? '일러스트레이션 설정 (Primordial 63:88 풀아트 재단)'
             : frameMode === 'secret'
               ? '일러스트레이션 설정 (Secret 63:88 풀아트 재단)'
-              : '일러스트레이션 설정 (63:88 풀아트 자동 재단)';
+              : frameMode === 'exhaustion'
+                ? '일러스트레이션 설정 (탈진 63:88 풀아트 재단)'
+                : '일러스트레이션 설정 (63:88 풀아트 자동 재단)';
         }
         if (artUploadLabel) artUploadLabel.textContent = '이미지 파일 불러오기 (업로드 시 63:88 카드 전체 규격으로 자동 재단됩니다)';
       } else {
@@ -1645,13 +1934,56 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
             ? '일러스트레이션 설정 (Primordial 5:3 자동 재단)'
             : frameMode === 'secret'
               ? '일러스트레이션 설정 (Secret 5:3 자동 재단)'
-              : '일러스트레이션 설정 (5:3 자동 재단)';
+              : frameMode === 'exhaustion'
+                ? '일러스트레이션 설정 (탈진 5:3 자동 재단)'
+                : '일러스트레이션 설정 (5:3 자동 재단)';
         }
         if (artUploadLabel) artUploadLabel.textContent = '이미지 파일 불러오기 (업로드 시 5:3 규격으로 자동 재단됩니다)';
       }
 
       updateArtworkTransform();
       updateCard();
+    };
+
+    window.setExhaustionArtMode = function(artMode) {
+      exhaustionArtMode = artMode === 'fullart' ? 'fullart' : 'standard';
+      const btnStd = document.getElementById('btnExhArtStandard');
+      const btnFull = document.getElementById('btnExhArtFull');
+      if (btnStd) {
+        btnStd.className = exhaustionArtMode === 'standard'
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-red-500 text-red-300 transition'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition';
+      }
+      if (btnFull) {
+        btnFull.className = exhaustionArtMode === 'fullart'
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 border border-red-500 text-red-300 transition'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition';
+      }
+      setFrameMode('exhaustion', false);
+    };
+
+    window.setExhaustionBoxStyle = function(style) {
+      exhaustionBoxStyle = style;
+      document.querySelectorAll('#exhaustionOptionsPanel button[data-exhstyle]').forEach(btn => {
+        if (btn.getAttribute('data-exhstyle') === style) {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-bold bg-zinc-800 border border-red-500 text-red-300 transition flex flex-col items-center gap-0.5';
+        } else {
+          btn.className = 'px-2.5 py-2 rounded-xl text-xs font-semibold bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-zinc-700 transition flex flex-col items-center gap-0.5';
+        }
+      });
+      updateCard();
+    };
+
+    window.applyExhaustionPreset = function() {
+      const nameInput = document.getElementById('inputName');
+      const textInput = document.getElementById('inputText');
+      const flavorInput = document.getElementById('inputFlavor');
+      if (nameInput) nameInput.value = '탈진';
+      if (textInput) {
+        textInput.value = '덱에 더 이상 뽑을 수 있는 카드가 없습니다.\n카드를 뽑으려 할 때마다 누적되는 탈진 피해를 받습니다.';
+      }
+      if (flavorInput) flavorInput.value = '';
+      setFrameMode('exhaustion', false);
     };
 
     window.setSecretArtMode = function(artMode) {
@@ -1739,13 +2071,19 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const labelSecGlow = document.getElementById('labelSecretGlow');
       if (labelSecGlow) labelSecGlow.textContent = `${Math.round(secGlowRaw)}%`;
 
+      const exhGlowRaw = parseFloat(document.getElementById('inputExhaustionGlow')?.value ?? 92);
+      const labelExhGlow = document.getElementById('labelExhaustionGlow');
+      if (labelExhGlow) labelExhGlow.textContent = `${Math.round(exhGlowRaw)}%`;
+
       const rarityVal = document.getElementById('selectRarity')?.value || 'mythic';
-      const isPrimordial = frameMode === 'primordial' || rarityVal === 'primordial';
-      const isSecret = !isPrimordial && (frameMode === 'secret' || rarityVal === 'secret');
+      const isExhaustion = frameMode === 'exhaustion';
+      const isPrimordial = !isExhaustion && (frameMode === 'primordial' || rarityVal === 'primordial');
+      const isSecret = !isExhaustion && !isPrimordial && (frameMode === 'secret' || rarityVal === 'secret');
       const showCosmicRibbons = document.getElementById('toggleCosmicRibbons')?.checked ?? true;
 
-      // Switch inner ornaments to Sterling Silver when Secret Rare is active
-      syncOrnamentMetalPalette(isSecret);
+      // Sync ornament metallic tone & cosmic SVG palette
+      syncOrnamentMetalPalette(isSecret ? 'silver' : isExhaustion ? 'crimson' : 'gold');
+      syncCosmicPaletteForMode(isExhaustion);
 
       const cardTarget = document.getElementById('cardPreviewTarget');
       const primOverlay = document.getElementById('primordialBorderOverlay');
@@ -1755,6 +2093,9 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const secOverlay = document.getElementById('secretBorderOverlay');
       const secGlowWash = document.getElementById('secretGlowWash');
       const secGemHalo = document.getElementById('secretGemHalo');
+
+      const exhOverlay = document.getElementById('exhaustionBorderOverlay');
+      const exhGlowWash = document.getElementById('exhaustionGlowWash');
 
       const footerBar = document.getElementById('renderFooterBar');
       const setLangEl = document.getElementById('renderSetAndLang');
@@ -1766,6 +2107,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
       const headerBox = document.getElementById('cardHeaderBox');
       const cardNameEl = document.getElementById('renderCardName');
+      const manaCostEl = document.getElementById('renderManaCost');
       const artWrapper = document.getElementById('cardArtWrapper');
       const artContainer = document.getElementById('cardArtContainer');
       const stdCanvas = document.getElementById('renderCardArtCanvas');
@@ -1777,6 +2119,8 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const typeBox = document.getElementById('cardTypeBox');
       const textBox = document.getElementById('cardTextBox');
       const watermark = document.getElementById('textBoxWatermark');
+      const wmCelestial = document.getElementById('watermarkCelestialGroup');
+      const wmExhaustion = document.getElementById('watermarkExhaustionGroup');
       const rulesEl = document.getElementById('renderRulesText');
       const flavorEl = document.getElementById('renderFlavorText');
       const divL = document.getElementById('flavorDividerLineL');
@@ -1786,10 +2130,11 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const ptBox = document.getElementById('renderPTBox');
       const ptValEl = document.getElementById('renderPTVal');
 
-      // Toggle Primordial-Rare & Secret-Rare Outer Filigree & Halo Layers
+      // Toggle Outer Glows & Border Overlays
       if (cardTarget) {
         cardTarget.classList.toggle('primordial-outer-glow', isPrimordial);
         cardTarget.classList.toggle('secret-outer-glow', isSecret);
+        cardTarget.classList.toggle('exhaustion-outer-glow', isExhaustion);
       }
       if (primOverlay) {
         primOverlay.classList.toggle('hidden', !isPrimordial);
@@ -1813,6 +2158,43 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
         secGemHalo.classList.toggle('hidden', !isSecret);
       }
 
+      if (exhOverlay) {
+        exhOverlay.classList.toggle('hidden', !isExhaustion);
+        exhOverlay.style.opacity = String(exhGlowRaw / 100);
+      }
+      if (exhGlowWash) {
+        exhGlowWash.style.opacity = String(Math.min(1, (exhGlowRaw / 100) * 1.05));
+      }
+
+      // Switch Watermark Graphic (Hourglass for Exhaustion vs Celestial Crest)
+      if (wmCelestial) wmCelestial.classList.toggle('hidden', isExhaustion);
+      if (wmExhaustion) wmExhaustion.classList.toggle('hidden', !isExhaustion);
+
+      // Reset Exhaustion-specific 3-section structural overrides before applying active mode
+      if (manaCostEl) {
+        manaCostEl.style.setProperty('display', isExhaustion ? 'none' : 'inline-flex', 'important');
+      }
+      if (headerBox) {
+        headerBox.classList.toggle('px-4', isExhaustion);
+        headerBox.classList.toggle('pl-5', !isExhaustion);
+        headerBox.classList.toggle('pr-3', !isExhaustion);
+      }
+      if (artWrapper) {
+        artWrapper.style.borderTopWidth = '0px';
+        artWrapper.style.borderBottomWidth = '0px';
+        artWrapper.style.borderRadius = '0px';
+        artWrapper.style.overflow = 'visible';
+        artWrapper.style.marginTop = '';
+      }
+      if (typeBox) {
+        typeBox.style.display = isExhaustion ? 'none' : '';
+      }
+      if (textBox) {
+        textBox.style.borderTopWidth = '0px';
+        textBox.style.borderRadius = '';
+        textBox.style.marginTop = '';
+      }
+
       // Toggle Inner 5:3 Artwork Corner Filigree Spandrels for Secret-Rare only
       if (artSpandrels) {
         const showSpandrels = isSecret && secretArtMode === 'standard';
@@ -1826,7 +2208,9 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       if (setLangEl) {
         setLangEl.className = isSecret
           ? 'font-bold text-[#f1f5f9]'
-          : 'font-bold text-[#ebd9b4]';
+          : isExhaustion
+            ? 'font-bold text-[#fca5a5]'
+            : 'font-bold text-[#ebd9b4]';
       }
 
       if (footerBar) {
@@ -1834,15 +2218,200 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           footerBar.className = 'absolute bottom-[13px] left-[7.5%] right-[7.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-amber-200/95 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.98)]';
         } else if (isSecret) {
           footerBar.className = 'absolute bottom-[13px] left-[7.5%] right-[7.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-slate-100/95 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.98)]';
+        } else if (isExhaustion) {
+          footerBar.className = 'absolute bottom-[12px] left-[7%] right-[7%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-rose-200/90 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.98)]';
         } else {
           footerBar.className = 'absolute bottom-[5px] left-[5.5%] right-[5.5%] flex items-center justify-between text-[7.5px] sm:text-[8px] text-zinc-300/85 font-mono tracking-tight pointer-events-none z-30 drop-shadow-[0_1px_2px_rgba(0,0,0,0.95)]';
         }
       }
 
       // Reset custom special tier box classes before applying mode-specific classes
-      if (headerBox) headerBox.classList.remove('primordial-gilded-header', 'secret-silver-header');
-      if (textBox) textBox.classList.remove('primordial-gilded-box', 'secret-silver-box');
+      if (headerBox) {
+        headerBox.classList.remove(
+          'primordial-gilded-header',
+          'secret-silver-header',
+          'exhaustion-crimson-header',
+          'exhaustion-marble-header'
+        );
+      }
+      if (textBox) {
+        textBox.classList.remove(
+          'primordial-gilded-box',
+          'secret-silver-box',
+          'exhaustion-crimson-box',
+          'exhaustion-marble-box'
+        );
+      }
       if (ptBox) ptBox.classList.remove('primordial-pt-plaque', 'secret-pt-plaque');
+
+      // EXHAUSTION (DECK DEPLETION) 3-SECTION CRIMSON FRAME MODE (Name + Illustration + Description Only)
+      if (frameMode === 'exhaustion') {
+        const crimsonBorder = '#ef4444';
+        const deepCrimsonBorder = '#dc2626';
+
+        if (cornerSpur) cornerSpur.style.display = 'none';
+        if (starLeft) starLeft.style.display = 'none';
+        if (starRight) starRight.style.display = 'none';
+
+        if (exhaustionArtMode === 'fullart') {
+          if (fullArtContainer) fullArtContainer.classList.remove('hidden');
+          if (cosmicBaseRect) cosmicBaseRect.style.display = 'none';
+          if (cosmicDecorGroup) cosmicDecorGroup.style.display = 'none';
+          if (artWrapper) {
+            artWrapper.style.borderTopWidth = '0px';
+            artWrapper.style.borderBottomWidth = '0px';
+            artWrapper.style.borderLeftWidth = '0px';
+            artWrapper.style.borderRightWidth = '0px';
+            artWrapper.style.boxShadow = 'none';
+            artWrapper.style.marginTop = '8px';
+          }
+          if (artContainer) artContainer.style.backgroundColor = 'transparent';
+          if (stdCanvas) stdCanvas.style.opacity = '0';
+          if (artVignette) artVignette.style.display = 'none';
+        } else {
+          if (fullArtContainer) fullArtContainer.classList.add('hidden');
+          if (cosmicBaseRect) cosmicBaseRect.style.display = 'block';
+          if (cosmicDecorGroup) cosmicDecorGroup.style.display = 'block';
+          if (artWrapper) {
+            artWrapper.style.borderTopWidth = '2.4px';
+            artWrapper.style.borderBottomWidth = '2.4px';
+            artWrapper.style.borderLeftWidth = '2.4px';
+            artWrapper.style.borderRightWidth = '2.4px';
+            artWrapper.style.borderRadius = '11px';
+            artWrapper.style.overflow = 'hidden';
+            artWrapper.style.marginTop = '8px';
+            artWrapper.style.borderColor = crimsonBorder;
+            artWrapper.style.boxShadow = '0 0 16px rgba(220, 38, 38, 0.42), 0 4px 12px rgba(0, 0, 0, 0.9)';
+          }
+          if (artContainer) artContainer.style.backgroundColor = '#0c0406';
+          if (stdCanvas) stdCanvas.style.opacity = '1';
+          if (artVignette) artVignette.style.display = 'block';
+        }
+
+        if (exhaustionBoxStyle === 'blood-marble') {
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(185,28,28,0.12) 0%, rgba(0,0,0,0) 42%, rgba(24,4,6,0.58) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.classList.add('exhaustion-marble-header');
+            headerBox.style.background = '';
+            headerBox.style.boxShadow = '';
+            headerBox.style.borderWidth = '2.2px';
+            headerBox.style.borderColor = deepCrimsonBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13.5px] sm:text-[15px] font-extrabold tracking-wide truncate flex-1 min-w-0 text-center text-[#30080c]';
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.classList.add('exhaustion-marble-box');
+            textBox.style.background = '';
+            textBox.style.boxShadow = '';
+            textBox.style.borderTopWidth = '2.4px';
+            textBox.style.borderLeftWidth = '2.4px';
+            textBox.style.borderRightWidth = '2.4px';
+            textBox.style.borderBottomWidth = '2.4px';
+            textBox.style.borderRadius = '12px';
+            textBox.style.marginTop = '10px';
+            textBox.style.borderColor = deepCrimsonBorder;
+          }
+          if (watermark) {
+            watermark.style.color = '#991b1b';
+            watermark.style.opacity = '0.13';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-2 font-card-body text-[11.5px] sm:text-[12px] leading-relaxed select-text text-[#26070a] text-center my-auto py-1';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#5c141b] px-2 text-center select-text';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#b91c1c]/55 to-[#991b1b]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#b91c1c]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#b91c1c]/55 to-[#991b1b]/85';
+        } else if (exhaustionBoxStyle === 'floating-omen') {
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(24,4,6,0.38) 0%, rgba(0,0,0,0) 24%, rgba(20,4,6,0.22) 48%, rgba(18,4,6,0.86) 74%, rgba(8,2,3,0.96) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.style.background = 'linear-gradient(180deg, rgba(40,10,14,0.84) 0%, rgba(16,4,6,0.68) 100%)';
+            headerBox.style.boxShadow = '0 2px 14px rgba(220,38,38,0.38)';
+            headerBox.style.borderWidth = '1.8px';
+            headerBox.style.borderColor = crimsonBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13.5px] sm:text-[15px] font-extrabold tracking-wide truncate flex-1 min-w-0 text-center text-[#fff1f2] fullart-crisp-shadow';
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.style.background = 'transparent';
+            textBox.style.boxShadow = 'none';
+            textBox.style.borderTopWidth = '0px';
+            textBox.style.borderLeftWidth = '0px';
+            textBox.style.borderRightWidth = '0px';
+            textBox.style.borderBottomWidth = '0px';
+            textBox.style.borderRadius = '12px';
+            textBox.style.marginTop = '10px';
+          }
+          if (watermark) {
+            watermark.style.color = '#f87171';
+            watermark.style.opacity = '0.12';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-2 font-card-body text-[11.5px] sm:text-[12px] leading-relaxed select-text text-[#fff1f2] text-center my-auto py-1 fullart-crisp-shadow';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#fecaca] px-2 text-center select-text fullart-crisp-shadow';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#ef4444]/60 to-[#fca5a5]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#f87171]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#ef4444]/60 to-[#fca5a5]/85';
+        } else {
+          // Default Exhaustion Style: Dark Crimson Obsidian + Sharp Red Point Borders
+          if (fullArtBottomScrim) {
+            fullArtBottomScrim.style.background = 'linear-gradient(180deg, rgba(185,28,28,0.16) 0%, rgba(0,0,0,0) 35%, rgba(12,3,4,0.72) 100%)';
+          }
+          if (headerBox) {
+            headerBox.classList.remove('astrum-marble-header');
+            headerBox.classList.add('exhaustion-crimson-header');
+            headerBox.style.background = '';
+            headerBox.style.boxShadow = '';
+            headerBox.style.borderWidth = '2.2px';
+            headerBox.style.borderColor = crimsonBorder;
+          }
+          if (cardNameEl) {
+            cardNameEl.className = 'font-card-title text-[13.5px] sm:text-[15px] font-extrabold tracking-wide truncate flex-1 min-w-0 text-center text-[#ffe4e6] fullart-crisp-shadow';
+          }
+          if (textBox) {
+            textBox.classList.remove('astrum-marble-box');
+            textBox.classList.add('exhaustion-crimson-box');
+            textBox.style.background = '';
+            textBox.style.boxShadow = '';
+            textBox.style.borderTopWidth = '2.4px';
+            textBox.style.borderLeftWidth = '2.4px';
+            textBox.style.borderRightWidth = '2.4px';
+            textBox.style.borderBottomWidth = '2.4px';
+            textBox.style.borderRadius = '12px';
+            textBox.style.marginTop = '10px';
+            textBox.style.borderColor = crimsonBorder;
+          }
+          if (watermark) {
+            watermark.style.color = '#ef4444';
+            watermark.style.opacity = '0.14';
+          }
+          if (rulesEl) {
+            rulesEl.className = 'relative z-10 space-y-2 font-card-body text-[11.5px] sm:text-[12px] leading-relaxed select-text text-[#fff1f2] text-center my-auto py-1 fullart-crisp-shadow';
+          }
+          if (flavorEl) {
+            flavorEl.className = 'font-card-flavor text-[10px] sm:text-[10.5px] text-[#fca5a5] px-2 text-center select-text fullart-crisp-shadow';
+          }
+          if (divL) divL.className = 'h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#ef4444]/60 to-[#f87171]/85';
+          if (divStar) divStar.className = 'w-2.5 h-2.5 mx-1 shrink-0 text-[#ef4444]';
+          if (divR) divR.className = 'h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#ef4444]/60 to-[#f87171]/85';
+        }
+        return;
+      }
 
       // SECRET-RARE DEDICATED STERLING SILVER FRAME MODE
       if (frameMode === 'secret') {
@@ -3548,17 +4117,21 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
 
         const holoStamp = document.getElementById('renderHoloStamp');
         if (holoStamp) {
-          holoStamp.style.display = ['rare', 'epic', 'legendary', 'mythic', 'secret', 'primordial'].includes(rarity) ? 'flex' : 'none';
+          if (frameMode === 'exhaustion') {
+            holoStamp.style.display = 'none';
+          } else {
+            holoStamp.style.display = ['rare', 'epic', 'legendary', 'mythic', 'secret', 'primordial'].includes(rarity) ? 'flex' : 'none';
+          }
         }
 
         // 3. Text Body
         const rulesContainer = document.getElementById('renderRulesText');
         if (rulesContainer) {
-          if (textMode === 'pokemon') {
-            rulesContainer.innerHTML = renderPokemonSkills();
-          } else {
+          if (frameMode === 'exhaustion' || textMode !== 'pokemon') {
             const rules = document.getElementById('inputText')?.value || '';
             rulesContainer.innerHTML = formatRulesText(rules);
+          } else {
+            rulesContainer.innerHTML = renderPokemonSkills();
           }
         }
 
@@ -3574,11 +4147,13 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           }
         }
 
-        // 4. P/T Plaque
+        // 4. P/T Plaque (Hidden in Exhaustion mode)
         const ptBox = document.getElementById('renderPTBox');
         const ptToggle = document.getElementById('togglePT');
         if (ptBox && ptToggle) {
-          if (ptToggle.checked) {
+          if (frameMode === 'exhaustion') {
+            ptBox.style.display = 'none';
+          } else if (ptToggle.checked) {
             ptBox.style.display = 'flex';
             const ptVal = document.getElementById('inputPT')?.value || '2/2';
             const renderPTValEl = document.getElementById('renderPTVal');
@@ -3588,11 +4163,11 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
           }
         }
 
-        // 5. Celestial Star Crest
+        // 5. Celestial Star Crest (Hidden in Exhaustion mode for clean 3-box focus)
         const crownToggle = document.getElementById('toggleCrown');
         const crownWrapper = document.getElementById('renderCrownWrapper');
         if (crownWrapper && crownToggle) {
-          crownWrapper.style.display = crownToggle.checked ? 'block' : 'none';
+          crownWrapper.style.display = (frameMode !== 'exhaustion' && crownToggle.checked) ? 'block' : 'none';
         }
 
         // 6. Metadata Footer
@@ -3627,7 +4202,7 @@ Whenever Kindlet, the Emberling attacks, it deals 1 damage to each opponent.
       const inputIds = [
         'inputName', 'inputMana', 'inputTypeLine',
         'inputText', 'inputFlavor', 'togglePT', 'inputPT', 'toggleCrown', 'toggleFooter',
-        'inputBoxOpacity', 'toggleCosmicRibbons', 'inputSecretGlow', 'inputPrimordialGlow',
+        'inputBoxOpacity', 'toggleCosmicRibbons', 'inputSecretGlow', 'inputPrimordialGlow', 'inputExhaustionGlow',
         'inputSetCode', 'inputLang', 'inputArtist', 'inputCopyright'
       ];
       inputIds.forEach(id => {
